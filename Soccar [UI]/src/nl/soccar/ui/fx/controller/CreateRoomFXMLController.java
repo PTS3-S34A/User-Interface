@@ -94,7 +94,7 @@ public class CreateRoomFXMLController implements Initializable {
         Session session;
         try {
             Soccar soccar = Soccar.getInstance();
-            SessionController controller = soccar.getSessionController();
+            SessionController controller = SessionController.getInstance();
 
             session = controller.create(textFieldRoomName.getText(), password, soccar.getCurrentPlayer());
             session.getRoom().setCapacity((int) sliderCapacity.getValue());
@@ -112,7 +112,7 @@ public class CreateRoomFXMLController implements Initializable {
             settings.setBallType(BallType.FOOTBALL);// TODO implement manual selection ball.
 
             session.setGame(game);
-            controller.setCurrentSession(session);
+            soccar.getCurrentPlayer().setCurrentSession(session);
             
             Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
         } catch (DuplicateValueException e) {

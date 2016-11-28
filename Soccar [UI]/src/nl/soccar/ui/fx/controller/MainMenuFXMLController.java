@@ -20,12 +20,9 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import nl.soccar.exception.UIException;
-import nl.soccar.library.Player;
 import nl.soccar.library.Session;
 import nl.soccar.library.SessionController;
 import nl.soccar.library.Soccar;
-import nl.soccar.library.enumeration.CarType;
-import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 
@@ -64,7 +61,7 @@ public class MainMenuFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        sessionController = Soccar.getInstance().getSessionController();
+        sessionController = SessionController.getInstance();
 
         // Overwrite the standard placeholder text with an empty String.
         tblSessionList.setPlaceholder(new Label(""));
@@ -101,7 +98,7 @@ public class MainMenuFXMLController implements Initializable {
 
     private void updateTable() {
         ObservableList<SessionTableItem> sessionItems = FXCollections.observableArrayList();
-        Soccar.getInstance().getSessionController().getAllSessions().stream().map(SessionTableItem::new).forEach(sessionItems::add);
+        SessionController.getInstance().getAllSessions().stream().map(SessionTableItem::new).forEach(sessionItems::add);
 
         tblSessionList.getItems().clear();
         tblSessionList.getItems().addAll(sessionItems);
@@ -131,7 +128,7 @@ public class MainMenuFXMLController implements Initializable {
         }
 
         try {
-            sessionController.setCurrentSession(sessionController.join(selectedSession, password, Soccar.getInstance().getCurrentPlayer()));
+            Soccar.getInstance().getCurrentPlayer().setCurrentSession(sessionController.join(selectedSession, password, Soccar.getInstance().getCurrentPlayer()));
 
             Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
         } catch (UIException e) {
