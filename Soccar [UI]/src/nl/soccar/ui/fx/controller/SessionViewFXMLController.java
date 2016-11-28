@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
+import nl.soccar.library.SessionController;
 import nl.soccar.library.Soccar;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
@@ -49,8 +50,8 @@ public class SessionViewFXMLController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Soccar soccar = Soccar.getInstance();
-        currentSession = soccar.getSessionController().getCurrentSession(); // Will never be null.
         currentPlayer = soccar.getCurrentPlayer();
+        currentSession = currentPlayer.getCurrentSession(); // Will never be null.
 
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
         btnLeaveRoom.setOnAction(e -> leaveRoom());
@@ -58,7 +59,7 @@ public class SessionViewFXMLController implements Initializable {
 
         lblUsername.setText(currentPlayer.getUsername());
         lblCar.setText(currentPlayer.getCarType().toString());
-        
+
         setRoomInfo();
     }
 
@@ -80,15 +81,17 @@ public class SessionViewFXMLController implements Initializable {
     }
 
     /**
-     * Method that removes the player from the current session and navigates to the main menu view.
+     * Method that removes the player from the current session and navigates to
+     * the main menu view.
      */
     private void leaveRoom() {
-        Soccar.getInstance().getSessionController().leave(currentSession, currentPlayer);
+        SessionController.getInstance().leave(currentSession, currentPlayer);
         Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
     }
 
     /**
-     * Method that navigates to the game view and set the application window to full screen mode.
+     * Method that navigates to the game view and set the application window to
+     * full screen mode.
      */
     public void startGame() {
         Main main = Main.getInstance();

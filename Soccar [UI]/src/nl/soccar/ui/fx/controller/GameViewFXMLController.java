@@ -55,7 +55,7 @@ public class GameViewFXMLController implements Initializable {
         canvas.setHeight(height);
         canvas.setFocusTraversable(true);
 
-        Session session = Soccar.getInstance().getSessionController().getCurrentSession(); // Will never be null.
+        Session session = Soccar.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
         GameCanvas gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
 
         initializeMap(session, gameCanvas);
