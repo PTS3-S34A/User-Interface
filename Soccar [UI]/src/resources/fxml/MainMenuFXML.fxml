@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import java.net.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.soccar.ui.fx.controller.MainMenuFXMLController">
+   <children>
+      <HBox alignment="CENTER" prefHeight="88.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="87.0" prefWidth="1200.0" style="-fx-background-color: white;">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="7.0" layoutY="9.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/images/logo_small.png" />
+                     </image>
+                  </ImageView>
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" height="20.0" layoutY="77.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1200.0">
+                     <fill>
+                        <LinearGradient endX="1.0" endY="1.0">
+                           <stops>
+                              <Stop color="#ffda00" />
+                              <Stop color="RED" offset="1.0" />
+                           </stops>
+                        </LinearGradient>
+                     </fill>
+                  </Rectangle>
+                  <Button id="button" fx:id="btnLogOut" layoutX="1050.0" layoutY="6.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="144.0" stylesheets="@../css/Style.css" text="LOG OUT" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Button>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="95.0" prefHeight="706.0" prefWidth="1200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <children>
+            <TabPane id="tab" prefHeight="599.0" prefWidth="1200.0" stylesheets="@../css/Style.css" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="SESSIONS">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="667.0" prefWidth="1200.0" style="-fx-background-color: #080931;">
+                           <children>
+                              <TableView id="table" fx:id="tblSessionList" layoutY="-1.0" prefHeight="562.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
+                                <columns>
+                                  <TableColumn fx:id="tbclName" prefWidth="509.0" text="ROOM" />
+                                    <TableColumn fx:id="tbclPassword" prefWidth="137.0" text="PASSWORD" />
+                                  <TableColumn fx:id="tbclOccupation" prefWidth="160.0" text="OCCUPATION" />
+                                    <TableColumn fx:id="tbclOwner" prefWidth="392.0" text="HOST" />
+                                </columns>
+                              </TableView>
+                              <HBox alignment="CENTER_RIGHT" layoutX="466.0" layoutY="557.0" prefHeight="97.0" prefWidth="734.0" spacing="12.0">
+                                 <children>
+                                    <Button id="button" fx:id="btnCreateRoom" alignment="CENTER" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="CREATE ROOM" textFill="WHITE">
+                                       <font>
+                                          <Font name="Century Gothic" size="24.0" />
+                                       </font>
+                                    </Button>
+                                    <Button id="button" fx:id="btnJoinRoom" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="JOIN SELECTED ROOM" textFill="WHITE">
+                                       <font>
+                                          <Font name="Century Gothic" size="24.0" />
+                                       </font>
+                                    </Button>
+                                 </children>
+                                 <padding>
+                                    <Insets right="7.0" />
+                                 </padding>
+                              </HBox>
+                              <Label layoutX="26.0" layoutY="578.0" text="LOGGED IN USER:" textFill="WHITE">
+                                 <font>
+                                    <Font name="Century Gothic" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblUsername" layoutX="212.0" layoutY="578.0" text="userNamePlaceHolder" textFill="WHITE">
+                                 <font>
+                                    <Font name="Century Gothic" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label layoutX="49.0" layoutY="610.0" text="SELECTED CAR:" textFill="WHITE">
+                                 <font>
+                                    <Font name="Century Gothic" size="20.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblCar" layoutX="212.0" layoutY="610.0" text="carPlaceHolder" textFill="WHITE">
+                                 <font>
+                                    <Font name="Century Gothic" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+                <Tab text="LEADERBOARD">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="542.0" prefWidth="1200.0" />
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

@@ -1,0 +1,64 @@
+/**
+* Stylesheet used for styling controls on the views.
+* 
+* Author: PTS34A
+*/
+
+.button {
+    -fx-background-color: #545ECB;
+}
+
+.button:hover {
+    -fx-background-color: #767ED5;
+}
+
+.button:selected {
+    -fx-background-color: #767ED5;
+    -fx-border-color: white; 
+    -fx-border-width: 4;
+}
+
+#tab .tab {
+    -fx-padding: 12 12 12 12;
+    -fx-background-color: #545ECB;
+}
+
+#tab .tab-label {
+    -fx-text-fill: white;
+    -fx-font-size: 20;
+    -fx-font-family: "Century Gothic";     
+}
+
+#combo {
+    -fx-background-color: white;
+    -fx-text-fill: white;
+    -fx-font-size: 24;
+    -fx-font-family: "Century Gothic";   
+}
+
+#table {
+    -fx-background-color: #080931;
+    -fx-table-cell-border-color: white;
+}
+#table .column-header {
+    -fx-font-size: 20;
+}
+
+#table .column-header .label {
+    -fx-font-family: "Century Gothic";  
+}
+
+#table .table-cell{
+    -fx-font-size: 20;
+    -fx-font-family: "Century Gothic";  
+}
+
+#table .table-row-cell:selected {
+    -fx-background-color: #545ECB;
+}
+
+#list .list-cell {
+    -fx-list-cell-border-color: white;
+    -fx-font-size: 24;
+    -fx-font-family: "Century Gothic";  
+}

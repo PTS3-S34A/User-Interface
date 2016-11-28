@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #080931;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.soccar.ui.fx.controller.LoginFXMLController">
+   <children>
+      <HBox alignment="CENTER" layoutX="70.0" prefHeight="180.0" prefWidth="1200.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/images/logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="169.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1200.0" HBox.hgrow="ALWAYS">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#ffda00" />
+                        <Stop color="RED" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Rectangle>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="200.0" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <AnchorPane prefHeight="555.0" prefWidth="498.0">
+               <children>
+                  <Label layoutX="148.0" layoutY="186.0" text="SELECT YOUR CAR" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="82.0" layoutY="50.0" text="CHOOSE YOUR PLAYERNAME" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtFieldName" alignment="CENTER" layoutX="4.0" layoutY="98.0" prefHeight="60.0" prefWidth="497.0" promptText="PLAYERNAME">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </TextField>
+                  <Button id="play" fx:id="btnLogin" layoutX="157.0" layoutY="475.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="187.0" stylesheets="@../css/Style.css" text="PLAY" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="48.0" />
+                     </font>
+                  </Button>
+                  <ToggleButton id="casual" fx:id="btnSelectCasualCar" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="2.0" layoutY="240.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="CASUAL" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/cars/casual_red_texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></ToggleButton>
+                  <ToggleButton id="pickup" fx:id="btnSelectPickup" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="356.0" layoutY="240.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="PICKUP" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/cars/pickup_red_texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></ToggleButton>
+                  <ToggleButton id="sports" fx:id="btnSelectSportsCar" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="180.0" layoutY="240.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="SPORTS" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/images/cars/sportscar_red_texture.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></ToggleButton>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
