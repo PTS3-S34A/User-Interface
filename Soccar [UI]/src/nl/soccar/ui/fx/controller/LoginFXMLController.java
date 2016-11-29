@@ -20,9 +20,11 @@ public class LoginFXMLController implements Initializable {
 
     private static final String CSS_ERROR_BORDER = "-fx-border-color: red;";
     private static final String CSS_NORMAL_BORDER = "-fx-border-color: white;";
-    
+
     @FXML
-    private Button btnLogin;
+    private Button btnLoginRegister;
+    @FXML
+    private Button btnPlayGuest;
     @FXML
     private TextField txtFieldName;
     @FXML
@@ -48,16 +50,32 @@ public class LoginFXMLController implements Initializable {
             btnSelectSportsCar.setStyle(CSS_NORMAL_BORDER);
             btnSelectPickup.setStyle(CSS_NORMAL_BORDER);
         });
-        
-        txtFieldName.setOnAction(e -> login());
-        btnLogin.setOnAction(e -> login());
+
+        txtFieldName.setOnAction(e -> playAsGuest());
+
+        btnLoginRegister.setOnAction(e -> loginOrRegister());
+        btnPlayGuest.setOnAction(e -> playAsGuest());
     }
 
     /**
-     * Handler for login-button; Uses current selected car, username and
-     * optional password.
+     * Handler for loginOrRegister-button; Uses current selected car, username
+     * and optional password.
      */
-    private void login() {
+    private void loginOrRegister() {
+        CarType car = selectedCar();
+        if (car != null && checkInput()) {
+            Main.getInstance().loginOrRegister(txtFieldName.getText(), car);
+        }
+    }
+
+    private void playAsGuest() {
+        CarType car = selectedCar();
+        if (car != null && checkInput()) {
+            Main.getInstance().playAsGuest(txtFieldName.getText(), car);
+        }
+    }
+
+    private CarType selectedCar() {
         CarType selectedCar;
         if (btnSelectCasualCar.isSelected()) {
             selectedCar = CarType.CASUAL;
@@ -69,13 +87,17 @@ public class LoginFXMLController implements Initializable {
             btnSelectCasualCar.setStyle(CSS_ERROR_BORDER);
             btnSelectSportsCar.setStyle(CSS_ERROR_BORDER);
             btnSelectPickup.setStyle(CSS_ERROR_BORDER);
-            return;
+            return null;
         }
-
-        if (!txtFieldName.getText().isEmpty()) {
-            Main.getInstance().login(txtFieldName.getText(), selectedCar);
-        } else {
-            txtFieldName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        }
+        return selectedCar;
     }
+
+    private boolean checkInput() {
+        if (!txtFieldName.getText().isEmpty()) {
+            return true;
+        }
+        txtFieldName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        return false;
+    }
+
 }
