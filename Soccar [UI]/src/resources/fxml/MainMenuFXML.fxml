@@ -47,16 +47,16 @@
          <children>
             <TabPane id="tab" prefHeight="599.0" prefWidth="1200.0" stylesheets="@../css/Style.css" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="SESSIONS">
+                <Tab fx:id="tabSession" text="SESSIONS">
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="667.0" prefWidth="1200.0" style="-fx-background-color: #080931;">
                            <children>
                               <TableView id="table" fx:id="tblSessionList" layoutY="-1.0" prefHeight="562.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
                                 <columns>
-                                  <TableColumn fx:id="tbclName" prefWidth="509.0" text="ROOM" />
-                                    <TableColumn fx:id="tbclPassword" prefWidth="137.0" text="PASSWORD" />
-                                  <TableColumn fx:id="tbclOccupation" prefWidth="160.0" text="OCCUPATION" />
-                                    <TableColumn fx:id="tbclOwner" prefWidth="392.0" text="HOST" />
+                                  <TableColumn fx:id="tbclSessionRoomName" prefWidth="509.0" text="ROOM" />
+                                    <TableColumn fx:id="tbclSessionPassword" prefWidth="137.0" text="PASSWORD" />
+                                  <TableColumn fx:id="tbclSessionOccupation" prefWidth="160.0" text="OCCUPATION" />
+                                    <TableColumn fx:id="tbclSessionHost" prefWidth="392.0" text="HOST" />
                                 </columns>
                               </TableView>
                               <HBox alignment="CENTER_RIGHT" layoutX="466.0" layoutY="557.0" prefHeight="97.0" prefWidth="734.0" spacing="12.0">
@@ -100,9 +100,22 @@
                         </AnchorPane>
                   </content>
                 </Tab>
-                <Tab text="LEADERBOARD">
+                <Tab fx:id="tabStatistic" text="LEADERBOARD">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="542.0" prefWidth="1200.0" />
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="542.0" prefWidth="1200.0">
+                           <children>
+                              <TableView id="table" fx:id="tblStatisticsList" prefHeight="657.0" prefWidth="1200.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
+                                 <columns>
+                                    <TableColumn fx:id="tbclStatisticUsername" prefWidth="310.0" text="USERNAME" />
+                                    <TableColumn fx:id="tbclStatisticGoals" prefWidth="115.0" text="GOALS" />
+                                    <TableColumn fx:id="tbclStatisticAssists" prefWidth="115.0" text="ASSISTS" />
+                                    <TableColumn fx:id="tbclStatisticRatio" prefWidth="150.0" text="RATIO" />
+                                    <TableColumn fx:id="tbclStatisticGamesWon" prefWidth="170.0" text="GAMES WON" />
+                                    <TableColumn fx:id="tbclStatisticGamesEven" prefWidth="170.0" text="GAMES EVEN" />
+                                    <TableColumn fx:id="tbclStatisticGamesLost" prefWidth="170.0" text="GAMES LOST" />
+                                 </columns>
+                              </TableView>
+                           </children></AnchorPane>
                   </content>
                 </Tab>
               </tabs>
