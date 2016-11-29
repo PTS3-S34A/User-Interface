@@ -47,7 +47,6 @@ public final class ClientController {
             clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_CLIENT);
         } catch (RemoteException | NotBoundException e) {
             LOGGER.log(Level.WARNING, "An error occurred while connecting to the Main server through RMI.", e);
-            System.out.println(e);
         }
     }
 
