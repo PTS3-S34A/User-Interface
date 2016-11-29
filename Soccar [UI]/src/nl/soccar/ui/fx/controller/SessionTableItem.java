@@ -1,9 +1,6 @@
 package nl.soccar.ui.fx.controller;
 
 import javafx.beans.property.SimpleStringProperty;
-import nl.soccar.library.Player;
-import nl.soccar.library.Room;
-import nl.soccar.library.Session;
 import nl.soccar.library.SessionData;
 
 /**
