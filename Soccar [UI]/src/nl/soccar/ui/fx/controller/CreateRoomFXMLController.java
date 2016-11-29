@@ -20,11 +20,10 @@ import nl.soccar.library.Game;
 import nl.soccar.library.GameSettings;
 import nl.soccar.library.Player;
 import nl.soccar.library.Session;
-import nl.soccar.library.SessionController;
-import nl.soccar.library.Soccar;
 import nl.soccar.library.enumeration.BallType;
 import nl.soccar.library.enumeration.Duration;
 import nl.soccar.library.enumeration.MapType;
+import nl.soccar.rmi.ClientController;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
@@ -69,7 +68,7 @@ public class CreateRoomFXMLController implements Initializable {
             }
         });
 
-        Player player = Soccar.getInstance().getCurrentPlayer();
+        Player player = ClientController.getInstance().getCurrentPlayer();
         lblUsername.setText(player.getUsername());
         lblCar.setText(player.getCarType().toString());
         textFieldRoomName.setOnAction(e -> createRoom());
@@ -85,46 +84,46 @@ public class CreateRoomFXMLController implements Initializable {
      * map-type.
      */
     private void createRoom() {
-        String password = "";
-
-        if (!textFieldPassword.getText().isEmpty()) {
-            password = textFieldPassword.getText();
-        }
-
-        Session session;
-        try {
-            Soccar soccar = Soccar.getInstance();
-            SessionController controller = SessionController.getInstance();
-
-            session = controller.create(textFieldRoomName.getText(), password, soccar.getCurrentPlayer());
-            session.getRoom().setCapacity((int) sliderCapacity.getValue());
-
-            Game game = new Game.Builder().setMapWidth(DisplayConstants.MAP_WIDTH)
-                    .setMapHeight(DisplayConstants.MAP_HEIGHT)
-                    .setGoalWidth(DisplayConstants.GOAL_WIDTH)
-                    .setGoalHeight(DisplayConstants.GOAL_HEIGHT)
-                    .setBallRadius(DisplayConstants.BALL_RADIUS)
-                    .setFieldMargin(DisplayConstants.FIELD_MARGIN).build();
-            GameSettings settings = game.getGameSettings();
-            
-            settings.setDuration(Duration.MINUTES_5); // TODO implement manual selection duration;
-            settings.setMapType((MapType) cbMap.getValue());
-            settings.setBallType(BallType.FOOTBALL);// TODO implement manual selection ball.
-
-            session.setGame(game);
-            soccar.getCurrentPlayer().setCurrentSession(session);
-            
-            Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
-        } catch (DuplicateValueException e) {
-            LOGGER.log(Level.WARNING, "An error occurred while creating a room.", e);
-
-            Alert alert = new Alert(AlertType.WARNING);
-            alert.setTitle(e.getTitle());
-            alert.setHeaderText(e.getTitle());
-            alert.setContentText(e.getMessage());
-
-            alert.showAndWait();
-        }
+//        String password = "";
+//
+//        if (!textFieldPassword.getText().isEmpty()) {
+//            password = textFieldPassword.getText();
+//        }
+//
+//        Session session;
+//        try {
+//            Soccar soccar = Soccar.getInstance();
+//            SessionController controller = SessionController.getInstance();
+//
+//            session = controller.create(textFieldRoomName.getText(), password, soccar.getCurrentPlayer());
+//            session.getRoom().setCapacity((int) sliderCapacity.getValue());
+//
+//            Game game = new Game.Builder().setMapWidth(DisplayConstants.MAP_WIDTH)
+//                    .setMapHeight(DisplayConstants.MAP_HEIGHT)
+//                    .setGoalWidth(DisplayConstants.GOAL_WIDTH)
+//                    .setGoalHeight(DisplayConstants.GOAL_HEIGHT)
+//                    .setBallRadius(DisplayConstants.BALL_RADIUS)
+//                    .setFieldMargin(DisplayConstants.FIELD_MARGIN).build();
+//            GameSettings settings = game.getGameSettings();
+//            
+//            settings.setDuration(Duration.MINUTES_5); // TODO implement manual selection duration;
+//            settings.setMapType((MapType) cbMap.getValue());
+//            settings.setBallType(BallType.FOOTBALL);// TODO implement manual selection ball.
+//
+//            session.setGame(game);
+//            soccar.getCurrentPlayer().setCurrentSession(session);
+//            
+//            Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
+//        } catch (DuplicateValueException e) {
+//            LOGGER.log(Level.WARNING, "An error occurred while creating a room.", e);
+//
+//            Alert alert = new Alert(AlertType.WARNING);
+//            alert.setTitle(e.getTitle());
+//            alert.setHeaderText(e.getTitle());
+//            alert.setContentText(e.getMessage());
+//
+//            alert.showAndWait();
+//        }
     }
 
 }

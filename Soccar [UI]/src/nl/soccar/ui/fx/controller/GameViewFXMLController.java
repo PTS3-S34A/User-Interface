@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import nl.soccar.library.Car;
 import nl.soccar.library.Map;
 import nl.soccar.library.Session;
-import nl.soccar.library.Soccar;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.fx.GameCanvasFx;
 import nl.soccar.ui.fx.drawable.BallUiFx;
@@ -28,6 +27,7 @@ import nl.soccar.library.Room;
 import nl.soccar.library.Team;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.physics.GameEngine;
+import nl.soccar.rmi.ClientController;
 import nl.soccar.ui.drawable.GameCanvas;
 
 /**
@@ -55,7 +55,7 @@ public class GameViewFXMLController implements Initializable {
         canvas.setHeight(height);
         canvas.setFocusTraversable(true);
 
-        Session session = Soccar.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
+        Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
         GameCanvas gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
 
         initializeMap(session, gameCanvas);
