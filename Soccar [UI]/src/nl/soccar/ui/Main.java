@@ -12,7 +12,7 @@ import javafx.stage.Stage;
 import nl.soccar.library.Player;
 import nl.soccar.library.enumeration.CarType;
 import nl.soccar.library.enumeration.Privilege;
-import nl.soccar.rmi.ClientController;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.fx.FXMLConstants;
 
 /**

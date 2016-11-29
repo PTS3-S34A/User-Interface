@@ -19,7 +19,7 @@ import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.cell.PropertyValueFactory;
 import nl.soccar.library.Player;
 import nl.soccar.library.Statistics;
-import nl.soccar.rmi.ClientController;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 
