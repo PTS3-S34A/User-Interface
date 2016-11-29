@@ -15,7 +15,7 @@ import nl.soccar.library.SessionData;
 import nl.soccar.library.Statistics;
 import nl.soccar.rmi.interfaces.IClientAuthenticated;
 import nl.soccar.rmi.interfaces.IClientUnauthenticated;
-import nl.soccar.util.PasswordUtilities;
+import nl.soccar.ui.util.PasswordUtilities;
 
 /**
  *

@@ -11,8 +11,8 @@ import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.fx.GameCanvasFx;
 import nl.soccar.ui.fx.drawable.ObstacleUiFx.ObstacleBuilder;
-import nl.soccar.util.MapUtilities;
-import nl.soccar.util.PhysicsUtilities;
+import nl.soccar.ui.util.MapUtilities;
+import nl.soccar.ui.util.PhysicsUtilities;
 import org.jbox2d.dynamics.World;
 
 /**

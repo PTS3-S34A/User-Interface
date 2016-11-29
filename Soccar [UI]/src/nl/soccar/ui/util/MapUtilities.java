@@ -1,4 +1,4 @@
-package nl.soccar.util;
+package nl.soccar.ui.util;
 
 import javafx.scene.shape.Rectangle;
 

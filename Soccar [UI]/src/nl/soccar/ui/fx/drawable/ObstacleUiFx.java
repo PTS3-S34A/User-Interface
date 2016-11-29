@@ -6,7 +6,7 @@ import nl.soccar.library.enumeration.ObstacleType;
 import nl.soccar.physics.models.ObstaclePhysics;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
-import nl.soccar.util.PhysicsUtilities;
+import nl.soccar.ui.util.PhysicsUtilities;
 import org.jbox2d.dynamics.World;
 
 /**

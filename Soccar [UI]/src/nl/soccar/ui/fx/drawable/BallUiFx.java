@@ -7,7 +7,7 @@ import nl.soccar.ui.DisplayConstants;
 import nl.soccar.physics.models.BallPhysics;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
-import nl.soccar.util.PhysicsUtilities;
+import nl.soccar.ui.util.PhysicsUtilities;
 
 /**
  * A BallUiFx object represents a JavaFX Drawable of a Ball.

@@ -1,4 +1,4 @@
-package nl.soccar.util;
+package nl.soccar.ui.util;
 
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.Main;
