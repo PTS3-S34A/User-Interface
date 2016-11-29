@@ -14,7 +14,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import nl.soccar.library.Player;
 import nl.soccar.library.enumeration.MapType;
-import nl.soccar.rmi.ClientController;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 

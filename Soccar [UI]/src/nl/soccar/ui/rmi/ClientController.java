@@ -1,4 +1,4 @@
-package nl.soccar.rmi;
+package nl.soccar.ui.rmi;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import nl.soccar.library.Player;
 import nl.soccar.library.SessionData;
 import nl.soccar.library.Statistics;
+import nl.soccar.rmi.RmiConstants;
 import nl.soccar.rmi.interfaces.IClientAuthenticated;
 import nl.soccar.rmi.interfaces.IClientUnauthenticated;
 import nl.soccar.ui.util.PasswordUtilities;
@@ -26,7 +27,7 @@ public final class ClientController {
     private static final String LOCATION_PROPERTIES = "mainserver.properties";
     private static final Logger LOGGER = Logger.getLogger(ClientController.class.getSimpleName());
 
-    private static final ClientController instance = new ClientController();
+    private static final ClientController INSTANCE = new ClientController();
     
     private IClientUnauthenticated clientUnauthenticated;
     private IClientAuthenticated clientAuthenticated;
@@ -44,14 +45,14 @@ public final class ClientController {
 
         try {
             Registry r = LocateRegistry.getRegistry(props.getProperty("mainserver", "localhost"), RmiConstants.PORT_NUMBER_CLIENT);
-            clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_CLIENT);
+            clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_MAIN_SERVER_FOR_CLIENT);
         } catch (RemoteException | NotBoundException e) {
             LOGGER.log(Level.WARNING, "An error occurred while connecting to the Main server through RMI.", e);
         }
     }
 
     public static ClientController getInstance() {
-        return instance;
+        return INSTANCE;
     }
     
     public Player getCurrentPlayer() {

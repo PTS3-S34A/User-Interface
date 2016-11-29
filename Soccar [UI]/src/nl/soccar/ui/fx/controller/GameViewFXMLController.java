@@ -27,7 +27,7 @@ import nl.soccar.library.Room;
 import nl.soccar.library.Team;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.physics.GameEngine;
-import nl.soccar.rmi.ClientController;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.drawable.GameCanvas;
 
 /**
