@@ -41,29 +41,29 @@
       </HBox>
       <HBox alignment="CENTER" layoutY="200.0" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
          <children>
-            <AnchorPane prefHeight="555.0" prefWidth="498.0">
+            <AnchorPane prefHeight="600.0" prefWidth="948.0">
                <children>
-                  <Label layoutX="148.0" layoutY="186.0" text="SELECT YOUR CAR" textFill="WHITE">
+                  <Label layoutX="371.0" layoutY="164.0" text="SELECT YOUR CAR" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="82.0" layoutY="50.0" text="CHOOSE YOUR PLAYERNAME" textFill="WHITE">
+                  <Label layoutX="305.0" layoutY="38.0" text="CHOOSE YOUR PLAYERNAME" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="txtFieldName" alignment="CENTER" layoutX="4.0" layoutY="98.0" prefHeight="60.0" prefWidth="497.0" promptText="PLAYERNAME">
+                  <TextField fx:id="txtFieldName" alignment="CENTER" layoutX="225.0" layoutY="86.0" prefHeight="60.0" prefWidth="497.0" promptText="PLAYERNAME">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </TextField>
-                  <Button id="play" fx:id="btnLogin" layoutX="157.0" layoutY="475.0" mnemonicParsing="false" prefHeight="102.0" prefWidth="187.0" stylesheets="@../css/Style.css" text="PLAY" textFill="WHITE">
+                  <Button id="play" fx:id="btnLoginRegister" layoutX="226.0" layoutY="513.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="497.0" stylesheets="@../css/Style.css" text="LOGIN OR REGISTER" textFill="WHITE">
                      <font>
-                        <Font name="Century Gothic" size="48.0" />
+                        <Font name="Century Gothic" size="32.0" />
                      </font>
                   </Button>
-                  <ToggleButton id="casual" fx:id="btnSelectCasualCar" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="2.0" layoutY="240.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="CASUAL" textFill="WHITE">
+                  <ToggleButton id="casual" fx:id="btnSelectCasualCar" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="227.0" layoutY="209.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="CASUAL" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
@@ -74,7 +74,7 @@
                            </image>
                         </ImageView>
                      </graphic></ToggleButton>
-                  <ToggleButton id="pickup" fx:id="btnSelectPickup" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="356.0" layoutY="240.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="PICKUP" textFill="WHITE">
+                  <ToggleButton id="pickup" fx:id="btnSelectPickup" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="581.0" layoutY="209.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="PICKUP" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
@@ -85,7 +85,7 @@
                            </image>
                         </ImageView>
                      </graphic></ToggleButton>
-                  <ToggleButton id="sports" fx:id="btnSelectSportsCar" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="180.0" layoutY="240.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="SPORTS" textFill="WHITE">
+                  <ToggleButton id="sports" fx:id="btnSelectSportsCar" alignment="BOTTOM_CENTER" contentDisplay="TOP" layoutX="405.0" layoutY="209.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="144.0" styleClass="button" stylesheets="@../css/Style.css" text="SPORTS" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
@@ -96,6 +96,11 @@
                            </image>
                         </ImageView>
                      </graphic></ToggleButton>
+                  <Button id="play" fx:id="btnPlayGuest" layoutX="225.0" layoutY="431.0" mnemonicParsing="false" prefHeight="63.0" prefWidth="497.0" stylesheets="@../css/Style.css" text="PLAY AS GUEST" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="32.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" style="-fx-background-color: #080931;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="nl.soccar.ui.fx.controller.RegisterFXMLController">
+   <children>
+      <HBox alignment="CENTER" layoutX="70.0" prefHeight="180.0" prefWidth="1200.0" style="-fx-background-color: white;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ImageView pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../resources/images/logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="169.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="20.0" stroke="TRANSPARENT" strokeType="INSIDE" width="1200.0" HBox.hgrow="ALWAYS">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop color="#ffda00" />
+                        <Stop color="RED" offset="1.0" />
+                     </stops>
+                  </LinearGradient>
+               </fill>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Rectangle>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutY="200.0" prefHeight="600.0" prefWidth="1200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="200.0">
+         <children>
+            <AnchorPane prefHeight="600.0" prefWidth="1202.0">
+               <children>
+                  <Label fx:id="lblUsername" alignment="CENTER" layoutX="140.0" layoutY="37.0" text="USERNAME" textFill="WHITE" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblUsernameDescription" alignment="CENTER" layoutX="10.0" layoutY="104.0" text="USERNAME EXISTS" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                     <font>
+                        <Font name="Century Gothic" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER" layoutX="50.0" layoutY="177.0" text="PASSWORD" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="txtFieldPassword" alignment="CENTER" layoutX="352.0" layoutY="250.0" prefHeight="60.0" prefWidth="497.0" promptText="PASSWORD">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </PasswordField>
+                  <Button id="play" fx:id="btnLoginRegister" layoutX="528.0" layoutY="349.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="144.0" stylesheets="@../css/Style.css" text="REGISTER" textFill="WHITE" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="528.0">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Button>
+                  <Button id="button" fx:id="btnCancel" focusTraversable="false" layoutX="1047.0" layoutY="519.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="144.0" stylesheets="@../css/Style.css" text="CANCEL" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Button>
+                  <Label alignment="CENTER" layoutX="490.0" layoutY="215.0" text="ENTER YOUR PASSWORD" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="19.0" />
+                     </font>
+                  </Label>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
