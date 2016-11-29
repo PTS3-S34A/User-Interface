@@ -28,7 +28,7 @@ public class StatisticsTableItem {
         username = new SimpleStringProperty(statistics.getUsername());
         goals = new SimpleIntegerProperty(statistics.getGoals());
         assists = new SimpleIntegerProperty(statistics.getAssists());
-        ratio = new SimpleStringProperty(String.format("%.1f", statistics.getGamesRatio()));
+        ratio = new SimpleStringProperty(String.format("%.1f%%", statistics.getGamesRatio()));
         gamesWon = new SimpleIntegerProperty(statistics.getGamesWon());
         gamesEven = new SimpleIntegerProperty(statistics.getGamesPlayed() - statistics.getGamesWon() - statistics.getGamesLost());
         gamesLost = new SimpleIntegerProperty(statistics.getGamesLost());

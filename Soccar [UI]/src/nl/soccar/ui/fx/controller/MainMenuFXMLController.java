@@ -82,7 +82,7 @@ public class MainMenuFXMLController implements Initializable {
         tblStatisticsList.setPlaceholder(new Label(""));
 
         Player currentPlayer = ClientController.getInstance().getCurrentPlayer();
-        
+
         lblUsername.setText(currentPlayer.getUsername());
         lblCar.setText(currentPlayer.getCarType().name());
 
@@ -104,6 +104,8 @@ public class MainMenuFXMLController implements Initializable {
         tbclStatisticGamesEven.setCellValueFactory(new PropertyValueFactory<>("gamesEven"));
         tbclStatisticGamesLost.setCellValueFactory(new PropertyValueFactory<>("gamesLost"));
 
+        tbclStatisticRatio.setSortType(TableColumn.SortType.DESCENDING);
+
         tblSessionList.setRowFactory(tv -> {
             TableRow<SessionTableItem> row = new TableRow();
             row.setOnMouseClicked(event -> {
@@ -120,7 +122,7 @@ public class MainMenuFXMLController implements Initializable {
 
         tabSession.setOnSelectionChanged(e -> updateSessionTable());
         tabStatistic.setOnSelectionChanged(e -> updateStatisticTable());
-        
+
         updateSessionTable();
         updateStatisticTable();
     }
@@ -135,12 +137,13 @@ public class MainMenuFXMLController implements Initializable {
 
     private void updateStatisticTable() {
         ObservableList<StatisticsTableItem> statisticItems = FXCollections.observableArrayList();
-        
+
         List<Statistics> statistics = ClientController.getInstance().getAllStatistics();
         statistics.stream().map(StatisticsTableItem::new).forEach(statisticItems::add);
 
         tblStatisticsList.getItems().clear();
         tblStatisticsList.getItems().addAll(statisticItems);
+        tblStatisticsList.getSortOrder().add(tbclStatisticRatio);
     }
 
     private void joinRoom(SessionTableItem selectedRow) {
