@@ -74,6 +74,7 @@ public class CreateRoomFXMLController implements Initializable {
      * map-type.
      */
     private void createRoom() {
+        // TODO : Implement join room with a message to the Main-Server
 //        String password = "";
 //
 //        if (!textFieldPassword.getText().isEmpty()) {
