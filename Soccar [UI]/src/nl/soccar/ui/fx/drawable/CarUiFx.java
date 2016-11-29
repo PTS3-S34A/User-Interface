@@ -12,8 +12,8 @@ import nl.soccar.physics.models.WheelPhysics;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
 import nl.soccar.ui.input.Keyboard;
-import nl.soccar.util.ImageUtilities;
-import nl.soccar.util.PhysicsUtilities;
+import nl.soccar.ui.util.ImageUtilities;
+import nl.soccar.ui.util.PhysicsUtilities;
 
 /**
  * A CarUiFx object represents a JavaFX Drawable of a Car. It keeps track of the

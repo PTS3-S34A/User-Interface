@@ -1,4 +1,4 @@
-package nl.soccar.util;
+package nl.soccar.ui.util;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;

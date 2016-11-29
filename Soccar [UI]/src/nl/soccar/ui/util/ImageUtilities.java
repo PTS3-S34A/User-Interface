@@ -1,4 +1,4 @@
-package nl.soccar.util;
+package nl.soccar.ui.util;
 
 import javafx.scene.image.Image;
 import nl.soccar.library.enumeration.CarType;

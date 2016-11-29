@@ -5,7 +5,7 @@ import javafx.scene.text.TextAlignment;
 import nl.soccar.library.Notification;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.fx.GameCanvasFx;
-import nl.soccar.util.PhysicsUtilities;
+import nl.soccar.ui.util.PhysicsUtilities;
 
 /**
  * A NotificationUiFx object represents a JavaFX Drawable of a Notification.
