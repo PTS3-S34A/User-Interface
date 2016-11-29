@@ -11,8 +11,7 @@ import javafx.scene.control.ListView;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
-import nl.soccar.library.SessionController;
-import nl.soccar.library.Soccar;
+import nl.soccar.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 
@@ -49,8 +48,7 @@ public class SessionViewFXMLController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        Soccar soccar = Soccar.getInstance();
-        currentPlayer = soccar.getCurrentPlayer();
+        currentPlayer = ClientController.getInstance().getCurrentPlayer();
         currentSession = currentPlayer.getCurrentSession(); // Will never be null.
 
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
@@ -85,8 +83,9 @@ public class SessionViewFXMLController implements Initializable {
      * the main menu view.
      */
     private void leaveRoom() {
-        SessionController.getInstance().leave(currentSession, currentPlayer);
-        Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
+        // TODO : Implement leaving room with message to the Game-Server
+//        SessionController.getInstance().leave(currentSession, currentPlayer);
+//        Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
     }
 
     /**
