@@ -1,17 +1,13 @@
 package nl.soccar.ui.fx.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
@@ -20,11 +16,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
-import nl.soccar.exception.UIException;
 import nl.soccar.library.Player;
-import nl.soccar.library.Session;
 import nl.soccar.library.Statistics;
 import nl.soccar.rmi.ClientController;
 import nl.soccar.ui.Main;
@@ -125,8 +118,11 @@ public class MainMenuFXMLController implements Initializable {
         model.setSelectionMode(SelectionMode.SINGLE);
         model.selectedItemProperty().addListener(l -> btnJoinRoom.setDisable(model.getSelectedItem() == null));
 
-        tabStatistic.setOnSelectionChanged(e -> updateSessionTable());
+        tabSession.setOnSelectionChanged(e -> updateSessionTable());
         tabStatistic.setOnSelectionChanged(e -> updateStatisticTable());
+        
+        updateSessionTable();
+        updateStatisticTable();
     }
 
     private void updateSessionTable() {
