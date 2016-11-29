@@ -10,9 +10,9 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.soccar.library.Player;
-import nl.soccar.library.Soccar;
 import nl.soccar.library.enumeration.CarType;
 import nl.soccar.library.enumeration.Privilege;
+import nl.soccar.rmi.ClientController;
 import nl.soccar.ui.fx.FXMLConstants;
 
 /**
@@ -71,24 +71,34 @@ public class Main extends Application {
     }
 
     /**
-     * Handles a login request. On success, it adjusts the current Player and
-     * changes the scene to the main menu. On fail, it throws an exception and
-     * displays an error message to the user.
+     * Handles a loginOrRegister request. On success, it adjusts the current
+     * Player and changes the scene to the register view.
      *
      * @param username The username of the Player.
      * @param selectedCar The selected car of the Player.
      */
-    public void login(String username, CarType selectedCar) {
-        //TODO Login handling (password, privilege)
-        Soccar.setInstance(new Player(username, Privilege.NORMAL, selectedCar));
+    public void loginOrRegister(String username, CarType selectedCar) {
+        ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.NORMAL, selectedCar));
+        setScene(FXMLConstants.LOCATION_REGISTER);
+    }
+
+    /**
+     * Handles a playAsGuest request. One success, it adjusts the current Player
+     * and changes the scene to the main view.
+     *
+     * @param username The username of the Player.
+     * @param selectedCar The selected car of the Player.
+     */
+    public void playAsGuest(String username, CarType selectedCar) {
+        ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.GUEST, selectedCar));
         setScene(FXMLConstants.LOCATION_MAIN_MENU);
     }
 
     /**
-     * Logs out the current user and changes the scene to the login menu.
+     * Logs out the current user and changes the scene to the loginOrRegister menu.
      */
     public void logOut() {
-        Soccar.setInstance(null);
+        ClientController.getInstance().setCurrentPlayer(null);
         setScene(FXMLConstants.LOCATION_LOGIN);
     }
 
