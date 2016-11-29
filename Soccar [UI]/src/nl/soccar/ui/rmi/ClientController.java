@@ -27,7 +27,7 @@ public final class ClientController {
     private static final String LOCATION_PROPERTIES = "mainserver.properties";
     private static final Logger LOGGER = Logger.getLogger(ClientController.class.getSimpleName());
 
-    private static final ClientController instance = new ClientController();
+    private static final ClientController INSTANCE = new ClientController();
     
     private IClientUnauthenticated clientUnauthenticated;
     private IClientAuthenticated clientAuthenticated;
@@ -48,12 +48,11 @@ public final class ClientController {
             clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_MAIN_SERVER_FOR_CLIENT);
         } catch (RemoteException | NotBoundException e) {
             LOGGER.log(Level.WARNING, "An error occurred while connecting to the Main server through RMI.", e);
-            System.out.println(e);
         }
     }
 
     public static ClientController getInstance() {
-        return instance;
+        return INSTANCE;
     }
     
     public Player getCurrentPlayer() {
