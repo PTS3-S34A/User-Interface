@@ -9,7 +9,6 @@ import javafx.scene.layout.AnchorPane;
 import nl.soccar.library.Car;
 import nl.soccar.library.Map;
 import nl.soccar.library.Session;
-import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.fx.GameCanvasFx;
 import nl.soccar.ui.fx.drawable.BallUiFx;
 import nl.soccar.ui.fx.drawable.CarUiFx;
@@ -115,7 +114,7 @@ public class GameViewFXMLController implements Initializable {
         float y = (height / (teamSize + 1)) * (number + 1);
         float degree = getAngle(x, y, ballX, ballY) -90;
 
-        Car car = new Car(x, y, degree, DisplayConstants.CAR_WIDTH, player.getCarType(), player);
+        Car car = new Car(x, y, degree, player.getCarType(), player);
         CarUiFx carUiFx = new CarUiFx(canvas, car, colour);
 
         canvas.addDrawable(carUiFx);
