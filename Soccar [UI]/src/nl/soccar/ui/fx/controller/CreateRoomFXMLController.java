@@ -48,7 +48,11 @@ public class CreateRoomFXMLController implements Initializable {
     @FXML
     private Slider sliderCapacity;
     @FXML
+    private Slider sliderDuration;
+    @FXML
     private ComboBox cbMap;
+    @FXML
+    private ComboBox cbBall;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -67,10 +71,13 @@ public class CreateRoomFXMLController implements Initializable {
         lblCar.setText(player.getCarType().toString());
         textFieldRoomName.setOnAction(e -> createRoom());
 
-        ObservableList<MapType> list = cbMap.getItems();
-        list.addAll(MapType.values());
-
+        ObservableList<MapType> maps = cbMap.getItems();
+        maps.addAll(MapType.values());
         cbMap.setValue(MapType.GRASSLAND);
+
+        ObservableList<BallType> balls = cbBall.getItems();
+        balls.addAll(BallType.values());
+        cbBall.setValue(BallType.FOOTBALL);
     }
 
     /**
@@ -82,24 +89,23 @@ public class CreateRoomFXMLController implements Initializable {
         String input = textFieldPassword.getText();
         String password = !input.isEmpty() ? input : "";
         int capacity = (int) sliderCapacity.getValue();
+        Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1]; 
 
         ClientController controller = ClientController.getInstance();
 
-        boolean success = controller.createSession(roomName, password, capacity,
-                Duration.MINUTES_5, (MapType) cbMap.getValue(), BallType.FOOTBALL);
-        if (!success) {
-            System.err.println("it works not");
+        if (!controller.createSession(roomName, password, capacity, 
+                Duration.MINUTES_5, (MapType) cbMap.getValue(), BallType.FOOTBALL)) {
             return;
         }
 
         Session session = new Session(roomName, password);
         session.getRoom().setCapacity(capacity);
-        
+
         GameSettings settings = session.getGame().getGameSettings();
-        settings.setDuration(Duration.MINUTES_5); // TODO implement manual selection duration;
+        settings.setDuration(duration);
         settings.setMapType((MapType) cbMap.getValue());
-        settings.setBallType(BallType.FOOTBALL);// TODO implement manual selection ball.
-        
+        settings.setBallType((BallType) cbBall.getValue());
+
         controller.getCurrentPlayer().setCurrentSession(session);
 
         Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
