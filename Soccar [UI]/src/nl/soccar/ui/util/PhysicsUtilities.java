@@ -1,6 +1,6 @@
 package nl.soccar.ui.util;
 
-import nl.soccar.ui.DisplayConstants;
+import nl.soccar.library.MapConstants;
 import nl.soccar.ui.Main;
 
 /**
@@ -31,7 +31,7 @@ public final class PhysicsUtilities {
      * @return The JavaFX y-coordinate.
      */
     public static float toPixelY(float y) {
-        return (DisplayConstants.MAP_HEIGHT - y) * getPixelsPerMeter();
+        return (MapConstants.MAP_HEIGHT - y) * getPixelsPerMeter();
     }
 
     /**
@@ -89,6 +89,6 @@ public final class PhysicsUtilities {
      * @return The number of pixels per meter based on the screen width of the user and the width of the map.
      */
     private static float getPixelsPerMeter() {
-        return Main.getInstance().getStageWidth() / DisplayConstants.MAP_WIDTH;
+        return Main.getInstance().getStageWidth() / MapConstants.MAP_WIDTH;
     }
 }

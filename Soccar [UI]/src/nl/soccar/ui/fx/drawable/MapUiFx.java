@@ -5,11 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import nl.soccar.library.Map;
+import nl.soccar.library.MapConstants;
 import nl.soccar.library.enumeration.ObstacleType;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
-import nl.soccar.ui.fx.GameCanvasFx;
 import nl.soccar.ui.fx.drawable.ObstacleUiFx.ObstacleBuilder;
 import nl.soccar.ui.util.MapUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;
@@ -239,15 +239,15 @@ public class MapUiFx extends Drawable<Map> {
         double centreX = PhysicsUtilities.toPixelX(MapUtilities.getCentreX(mapSize));
         double centreY = PhysicsUtilities.toPixelY(MapUtilities.getCentreY(mapSize));
 
-        double lineWidth = PhysicsUtilities.toPixelWidth(DisplayConstants.LINE_WIDTH);
-        double fieldMargin = PhysicsUtilities.toPixelWidth(DisplayConstants.FIELD_MARGIN);
+        double lineWidth = PhysicsUtilities.toPixelWidth(MapConstants.LINE_WIDTH);
+        double fieldMargin = PhysicsUtilities.toPixelWidth(MapConstants.FIELD_MARGIN);
 
-        double centreCircleSize = PhysicsUtilities.toPixelWidth(DisplayConstants.CENTRE_CIRCLE_SIZE);
-        double centreSpotSize = PhysicsUtilities.toPixelWidth(DisplayConstants.CENTRE_SPOT_SIZE);
+        double centreCircleSize = PhysicsUtilities.toPixelWidth(MapConstants.CENTRE_CIRCLE_SIZE);
+        double centreSpotSize = PhysicsUtilities.toPixelWidth(MapConstants.CENTRE_SPOT_SIZE);
 
-        double boxPositionY = PhysicsUtilities.toPixelY((float) (mapSize.getHeight() / 2) + (DisplayConstants.BOX_HEIGHT / 2));
-        double boxWidth = PhysicsUtilities.toPixelWidth(DisplayConstants.BOX_WIDTH);
-        double boxHeight = PhysicsUtilities.toPixelHeight(DisplayConstants.BOX_HEIGHT);
+        double boxPositionY = PhysicsUtilities.toPixelY((float) (mapSize.getHeight() / 2) + (MapConstants.BOX_HEIGHT / 2));
+        double boxWidth = PhysicsUtilities.toPixelWidth(MapConstants.BOX_WIDTH);
+        double boxHeight = PhysicsUtilities.toPixelHeight(MapConstants.BOX_HEIGHT);
 
         Rectangle leftGoal = map.getGoalBlue();
         double leftGoalX = PhysicsUtilities.toPixelX((float) leftGoal.getX());
@@ -324,10 +324,10 @@ public class MapUiFx extends Drawable<Map> {
     }
 
     private void drawScoreboard(GraphicsContext context, Rectangle mapSize) {
-        float width = PhysicsUtilities.toPixelWidth(DisplayConstants.SCOREBOARD_WIDTH);
-        float height = PhysicsUtilities.toPixelHeight(DisplayConstants.SCOREBOARD_HEIGHT);
+        float width = PhysicsUtilities.toPixelWidth(MapConstants.SCOREBOARD_WIDTH);
+        float height = PhysicsUtilities.toPixelHeight(MapConstants.SCOREBOARD_HEIGHT);
 
-        float x = PhysicsUtilities.toPixelX(MapUtilities.getCentreX(mapSize) - (DisplayConstants.SCOREBOARD_WIDTH / 2));
+        float x = PhysicsUtilities.toPixelX(MapUtilities.getCentreX(mapSize) - (MapConstants.SCOREBOARD_WIDTH / 2));
         float y = PhysicsUtilities.toPixelY((float) mapSize.getHeight());
 
         context.setFill(Color.BROWN);

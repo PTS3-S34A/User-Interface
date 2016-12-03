@@ -12,7 +12,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import nl.soccar.library.GameSettings;
 import nl.soccar.library.Player;
+import nl.soccar.library.Session;
+import nl.soccar.library.enumeration.BallType;
+import nl.soccar.library.enumeration.Duration;
 import nl.soccar.library.enumeration.MapType;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
@@ -44,7 +48,11 @@ public class CreateRoomFXMLController implements Initializable {
     @FXML
     private Slider sliderCapacity;
     @FXML
+    private Slider sliderDuration;
+    @FXML
     private ComboBox cbMap;
+    @FXML
+    private ComboBox cbBall;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -63,10 +71,13 @@ public class CreateRoomFXMLController implements Initializable {
         lblCar.setText(player.getCarType().toString());
         textFieldRoomName.setOnAction(e -> createRoom());
 
-        ObservableList<MapType> list = cbMap.getItems();
-        list.addAll(MapType.values());
-
+        ObservableList<MapType> maps = cbMap.getItems();
+        maps.addAll(MapType.values());
         cbMap.setValue(MapType.GRASSLAND);
+
+        ObservableList<BallType> balls = cbBall.getItems();
+        balls.addAll(BallType.values());
+        cbBall.setValue(BallType.FOOTBALL);
     }
 
     /**
@@ -74,38 +85,33 @@ public class CreateRoomFXMLController implements Initializable {
      * map-type.
      */
     private void createRoom() {
-        // TODO : Implement join room with a message to the Main-Server
-//        String password = "";
-//
-//        if (!textFieldPassword.getText().isEmpty()) {
-//            password = textFieldPassword.getText();
-//        }
-//
-//        Session session;
-//        try {
-//            Soccar soccar = Soccar.getInstance();
-//            SessionController controller = SessionController.getInstance();
-//
-//            session = controller.create(textFieldRoomName.getText(), password, soccar.getCurrentPlayer());
-//            session.getRoom().setCapacity((int) sliderCapacity.getValue());
-//
-//            Game game = new Game.Builder().setMapWidth(DisplayConstants.MAP_WIDTH)
-//                    .setMapHeight(DisplayConstants.MAP_HEIGHT)
-//                    .setGoalWidth(DisplayConstants.GOAL_WIDTH)
-//                    .setGoalHeight(DisplayConstants.GOAL_HEIGHT)
-//                    .setBallRadius(DisplayConstants.BALL_RADIUS)
-//                    .setFieldMargin(DisplayConstants.FIELD_MARGIN).build();
-//            GameSettings settings = game.getGameSettings();
-//            
-//            settings.setDuration(Duration.MINUTES_5); // TODO implement manual selection duration;
-//            settings.setMapType((MapType) cbMap.getValue());
-//            settings.setBallType(BallType.FOOTBALL);// TODO implement manual selection ball.
-//
-//            session.setGame(game);
-//            soccar.getCurrentPlayer().setCurrentSession(session);
-//            
-//            Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
-//        } catch (DuplicateValueException e) {
+        String roomName = textFieldRoomName.getText();
+        String input = textFieldPassword.getText();
+        String password = !input.isEmpty() ? input : "";
+        int capacity = (int) sliderCapacity.getValue();
+        Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1]; 
+
+        ClientController controller = ClientController.getInstance();
+
+        if (!controller.createSession(roomName, password, capacity, 
+                Duration.MINUTES_5, (MapType) cbMap.getValue(), BallType.FOOTBALL)) {
+            return;
+        }
+
+        Session session = new Session(roomName, password);
+        session.getRoom().setCapacity(capacity);
+
+        GameSettings settings = session.getGame().getGameSettings();
+        settings.setDuration(duration);
+        settings.setMapType((MapType) cbMap.getValue());
+        settings.setBallType((BallType) cbBall.getValue());
+
+        controller.getCurrentPlayer().setCurrentSession(session);
+
+        Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
+
+        //TODO throw exception when room name alread exists
+//        catch (DuplicateValueException e) {
 //            LOGGER.log(Level.WARNING, "An error occurred while creating a room.", e);
 //
 //            Alert alert = new Alert(AlertType.WARNING);
