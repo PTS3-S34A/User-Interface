@@ -107,7 +107,7 @@
                      </font>
                   </Label>
                   <ComboBox id="combo" fx:id="cbBall" layoutX="391.0" layoutY="439.0" prefHeight="47.0" prefWidth="305.0" promptText="SELECT" stylesheets="@../css/Style.css" />
-                  <Slider fx:id="sliderDuration" blockIncrement="1.0" layoutX="390.0" layoutY="321.0" majorTickUnit="1.0" max="3.0" min="1.0" prefHeight="38.0" prefWidth="305.0" snapToTicks="true" value="1.0" />
+                  <Slider fx:id="sliderDuration" blockIncrement="1.0" layoutX="390.0" layoutY="321.0" majorTickUnit="1.0" max="3.0" min="1.0" minorTickCount="1" prefHeight="38.0" prefWidth="305.0" snapToTicks="true" value="1.0" />
                   <Label layoutX="153.0" layoutY="325.0" text="GAME DURATION" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
