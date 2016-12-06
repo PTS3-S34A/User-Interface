@@ -67,7 +67,7 @@
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <Button id="button" fx:id="btnStartGame" layoutX="392.0" layoutY="539.0" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="START" textFill="WHITE">
+                  <Button id="button" fx:id="btnStartGame" layoutX="392.0" layoutY="539.0" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="START" textFill="WHITE" visible="false">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>

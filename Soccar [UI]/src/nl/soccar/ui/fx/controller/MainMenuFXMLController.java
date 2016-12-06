@@ -1,8 +1,11 @@
 package nl.soccar.ui.fx.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,12 +19,18 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
 import nl.soccar.library.Player;
+import nl.soccar.library.SessionData;
 import nl.soccar.library.Statistics;
+import nl.soccar.socnet.Client;
+import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.socnet.message.JoinSessionMessage;
+import nl.socnet.message.RegisterPlayerMessage;
 
 /**
  * FXML Controller class
@@ -147,41 +156,53 @@ public class MainMenuFXMLController implements Initializable {
     }
 
     private void joinRoom(SessionTableItem selectedRow) {
-//        Session selectedSession = selectedRow.getSession();
-//        if (selectedSession == null) {
-//            // There isn't actually a selected session, we should just do nothing.
-//            return;
-//        }
-//
-//        String password = NO_PASSWORD;
-//        if (selectedSession.getRoom().passwordAvailable()) {
-//            TextInputDialog dialog = new TextInputDialog("Password");
-//            dialog.setTitle("Room Locked");
-//            dialog.setHeaderText("Room Locked");
-//            dialog.setContentText("Enter the room password:");
-//
-//            Optional<String> result = dialog.showAndWait();
-//            if (!result.isPresent()) {
-//                // There's no password set, we should just do nothing.
-//                return;
-//            }
-//            password = result.get();
-//        }
-//
-//        try {
-//            // TODO : Implement joining session with sending a message to the Main-Server.
-//            
-//            Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
-//        } catch (UIException e) {
-//            LOGGER.log(Level.WARNING, "An error occurred while joining a room.", e);
-//
-//            Alert alert = new Alert(Alert.AlertType.WARNING);
-//            alert.setTitle(e.getTitle());
-//            alert.setHeaderText(e.getTitle());
-//            alert.setContentText(e.getMessage());
-//
-//            alert.showAndWait();
-//        }
+        SessionData selectedSession = selectedRow.getSessionData();
+        if (selectedSession == null) {
+            // There isn't actually a selected session, we should just do nothing.
+            return;
+        }
+
+        String password = NO_PASSWORD;
+        if (selectedSession.hasPassword()) {
+            TextInputDialog dialog = new TextInputDialog("Password");
+            dialog.setTitle("Room Locked");
+            dialog.setHeaderText("Room Locked");
+            dialog.setContentText("Enter the room password:");
+
+            Optional<String> result = dialog.showAndWait();
+            if (!result.isPresent()) {
+                // There's no password set, we should just do nothing.
+                return;
+            }
+            password = result.get();
+        }
+
+        ClientController controller = ClientController.getInstance();
+        Client client = controller.getClient();
+        try {
+            client.connect(selectedSession.getAddress(), 1046);
+
+            Connection connection;
+            while ((connection = controller.getCurrentConnection()) == null) {
+                try {
+                    Thread.sleep(50L);
+                } catch (InterruptedException e) {
+                    // Ignored, I KNOW.. I know. Shh.
+                }
+            }
+
+            Player currentPlayer = controller.getCurrentPlayer();
+            connection.send(new RegisterPlayerMessage(currentPlayer.getUsername(), currentPlayer.getCarType()));
+            LOGGER.log(Level.INFO, "Registered Player to Game Server");
+            
+            connection.send(new JoinSessionMessage(selectedSession.getRoomName(), password));
+            LOGGER.log(Level.INFO, "Joined the chosen Session of the Game Server");   
+            
+        } catch (IOException ex) {
+            Logger.getLogger(MainMenuFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
     }
 
 }
