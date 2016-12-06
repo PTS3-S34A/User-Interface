@@ -3,6 +3,8 @@ package nl.soccar.ui.fx.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -88,12 +90,17 @@ public class CreateRoomFXMLController implements Initializable {
         String roomName = textFieldRoomName.getText();
         String input = textFieldPassword.getText();
         String password = !input.isEmpty() ? input : "";
+
+        if (!checkInput(roomName, password)) {
+            return;
+        }
+
         int capacity = (int) sliderCapacity.getValue();
-        Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1]; 
+        Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1];
 
         ClientController controller = ClientController.getInstance();
 
-        if (!controller.createSession(roomName, password, capacity, 
+        if (!controller.createSession(roomName, password, capacity,
                 Duration.MINUTES_5, (MapType) cbMap.getValue(), BallType.FOOTBALL)) {
             return;
         }
@@ -123,4 +130,24 @@ public class CreateRoomFXMLController implements Initializable {
 //        }
     }
 
+    private boolean checkInput(String roomName, String password) {
+        final String REGEX = "^[a-zA-Z0-9]{1,16}$";
+
+        Pattern p = Pattern.compile(REGEX);
+        Matcher m = p.matcher(roomName);
+
+        boolean accepted = true;
+
+        if (!m.matches()) {
+            accepted = false;
+            textFieldRoomName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        }
+
+        if (password.length() > 0 && password.length() < 8) {
+            accepted = false;
+            textFieldPassword.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        }
+
+        return accepted;
+    }
 }
