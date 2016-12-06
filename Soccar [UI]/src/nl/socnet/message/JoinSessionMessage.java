@@ -13,26 +13,37 @@ import nl.socnet.message.handler.JoinSessionMessageHandler;
 public final class JoinSessionMessage extends Message {
 
     public enum Status {
-        SUCCESS
+        SUCCESS,
+        SESSION_NON_EXISTENT,
+        INVALID_PASSWORD,
+        CAPACITY_OVERFLOW,
+        USERNAME_EXISTS
     }
-    
-    private static final int JOIN_SESSION_MESSAGE_ID = 2;
-    
+
     private final String roomName;
     private final String password;
-    
+
     private final Status status;
     private final int capacity;
     private final GameSettings settings;
 
-    public JoinSessionMessage(String roomName, String password) {
-        status = null;
-        this.roomName = roomName;
-        this.password = password;
+    public JoinSessionMessage(Status status) {
+        this.status = status;
+        roomName = null;
+        password = null;
         capacity = -1;
         settings = null;
     }
-    
+
+    public JoinSessionMessage(String roomName, String password) {
+        this.roomName = roomName;
+        this.password = password;
+
+        status = null;
+        capacity = -1;
+        settings = null;
+    }
+
     public JoinSessionMessage(Status status, String roomName, int capacity, GameSettings settings) {
         this.status = status;
         this.roomName = roomName;
@@ -40,7 +51,7 @@ public final class JoinSessionMessage extends Message {
         this.capacity = capacity;
         this.settings = settings;
     }
-    
+
     public Status getStatus() {
         return status;
     }
@@ -52,18 +63,18 @@ public final class JoinSessionMessage extends Message {
     public String getPassword() {
         return password;
     }
-    
+
     public int getCapacity() {
         return capacity;
     }
-    
+
     public GameSettings getGameSettings() {
         return settings;
     }
 
     @Override
     public int getId() {
-        return JOIN_SESSION_MESSAGE_ID;
+        return 2;
     }
 
 }
