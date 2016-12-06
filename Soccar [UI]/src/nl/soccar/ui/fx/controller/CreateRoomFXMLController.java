@@ -66,13 +66,7 @@ public class CreateRoomFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
         btnCancel.setOnAction(e -> Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU));
-        btnCreateRoom.setOnAction(e -> {
-            if (!textFieldRoomName.getText().isEmpty()) {
-                createRoom();
-            } else {
-                textFieldRoomName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-            }
-        });
+        btnCreateRoom.setOnAction(e -> createRoom());
 
         Player player = ClientController.getInstance().getCurrentPlayer();
         lblUsername.setText(player.getUsername());
@@ -136,7 +130,7 @@ public class CreateRoomFXMLController implements Initializable {
             LOGGER.log(Level.INFO, "Registered Player to Game Server");
 
             connection.send(new JoinSessionMessage(roomName, password));
-            LOGGER.log(Level.INFO, "Joined " + roomName );
+            LOGGER.log(Level.INFO, "Joined " + roomName);
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "An exception occured while trying to connect to the Game Server", ex);
         }
@@ -155,6 +149,9 @@ public class CreateRoomFXMLController implements Initializable {
     }
 
     private boolean checkInput(String roomName, String password) {
+        textFieldRoomName.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
+        textFieldPassword.setStyle("-fx-text-box-border: white; -fx-focus-color: white  ;");
+
         final String REGEX = "^[a-zA-Z0-9]{1,16}$";
 
         Pattern p = Pattern.compile(REGEX);
