@@ -150,7 +150,7 @@ public class CreateRoomFXMLController implements Initializable {
 
     private boolean checkInput(String roomName, String password) {
         textFieldRoomName.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
-        textFieldPassword.setStyle("-fx-text-box-border: white; -fx-focus-color: white  ;");
+        textFieldPassword.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
 
         final String REGEX = "^[a-zA-Z0-9]{1,16}$";
 
