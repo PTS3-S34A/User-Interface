@@ -2,6 +2,7 @@ package nl.soccar.ui.fx.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -15,6 +16,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import nl.soccar.library.Player;
+import nl.soccar.library.SessionData;
 import nl.soccar.library.enumeration.BallType;
 import nl.soccar.library.enumeration.Duration;
 import nl.soccar.library.enumeration.MapType;
@@ -104,7 +106,13 @@ public class CreateRoomFXMLController implements Initializable {
 
         try {
             Client client = controller.getClient();
-            client.connect("145.93.61.32", 1046);
+            Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(roomName)).findFirst();
+            if (!session.isPresent()) {
+                LOGGER.log(Level.WARNING, "An exception occured while getting the Ipaddress from the Game Server");
+                return;
+            }
+            
+            client.connect(session.get().getAddress(), 1046);
 
             Connection connection;
             while ((connection = controller.getCurrentConnection()) == null) {
