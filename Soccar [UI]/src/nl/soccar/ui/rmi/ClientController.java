@@ -19,7 +19,15 @@ import nl.soccar.library.enumeration.MapType;
 import nl.soccar.rmi.RmiConstants;
 import nl.soccar.rmi.interfaces.IClientAuthenticated;
 import nl.soccar.rmi.interfaces.IClientUnauthenticated;
+import nl.soccar.socnet.Client;
+import nl.soccar.socnet.connection.Connection;
+import nl.soccar.socnet.message.MessageRegistry;
 import nl.soccar.ui.util.PasswordUtilities;
+import nl.socnet.connection.ClientConnectionListener;
+import nl.socnet.message.JoinSessionMessage;
+import nl.socnet.message.PlayerJoinedSessionMessage;
+import nl.socnet.message.PlayerLeftSessionMessage;
+import nl.socnet.message.RegisterPlayerMessage;
 
 /**
  * Controller class that is responsible for handling RMI network communication
@@ -37,6 +45,8 @@ public final class ClientController {
     private IClientUnauthenticated clientUnauthenticated;
     private IClientAuthenticated clientAuthenticated;
 
+    private final Client client = new Client();
+    private Connection currentConnection;
     private Player currentPlayer;
 
     /**
@@ -59,6 +69,19 @@ public final class ClientController {
         } catch (RemoteException | NotBoundException e) {
             LOGGER.log(Level.WARNING, "An error occurred while connecting to the Main server through RMI.", e);
         }
+
+        initializeConnection();
+    }
+    
+    private void initializeConnection() {
+        MessageRegistry registry = client.getMessageRegistry();
+        registry.register(RegisterPlayerMessage.class);
+        registry.register(JoinSessionMessage.class);
+        registry.register(PlayerJoinedSessionMessage.class);
+        registry.register(PlayerLeftSessionMessage.class);
+        
+        client.addListener(new ClientConnectionListener());
+        
     }
 
     /**
@@ -129,6 +152,18 @@ public final class ClientController {
 
         return null;
     }
+    
+    public Client getClient() {
+        return client;
+    }
+
+    public Connection getCurrentConnection() {
+        return currentConnection;
+    }
+
+    public void setCurrentConnection(Connection connection) {
+        this.currentConnection = connection;
+    }
 
     public Player getCurrentPlayer() {
         return currentPlayer;
@@ -137,5 +172,5 @@ public final class ClientController {
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
-
+    
 }

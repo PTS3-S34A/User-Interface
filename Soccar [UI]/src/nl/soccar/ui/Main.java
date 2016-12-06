@@ -101,6 +101,15 @@ public class Main extends Application {
         ClientController.getInstance().setCurrentPlayer(null);
         setScene(FXMLConstants.LOCATION_LOGIN);
     }
+    
+    /**
+     * Gets the controller of the current Scene.
+     * 
+     * @return The controller of the current Scene.
+     */
+    public Object getController() {
+        return primaryStage.getScene().getUserData();
+    }
 
     /**
      * Changes the scene by giving a name. The actual file is resolved by
@@ -111,12 +120,18 @@ public class Main extends Application {
      */
     public void setScene(String sceneName) {
         try {
-            Parent root = FXMLLoader.load(getClass().getClassLoader().getResource(sceneName));
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(sceneName));
+            Parent root = loader.load();
+            
             Scene scene = new Scene(root, DisplayConstants.SCREEN_WIDTH, DisplayConstants.SCREEN_HEIGHT);
+            scene.setUserData(loader.getController());
+            
 
             primaryStage.setTitle(DisplayConstants.APPLICATION_NAME);
             primaryStage.setScene(scene);
             primaryStage.getIcons().add(new Image(DisplayConstants.LOCATION_STAGE_ICON));
+            
+            System.out.println(getController());
 
             primaryStage.show();
         } catch (IOException e) {

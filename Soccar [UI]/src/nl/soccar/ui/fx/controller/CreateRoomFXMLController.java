@@ -1,7 +1,10 @@
 package nl.soccar.ui.fx.controller;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -12,15 +15,18 @@ import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import nl.soccar.library.GameSettings;
 import nl.soccar.library.Player;
-import nl.soccar.library.Session;
+import nl.soccar.library.SessionData;
 import nl.soccar.library.enumeration.BallType;
 import nl.soccar.library.enumeration.Duration;
 import nl.soccar.library.enumeration.MapType;
+import nl.soccar.socnet.Client;
+import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.socnet.message.JoinSessionMessage;
+import nl.socnet.message.RegisterPlayerMessage;
 
 /**
  * FXML Controller class
@@ -89,27 +95,45 @@ public class CreateRoomFXMLController implements Initializable {
         String input = textFieldPassword.getText();
         String password = !input.isEmpty() ? input : "";
         int capacity = (int) sliderCapacity.getValue();
-        Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1]; 
+        Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1];
 
         ClientController controller = ClientController.getInstance();
 
-        if (!controller.createSession(roomName, password, capacity, 
-                Duration.MINUTES_5, (MapType) cbMap.getValue(), BallType.FOOTBALL)) {
+        if (!controller.createSession(roomName, password, capacity,
+                duration, (MapType) cbMap.getValue(), (BallType) cbBall.getValue())) {
             return;
         }
 
-        Session session = new Session(roomName, password);
-        session.getRoom().setCapacity(capacity);
+        try {
+            Client client = controller.getClient();
+            Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(roomName)).findFirst();
+            if (!session.isPresent()) {
+                LOGGER.log(Level.WARNING, "An exception occured while getting the Ipaddress from the Game Server");
+                return;
+            }
+            
+            client.connect(session.get().getAddress(), 1046);
 
-        GameSettings settings = session.getGame().getGameSettings();
-        settings.setDuration(duration);
-        settings.setMapType((MapType) cbMap.getValue());
-        settings.setBallType((BallType) cbBall.getValue());
+            Connection connection;
+            while ((connection = controller.getCurrentConnection()) == null) {
+                try {
+                    Thread.sleep(50L);
+                } catch (InterruptedException e) {
+                    // Ignored, I KNOW.. I know. Shh.
+                }
+            }
+            
+            Player currentPlayer = controller.getCurrentPlayer();
 
-        controller.getCurrentPlayer().setCurrentSession(session);
+            connection.send(new RegisterPlayerMessage(currentPlayer.getUsername(), currentPlayer.getCarType()));
+            LOGGER.log(Level.INFO, "Registered Player to Game Server");
 
-        Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
-
+            connection.send(new JoinSessionMessage(roomName, password));
+            LOGGER.log(Level.INFO, "Joined " + roomName );
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, "An exception occured while trying to connect to the Game Server", ex);
+        }
+        
         //TODO throw exception when room name alread exists
 //        catch (DuplicateValueException e) {
 //            LOGGER.log(Level.WARNING, "An error occurred while creating a room.", e);
