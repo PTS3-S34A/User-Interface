@@ -14,6 +14,8 @@ public class SessionTableItem {
     private final SimpleStringProperty occupancy;
     private final SimpleStringProperty hostName;
     private final SimpleStringProperty passwordAvailable;
+    
+    private final SessionData sessionData;
 
     /**
      * Initiates a new SesionTableItem using the given session.
@@ -21,10 +23,16 @@ public class SessionTableItem {
      * @param session The session of which values will be retreived from.
      */
     public SessionTableItem(SessionData session) {
+        this.sessionData = session;
+        
         roomName = new SimpleStringProperty(session.getRoomName());
         occupancy = new SimpleStringProperty(String.format("%d/%d", session.getOccupation(), session.getCapacity()));
         hostName = new SimpleStringProperty(session.getHostName());
         passwordAvailable = new SimpleStringProperty(session.hasPassword() ? "Yes" : "No");
+    }
+    
+    public SessionData getSessionData() {
+        return sessionData;
     }
 
     public String getRoomName() {

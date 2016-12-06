@@ -59,12 +59,16 @@ public class SessionViewFXMLController implements Initializable {
         lblCar.setText(currentPlayer.getCarType().toString());
 
         setRoomInfo();
+        
+        if (currentSession.getRoom().getHost().equals(currentPlayer)) {
+            btnStartGame.setVisible(true);
+        }
     }
 
     /**
      * Method that display the current settings of the room on the session view.
      */
-    private void setRoomInfo() {
+    public void setRoomInfo() {
         Room room = currentSession.getRoom();
         int occupancy = room.getOccupancy();
         int capacity = room.getCapacity();
