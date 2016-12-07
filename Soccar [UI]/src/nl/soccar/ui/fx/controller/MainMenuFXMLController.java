@@ -188,6 +188,8 @@ public class MainMenuFXMLController implements Initializable {
                 try {
                     Thread.sleep(50L);
                 } catch (InterruptedException e) {
+                    LOGGER.log(Level.WARNING, "An error while connecting to the game server.", e);
+
                     DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
                 }
             }
