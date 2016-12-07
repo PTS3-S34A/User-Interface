@@ -100,7 +100,7 @@ public class CreateRoomFXMLController implements Initializable {
 
         ClientController controller = ClientController.getInstance();
 
-        if (!controller.createSession(roomName, password, capacity,
+        if (!controller.createSession(roomName, password, controller.getCurrentPlayer().getUsername(), capacity,
                 duration, (MapType) cbMap.getValue(), (BallType) cbBall.getValue())) {
             return;
         }

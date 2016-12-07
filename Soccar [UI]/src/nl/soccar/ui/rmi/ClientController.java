@@ -123,9 +123,9 @@ public final class ClientController {
         return clientAuthenticated != null;
     }
 
-    public boolean createSession(String name, String password, int capacity, Duration duration, MapType mapType, BallType ballType) {
+    public boolean createSession(String name, String password, String hostName, int capacity, Duration duration, MapType mapType, BallType ballType) {
         try {
-            return clientUnauthenticated.createSession(name, password, capacity, duration, mapType, ballType);
+            return clientUnauthenticated.createSession(name, password, hostName, capacity, duration, mapType, ballType);
         } catch (RemoteException e) {
             LOGGER.log(Level.WARNING, "An error occurred while creating a session on the Main server through RMI.", e);
         }
