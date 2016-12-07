@@ -41,10 +41,6 @@ public class RegisterFXMLController implements Initializable {
         setState();
     }
 
-    private void checkUsername() {
-        userExists = false;
-    }
-
     /**
      * Handler for loginOrRegister-button; Uses current selected car, username
      * and optional password.
