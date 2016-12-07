@@ -136,7 +136,7 @@ public class CreateRoomFXMLController implements Initializable {
 
                     DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
                     
-                    break;
+                    return;
                 }
             }
 
