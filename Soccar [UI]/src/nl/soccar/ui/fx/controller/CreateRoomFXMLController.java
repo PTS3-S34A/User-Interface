@@ -135,6 +135,8 @@ public class CreateRoomFXMLController implements Initializable {
                     LOGGER.log(Level.WARNING, "An error while connecting to the game server.", e);
 
                     DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
+                    
+                    break;
                 }
             }
 
