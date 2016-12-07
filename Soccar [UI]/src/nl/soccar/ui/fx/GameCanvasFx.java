@@ -35,9 +35,7 @@ public class GameCanvasFx extends GameCanvas {
 
         gameTimer = new Timeline();
         gameTimer.setCycleCount(Timeline.INDEFINITE);
-        gameTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0F / PhysicsConstants.FPS), e -> {
-            render();
-        }));
+        gameTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0F / PhysicsConstants.FPS), e -> render()));
         gameTimer.playFromStart();
         
         Canvas canvas = context.getCanvas();

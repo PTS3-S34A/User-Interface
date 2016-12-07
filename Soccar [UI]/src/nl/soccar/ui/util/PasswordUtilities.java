@@ -33,13 +33,10 @@ public final class PasswordUtilities {
     }
 
     public static byte[] generateHash(String password) {
-        byte[] hash = new byte[64];
         digest.reset();
-
         digest.update(password.getBytes());
-        hash = digest.digest();
 
-        return hash;
+        return digest.digest();
     }
 
 }

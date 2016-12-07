@@ -209,10 +209,11 @@ public class MapUiFx extends Drawable<Map> {
             case MOON:
                 context.drawImage(TEXTURE_MOON, 0, 0, width, height);
                 break;
-            default:
             case GRASSLAND:
                 context.drawImage(TEXTURE_GRASS, 0, 0, width, height);
                 break;
+            default:
+                throw new UnsupportedOperationException("This exception should never happen.");
         }
 
         // Draw the grid lines on the map.

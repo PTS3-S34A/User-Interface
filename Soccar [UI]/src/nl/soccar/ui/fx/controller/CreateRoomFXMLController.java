@@ -11,12 +11,16 @@ import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javax.xml.ws.Dispatch;
+import nl.soccar.exception.DuplicateValueException;
 import nl.soccar.library.Player;
 import nl.soccar.library.SessionData;
 import nl.soccar.library.enumeration.BallType;
@@ -24,6 +28,7 @@ import nl.soccar.library.enumeration.Duration;
 import nl.soccar.library.enumeration.MapType;
 import nl.soccar.socnet.Client;
 import nl.soccar.socnet.connection.Connection;
+import nl.soccar.ui.DisplayUtilities;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
@@ -38,6 +43,8 @@ import nl.socnet.message.RegisterPlayerMessage;
 public class CreateRoomFXMLController implements Initializable {
 
     private static final Logger LOGGER = Logger.getLogger(CreateRoomFXMLController.class.getSimpleName());
+
+    private static final String REGEX = "^[a-zA-Z0-9]{1,16}$";
 
     @FXML
     private Button btnLogOut;
@@ -100,8 +107,16 @@ public class CreateRoomFXMLController implements Initializable {
 
         ClientController controller = ClientController.getInstance();
 
-        if (!controller.createSession(roomName, password, controller.getCurrentPlayer().getUsername(), capacity,
-                duration, (MapType) cbMap.getValue(), (BallType) cbBall.getValue())) {
+        try {
+            if (!controller.createSession(roomName, password, controller.getCurrentPlayer().getUsername(), capacity,
+                    duration, (MapType) cbMap.getValue(), (BallType) cbBall.getValue())) {
+                throw new DuplicateValueException("Error", "Roomname already exists.");
+            }
+        } catch (DuplicateValueException e) {
+            LOGGER.log(Level.WARNING, "An error occurred while creating a room.", e);
+
+            DisplayUtilities.showAlert(e.getTitle(), e.getMessage());
+
             return;
         }
 
@@ -109,7 +124,7 @@ public class CreateRoomFXMLController implements Initializable {
             Client client = controller.getClient();
             Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(roomName)).findFirst();
             if (!session.isPresent()) {
-                LOGGER.log(Level.WARNING, "An exception occured while getting the Ipaddress from the Game Server");
+                LOGGER.log(Level.WARNING, "An error occured while retrieving the session from the game server");
                 return;
             }
 
@@ -120,7 +135,7 @@ public class CreateRoomFXMLController implements Initializable {
                 try {
                     Thread.sleep(50L);
                 } catch (InterruptedException e) {
-                    // Ignored, I KNOW.. I know. Shh.
+                    DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
                 }
             }
 
@@ -130,29 +145,15 @@ public class CreateRoomFXMLController implements Initializable {
             LOGGER.log(Level.INFO, "Registered Player to Game Server");
 
             connection.send(new JoinSessionMessage(roomName, password));
-            LOGGER.log(Level.INFO, "Joined " + roomName);
-        } catch (IOException ex) {
-            LOGGER.log(Level.SEVERE, "An exception occured while trying to connect to the Game Server", ex);
+            LOGGER.log(Level.INFO, "Joined {0}", roomName);
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "An exception occured while trying to connect to the Game Server", e);
         }
-
-        //TODO throw exception when room name alread exists
-//        catch (DuplicateValueException e) {
-//            LOGGER.log(Level.WARNING, "An error occurred while creating a room.", e);
-//
-//            Alert alert = new Alert(AlertType.WARNING);
-//            alert.setTitle(e.getTitle());
-//            alert.setHeaderText(e.getTitle());
-//            alert.setContentText(e.getMessage());
-//
-//            alert.showAndWait();
-//        }
     }
 
     private boolean checkInput(String roomName, String password) {
         textFieldRoomName.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
         textFieldPassword.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
-
-        final String REGEX = "^[a-zA-Z0-9]{1,16}$";
 
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(roomName);
