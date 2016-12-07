@@ -5,13 +5,18 @@ import javafx.animation.Timeline;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
+import nl.soccar.library.Event;
 import nl.soccar.library.Game;
+import nl.soccar.library.Notification;
 import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.physics.PhysicsConstants;
+import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
+import nl.soccar.ui.fx.drawable.NotificationUiFx;
 import nl.soccar.ui.input.Keyboard;
 
+import java.time.LocalTime;
 import java.util.List;
 
 /**
@@ -48,9 +53,9 @@ public class GameCanvasFx extends GameCanvas {
      * Clears the canvas and renders a frame by drawing all Drawable items.
      */
     private void render() {
-        clear();
 
         if (getGameEngine().getGame().getStatus() == GameStatus.RUNNING) {
+            clear();
             List<Drawable> drawables = super.getDrawables();
             drawables.forEach(d -> d.draw(context));
         }
