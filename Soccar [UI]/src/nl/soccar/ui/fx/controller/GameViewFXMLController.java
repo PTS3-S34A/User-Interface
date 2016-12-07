@@ -48,12 +48,8 @@ public class GameViewFXMLController implements Initializable {
         canvas.setHeight(height);
         canvas.setFocusTraversable(true);
 
-//        Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
-        Session session = new Session("Test", "");
+        Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
         GameCanvas gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
-        session.getGame().getGameSettings().setDuration(Duration.MINUTES_3);
-
-        ClientController.getInstance().getCurrentPlayer().setCurrentSession(session);
 
         initializeMap(session, gameCanvas);
         initializeScoreboard(session, gameCanvas);
