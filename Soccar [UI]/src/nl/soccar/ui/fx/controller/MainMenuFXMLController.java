@@ -26,6 +26,7 @@ import nl.soccar.library.SessionData;
 import nl.soccar.library.Statistics;
 import nl.soccar.socnet.Client;
 import nl.soccar.socnet.connection.Connection;
+import nl.soccar.ui.DisplayUtilities;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
@@ -187,22 +188,21 @@ public class MainMenuFXMLController implements Initializable {
                 try {
                     Thread.sleep(50L);
                 } catch (InterruptedException e) {
-                    // Ignored, I KNOW.. I know. Shh.
+                    DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
                 }
             }
 
             Player currentPlayer = controller.getCurrentPlayer();
             connection.send(new RegisterPlayerMessage(currentPlayer.getUsername(), currentPlayer.getCarType()));
             LOGGER.log(Level.INFO, "Registered Player to Game Server");
-            
+
             connection.send(new JoinSessionMessage(selectedSession.getRoomName(), password));
-            LOGGER.log(Level.INFO, "Joined the chosen Session of the Game Server");   
-            
+            LOGGER.log(Level.INFO, "Joined the chosen Session of the Game Server");
+
         } catch (IOException ex) {
             Logger.getLogger(MainMenuFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
+
     }
 
 }

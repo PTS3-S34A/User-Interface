@@ -69,9 +69,7 @@ public class RegisterFXMLController implements Initializable {
         
         ClientController controller = ClientController.getInstance();
 
-        if (userExists && controller.checkPassword(username, password)) {
-            Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
-        } else if (!userExists && controller.add(username, password)) {
+        if (userExists && controller.checkPassword(username, password) || !userExists && controller.add(username, password)) {
             Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
         } else {
             clearInput();
@@ -80,7 +78,7 @@ public class RegisterFXMLController implements Initializable {
 
     private boolean checkInput(String password) {
         
-        if (!(password.length() < 8)) {
+        if (password.length() >= 8) {
             return true;
         }
         

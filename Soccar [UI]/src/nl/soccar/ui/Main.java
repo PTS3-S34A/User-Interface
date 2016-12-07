@@ -131,8 +131,6 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.getIcons().add(new Image(DisplayConstants.LOCATION_STAGE_ICON));
             
-            System.out.println(getController());
-
             primaryStage.show();
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "An error occurred while changing a scene.", e);
