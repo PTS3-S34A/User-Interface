@@ -24,7 +24,7 @@ public final class ClientConnectionListener implements ConnectionListener {
 
     @Override
     public void onDisconnected(Connection connection) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        // Do nothing on disconnect.
     }
 
 }

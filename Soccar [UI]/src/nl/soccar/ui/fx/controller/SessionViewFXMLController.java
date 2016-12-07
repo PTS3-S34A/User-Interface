@@ -14,10 +14,14 @@ import javafx.scene.control.ListView;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
+import nl.soccar.library.enumeration.TeamColour;
+import nl.soccar.socnet.connection.Connection;
 import nl.soccar.library.SessionData;
+import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.socnet.message.PlayerLeaveSessionMessage;
 
 /**
  * FXML Controller class
@@ -98,9 +102,23 @@ public class SessionViewFXMLController implements Initializable {
      * the main menu view.
      */
     private void leaveRoom() {
-        // TODO : Implement leaving room with message to the Game-Server
-//        SessionController.getInstance().leave(currentSession, currentPlayer);
-//        Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
+        ClientController controller = ClientController.getInstance();
+        Connection connection = controller.getCurrentConnection();
+        Room room = currentPlayer.getCurrentSession().getRoom();
+        
+        TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(p -> p.getUsername().equals(currentPlayer.getUsername())).count() > 0 ? TeamColour.BLUE: TeamColour.RED;
+        
+        connection.send(new PlayerLeaveSessionMessage(currentPlayer.getUsername(), colour));
+        
+        Main main = Main.getInstance();
+        main.setScene(FXMLConstants.LOCATION_MAIN_MENU);
+        
+        Client client = controller.getClient();
+        client.disconnect();
+        
+        controller.setCurrentConnection(null);
+        currentPlayer.setCurrentSession(null);
+        
     }
 
     /**

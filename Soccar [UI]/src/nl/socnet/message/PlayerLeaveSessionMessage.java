@@ -4,19 +4,19 @@ import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.message.Message;
 import nl.soccar.socnet.message.MessageConstants;
 import nl.soccar.socnet.message.MessageEvent;
-import nl.socnet.message.handler.PlayerLeftSessionMessageHandler;
+import nl.socnet.message.handler.PlayerLeaveSessionMessageHandler;
 
 /**
  *
  * @author PTS34A
  */
-@MessageEvent(id = MessageConstants.PLAYER_LEFT_SESSION_MESSAGE_ID, handler = PlayerLeftSessionMessageHandler.class)
-public final class PlayerLeftSessionMessage extends Message {
-        
+@MessageEvent(id = MessageConstants.PLAYER_LEAVE_SESSION_MESSAGE_ID, handler = PlayerLeaveSessionMessageHandler.class)
+public class PlayerLeaveSessionMessage extends Message {
+    
     private final String username;
     private final TeamColour colour;
     
-    public PlayerLeftSessionMessage(String username, TeamColour colour) {
+    public PlayerLeaveSessionMessage(String username, TeamColour colour) {
         this.username = username;
         this.colour = colour;
     }
@@ -28,10 +28,10 @@ public final class PlayerLeftSessionMessage extends Message {
     public TeamColour getTeamColour() {
         return colour;
     }
-
+    
     @Override
     public int getId() {
-        return MessageConstants.PLAYER_LEFT_SESSION_MESSAGE_ID;
+        return MessageConstants.PLAYER_LEAVE_SESSION_MESSAGE_ID;
     }
     
 }
