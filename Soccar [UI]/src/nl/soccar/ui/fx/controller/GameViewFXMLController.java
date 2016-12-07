@@ -6,13 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
-import nl.soccar.library.Car;
-import nl.soccar.library.Map;
-import nl.soccar.library.Session;
+import nl.soccar.library.*;
+import nl.soccar.library.enumeration.Duration;
+import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.fx.GameCanvasFx;
-import nl.soccar.ui.fx.drawable.BallUiFx;
-import nl.soccar.ui.fx.drawable.CarUiFx;
-import nl.soccar.ui.fx.drawable.MapUiFx;
+import nl.soccar.ui.fx.drawable.*;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,10 +18,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.scene.shape.Rectangle;
-import nl.soccar.library.Ball;
-import nl.soccar.library.Player;
-import nl.soccar.library.Room;
-import nl.soccar.library.Team;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.physics.GameEngine;
 import nl.soccar.ui.rmi.ClientController;
@@ -54,12 +48,18 @@ public class GameViewFXMLController implements Initializable {
         canvas.setHeight(height);
         canvas.setFocusTraversable(true);
 
-        Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
+//        Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
+        Session session = new Session("Test", "");
         GameCanvas gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
+        session.getGame().getGameSettings().setDuration(Duration.MINUTES_3);
+
+        ClientController.getInstance().getCurrentPlayer().setCurrentSession(session);
 
         initializeMap(session, gameCanvas);
+        initializeScoreboard(session, gameCanvas);
         initializeBall(session, gameCanvas);
         initializeCars(session, gameCanvas);
+        initializeNotification(session, gameCanvas);
 
         GameEngine engine = gameCanvas.getGameEngine();
         engine.start();
@@ -73,6 +73,11 @@ public class GameViewFXMLController implements Initializable {
         mapUiFx.addWalls();
     }
 
+    private void initializeScoreboard(Session session, GameCanvas canvas) {
+        ScoreBoardUiFx scoreBoardUiFx = new ScoreBoardUiFx(canvas, session.getGame());
+        canvas.addDrawable(scoreBoardUiFx);
+    }
+
     private void initializeBall(Session session, GameCanvas canvas) {
         BallUiFx ballUiFx = new BallUiFx(canvas, session.getGame().getMap().getBall());
         canvas.addDrawable(ballUiFx);
@@ -82,8 +87,26 @@ public class GameViewFXMLController implements Initializable {
         Room room = session.getRoom();
         Map map = session.getGame().getMap();
 
+        room.getTeamBlue().join(ClientController.getInstance().getCurrentPlayer());
+
         addCars(map, room.getTeamBlue(), canvas);
         addCars(map, room.getTeamRed(), canvas);
+    }
+
+    private void initializeBoostMeter(Car car, GameCanvas canvas) {
+        BoostMeterUiFx boostMeterUiFx = new BoostMeterUiFx(canvas, car);
+        canvas.addDrawable(boostMeterUiFx);
+    }
+
+    private void initializeNotification(Session session, GameCanvas canvas) {
+        float x = (float) session.getGame().getMap().getSize().getWidth() / 2;
+        float y = (float) session.getGame().getMap().getSize().getHeight() / 2;
+
+        Notification notification = new Notification(x, y, 0, DisplayConstants.NOTIFICATION_DISPLAY_TIME);
+        NotificationUiFx notificationUiFx = new NotificationUiFx(canvas, notification);
+
+        session.getGame().setNotification(notification);
+        canvas.addDrawable(notificationUiFx);
     }
 
     private void addCars(Map map, Team team, GameCanvas canvas) {
@@ -94,7 +117,6 @@ public class GameViewFXMLController implements Initializable {
 
         for (int i = 0; i < teamSize; i++) {
             Player player = players.get(i);
-
             addCar(canvas, map, player, team, teamSize, i);
         }
     }
@@ -118,6 +140,7 @@ public class GameViewFXMLController implements Initializable {
         CarUiFx carUiFx = new CarUiFx(canvas, car, colour);
 
         canvas.addDrawable(carUiFx);
+        initializeBoostMeter(car, canvas);
     }
 
     private static float getAngle(float sourceX, float sourceY, float targetX, float targetY) {
