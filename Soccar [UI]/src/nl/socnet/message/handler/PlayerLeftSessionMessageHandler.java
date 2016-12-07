@@ -2,6 +2,7 @@ package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
 import java.util.Optional;
+import javafx.application.Platform;
 import nl.soccar.gamecommuncation.util.ByteBufUtilities;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
@@ -10,6 +11,8 @@ import nl.soccar.library.Team;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
+import nl.soccar.ui.Main;
+import nl.soccar.ui.fx.controller.SessionViewFXMLController;
 import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.PlayerLeftSessionMessage;
 
@@ -32,6 +35,11 @@ public final class PlayerLeftSessionMessageHandler extends MessageHandler<Player
         }
         
         team.leave(optional.get());
+        
+        Object controller = Main.getInstance().getController();
+        if (controller != null && controller instanceof SessionViewFXMLController) {
+            Platform.runLater(() -> ((SessionViewFXMLController) controller).setRoomInfo());
+        }
     }
 
     @Override
