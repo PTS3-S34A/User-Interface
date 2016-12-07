@@ -1,12 +1,12 @@
 package nl.soccar.ui.input;
 
 import javafx.scene.input.KeyCode;
-
-import java.util.ArrayList;
-import java.util.List;
 import nl.soccar.library.enumeration.HandbrakeAction;
 import nl.soccar.library.enumeration.SteerAction;
 import nl.soccar.library.enumeration.ThrottleAction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Keyboard class keeps track of all pressed (and in turn released) keys.
@@ -21,6 +21,7 @@ public final class Keyboard {
     // Stores the key binds.
     private static final List<KeyCode> ACCELERATE;
     private static final List<KeyCode> REVERSE;
+    private static final List<KeyCode> BOOST;
     private static final List<KeyCode> STEER_LEFT;
     private static final List<KeyCode> STEER_RIGHT;
     private static final List<KeyCode> HANDBRAKE;
@@ -37,6 +38,11 @@ public final class Keyboard {
         REVERSE = new ArrayList<>();
         REVERSE.add(KeyCode.S);
         REVERSE.add(KeyCode.DOWN);
+
+        // Boost binds
+        BOOST = new ArrayList<>();
+        BOOST.add(KeyCode.SHIFT);
+        BOOST.add(KeyCode.CONTROL);
 
         // Steer left binds
         STEER_LEFT = new ArrayList<>();
@@ -101,6 +107,10 @@ public final class Keyboard {
 
         // The last pressed key
         for (KeyCode pressedKey : PRESSED_KEYS) {
+
+            if (BOOST.contains(pressedKey)) {
+                return ThrottleAction.BOOST;
+            }
 
             if (ACCELERATE.contains(pressedKey)) {
                 return ThrottleAction.ACCELERATE;
