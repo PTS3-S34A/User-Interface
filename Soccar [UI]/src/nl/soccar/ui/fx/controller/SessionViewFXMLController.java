@@ -17,6 +17,7 @@ import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.library.SessionData;
+import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
@@ -111,6 +112,10 @@ public class SessionViewFXMLController implements Initializable {
         
         Main main = Main.getInstance();
         main.setScene(FXMLConstants.LOCATION_MAIN_MENU);
+        
+        Client client = controller.getClient();
+        client.disconnect();
+        
         controller.setCurrentConnection(null);
         currentPlayer.setCurrentSession(null);
         
