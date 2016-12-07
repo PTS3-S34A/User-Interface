@@ -19,7 +19,7 @@ public final class ClientConnectionListener implements ConnectionListener {
         ClientController controller = ClientController.getInstance();
         connection.setPlayer(controller.getCurrentPlayer());
         controller.setCurrentConnection(connection);
-        LOGGER.log(Level.INFO, " CONNECTION AANGEMAAKT BIEM JONGEH BOEM BOEM");
+        LOGGER.log(Level.INFO, "Connection made to Node with Ipaddress {0}", connection.getRemoteAddress().getAddress());
     }
 
     @Override

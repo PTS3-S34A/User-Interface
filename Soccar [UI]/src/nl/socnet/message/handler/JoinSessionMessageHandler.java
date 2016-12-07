@@ -24,6 +24,11 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
 
     @Override
     protected void handle(Connection connection, JoinSessionMessage message) throws Exception {
+        Status status = message.getStatus();
+        if (status != Status.SUCCESS) {
+            return;
+        }
+
         GameSettings givenSettings = message.getGameSettings();
 
         Session session = new Session(message.getRoomName(), message.getPassword());
@@ -35,7 +40,6 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
         settings.setBallType(givenSettings.getBallType());
 
         ClientController.getInstance().getCurrentPlayer().setCurrentSession(session);
-
         Platform.runLater(() -> Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW));
     }
 
@@ -48,6 +52,10 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
     @Override
     protected JoinSessionMessage decode(Connection connection, ByteBuf buf) throws Exception {
         Status status = Status.valueOf(ByteBufUtilities.readString(buf));
+        if (status != Status.SUCCESS) {
+            return new JoinSessionMessage(status);
+        }
+
         String roomName = ByteBufUtilities.readString(buf);
         int capacity = buf.readByte();
         MapType mapType = MapType.valueOf(ByteBufUtilities.readString(buf));

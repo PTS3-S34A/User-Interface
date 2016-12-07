@@ -1,7 +1,10 @@
 package nl.soccar.ui.fx.controller;
 
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,6 +16,7 @@ import nl.soccar.library.Room;
 import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.connection.Connection;
+import nl.soccar.library.SessionData;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
@@ -45,13 +49,16 @@ public class SessionViewFXMLController implements Initializable {
     private Button btnStartGame;
     @FXML
 
+    private static final Logger LOGGER = Logger.getLogger(SessionViewFXMLController.class.getSimpleName());
+
     private Session currentSession;
 
     private Player currentPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        currentPlayer = ClientController.getInstance().getCurrentPlayer();
+        ClientController controller = ClientController.getInstance();
+        currentPlayer = controller.getCurrentPlayer();
         currentSession = currentPlayer.getCurrentSession(); // Will never be null.
 
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
@@ -62,10 +69,14 @@ public class SessionViewFXMLController implements Initializable {
         lblCar.setText(currentPlayer.getCarType().toString());
 
         setRoomInfo();
-        
-        if (currentSession.getRoom().getHost().equals(currentPlayer)) {
-            btnStartGame.setVisible(true);
+
+        Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
+        if (!session.isPresent()) {
+            LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
+            return;
         }
+
+        btnStartGame.setVisible(session.get().getHostName().equals(currentPlayer.getUsername()));
     }
 
     /**

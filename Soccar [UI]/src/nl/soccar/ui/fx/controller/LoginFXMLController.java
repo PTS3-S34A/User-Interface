@@ -2,6 +2,8 @@ package nl.soccar.ui.fx.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -93,7 +95,12 @@ public class LoginFXMLController implements Initializable {
     }
 
     private boolean checkInput() {
-        if (!txtFieldName.getText().isEmpty()) {
+        final String REGEX =  "^[a-zA-Z0-9]{1,16}$";
+
+        Pattern p = Pattern.compile(REGEX);
+        Matcher m = p.matcher(txtFieldName.getText());
+        
+        if (m.matches()) {
             return true;
         }
         txtFieldName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");

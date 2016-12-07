@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -64,13 +66,7 @@ public class CreateRoomFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
         btnCancel.setOnAction(e -> Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU));
-        btnCreateRoom.setOnAction(e -> {
-            if (!textFieldRoomName.getText().isEmpty()) {
-                createRoom();
-            } else {
-                textFieldRoomName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-            }
-        });
+        btnCreateRoom.setOnAction(e -> createRoom());
 
         Player player = ClientController.getInstance().getCurrentPlayer();
         lblUsername.setText(player.getUsername());
@@ -94,12 +90,17 @@ public class CreateRoomFXMLController implements Initializable {
         String roomName = textFieldRoomName.getText();
         String input = textFieldPassword.getText();
         String password = !input.isEmpty() ? input : "";
+
+        if (!checkInput(roomName, password)) {
+            return;
+        }
+
         int capacity = (int) sliderCapacity.getValue();
         Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1];
 
         ClientController controller = ClientController.getInstance();
 
-        if (!controller.createSession(roomName, password, capacity,
+        if (!controller.createSession(roomName, password, controller.getCurrentPlayer().getUsername(), capacity,
                 duration, (MapType) cbMap.getValue(), (BallType) cbBall.getValue())) {
             return;
         }
@@ -111,7 +112,7 @@ public class CreateRoomFXMLController implements Initializable {
                 LOGGER.log(Level.WARNING, "An exception occured while getting the Ipaddress from the Game Server");
                 return;
             }
-            
+
             client.connect(session.get().getAddress(), 1046);
 
             Connection connection;
@@ -122,18 +123,18 @@ public class CreateRoomFXMLController implements Initializable {
                     // Ignored, I KNOW.. I know. Shh.
                 }
             }
-            
+
             Player currentPlayer = controller.getCurrentPlayer();
 
             connection.send(new RegisterPlayerMessage(currentPlayer.getUsername(), currentPlayer.getCarType()));
             LOGGER.log(Level.INFO, "Registered Player to Game Server");
 
             connection.send(new JoinSessionMessage(roomName, password));
-            LOGGER.log(Level.INFO, "Joined " + roomName );
+            LOGGER.log(Level.INFO, "Joined " + roomName);
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "An exception occured while trying to connect to the Game Server", ex);
         }
-        
+
         //TODO throw exception when room name alread exists
 //        catch (DuplicateValueException e) {
 //            LOGGER.log(Level.WARNING, "An error occurred while creating a room.", e);
@@ -147,4 +148,27 @@ public class CreateRoomFXMLController implements Initializable {
 //        }
     }
 
+    private boolean checkInput(String roomName, String password) {
+        textFieldRoomName.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
+        textFieldPassword.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
+
+        final String REGEX = "^[a-zA-Z0-9]{1,16}$";
+
+        Pattern p = Pattern.compile(REGEX);
+        Matcher m = p.matcher(roomName);
+
+        boolean accepted = true;
+
+        if (!m.matches()) {
+            accepted = false;
+            textFieldRoomName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        }
+
+        if (password.length() > 0 && password.length() < 8) {
+            accepted = false;
+            textFieldPassword.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+        }
+
+        return accepted;
+    }
 }

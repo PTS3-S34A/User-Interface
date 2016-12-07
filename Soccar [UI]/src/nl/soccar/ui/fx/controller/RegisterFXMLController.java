@@ -41,10 +41,6 @@ public class RegisterFXMLController implements Initializable {
         setState();
     }
 
-    private void checkUsername() {
-        userExists = false;
-    }
-
     /**
      * Handler for loginOrRegister-button; Uses current selected car, username
      * and optional password.
@@ -83,7 +79,8 @@ public class RegisterFXMLController implements Initializable {
     }
 
     private boolean checkInput(String password) {
-        if (!password.isEmpty()) {
+        
+        if (!(password.length() < 8)) {
             return true;
         }
         
