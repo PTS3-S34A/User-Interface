@@ -5,12 +5,10 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -123,6 +121,9 @@ public class GameResultsFXMLController implements Initializable {
         main.setFullScreen(true);
     }
     
+        /**
+     * Method that navigates to back the SessionView screen (Room information).
+     */
     public void closeResults() {
         Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
     }

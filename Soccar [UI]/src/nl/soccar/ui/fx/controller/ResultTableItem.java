@@ -2,7 +2,6 @@ package nl.soccar.ui.fx.controller;
 
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import nl.soccar.library.SessionData;
 
 /**
  * A table-item represents one single row inside a (JavaFX) TableView.
