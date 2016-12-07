@@ -1,19 +1,25 @@
 package nl.soccar.ui.fx.drawable;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import nl.soccar.library.Car;
 import nl.soccar.library.enumeration.TeamColour;
+import nl.soccar.physics.PhysicsConstants;
 import nl.soccar.physics.models.CarPhysics;
 import nl.soccar.physics.models.WheelPhysics;
+import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
 import nl.soccar.ui.input.Keyboard;
 import nl.soccar.ui.util.ImageUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;
+
+import java.util.List;
 
 /**
  * A CarUiFx object represents a JavaFX Drawable of a Car. It keeps track of the
@@ -59,6 +65,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         super.getModel().setHandbrakeAction(Keyboard.getHandbrakeAction());
         super.getModel().setThrottleAction(Keyboard.getThrottleAction());
 
+        drawBoostTrail(physics.getTrail(), context);
         physics.getWheels().forEach(w -> drawWheel(w, context));
         drawBody(context);
     }
@@ -100,6 +107,39 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         gc.fillRect(-width / 2, -height / 2, width, height); // Draw the rectangle from the top left.
 
         gc.restore();
+    }
+
+    private void drawBoostTrail(List<Point2D> trail, GraphicsContext gc) {
+
+        double prevX, prevY, x, y;
+        double o = 0.0;
+        int r = 30;
+        int g = 30;
+        int b = 230;
+
+        // Cancel when there is no trail.
+        if (trail.size() == 0) {
+            return;
+        }
+
+        // Line settings
+        gc.setLineWidth(DisplayConstants.BOOST_TRAIL_WIDTH);
+        gc.setLineCap(StrokeLineCap.ROUND);
+
+        // Draw trail line
+        for (int i = 1; i < trail.size(); i++) {
+
+            gc.setStroke(Color.rgb(r, g, b, o));
+
+            prevX = PhysicsUtilities.toPixelX((float) trail.get(i - 1).getX());
+            prevY = PhysicsUtilities.toPixelY((float) trail.get(i - 1).getY());
+
+            x = PhysicsUtilities.toPixelX((float) trail.get(i).getX());
+            y = PhysicsUtilities.toPixelY((float) trail.get(i).getY());
+
+            gc.strokeLine(prevX, prevY, x, y);
+            o = Math.min(1.0F, o + (1.0F / PhysicsConstants.CAR_BOOST_TRAIL_SIZE));
+        }
     }
 
 }
