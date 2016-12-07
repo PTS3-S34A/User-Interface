@@ -1,6 +1,5 @@
 package nl.soccar.ui.fx.controller;
 
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import nl.soccar.library.SessionData;
 
@@ -11,26 +10,45 @@ import nl.soccar.library.SessionData;
  */
 public class ResultTableItem {
 
-    private final SimpleStringProperty username;
-    private final SimpleIntegerProperty goalsScored;
+    private final SimpleStringProperty roomName;
+    private final SimpleStringProperty occupancy;
+    private final SimpleStringProperty hostName;
+    private final SimpleStringProperty passwordAvailable;
+    
+    private final SessionData sessionData;
 
     /**
      * Initiates a new SesionTableItem using the given session.
      * 
-     * @param username The username of the player the goals belong to.
-     * @param goalsScored The amount of goals scored by the specific user.
+     * @param session The session of which values will be retreived from.
      */
-    public ResultTableItem(String username, Integer goalsScored) {
-        this.username = new SimpleStringProperty(username);
-        this.goalsScored = new SimpleIntegerProperty(goalsScored);
+    public ResultTableItem(SessionData session) {
+        this.sessionData = session;
+        
+        roomName = new SimpleStringProperty(session.getRoomName());
+        occupancy = new SimpleStringProperty(String.format("%d/%d", session.getOccupation(), session.getCapacity()));
+        hostName = new SimpleStringProperty(session.getHostName());
+        passwordAvailable = new SimpleStringProperty(session.hasPassword() ? "Yes" : "No");
     }
     
-    public String getUsername() {
-        return username.get();
+    public SessionData getSessionData() {
+        return sessionData;
     }
 
-    public Integer getGoalsScored() {
-        return goalsScored.get();
+    public String getRoomName() {
+        return roomName.get();
+    }
+
+    public String getOccupancy() {
+        return occupancy.get();
+    }
+
+    public String getHostName() {
+        return hostName.get();
+    }
+
+    public String isPasswordAvailable() {
+        return passwordAvailable.get();
     }
     
 }
