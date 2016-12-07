@@ -20,6 +20,8 @@ import nl.soccar.ui.Main;
  */
 public class LoginFXMLController implements Initializable {
 
+    private static final String REGEX = "^[a-zA-Z0-9]{1,16}$";
+
     private static final String CSS_ERROR_BORDER = "-fx-border-color: red;";
     private static final String CSS_NORMAL_BORDER = "-fx-border-color: white;";
 
@@ -95,11 +97,9 @@ public class LoginFXMLController implements Initializable {
     }
 
     private boolean checkInput() {
-        final String REGEX =  "^[a-zA-Z0-9]{1,16}$";
-
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(txtFieldName.getText());
-        
+
         if (m.matches()) {
             return true;
         }
