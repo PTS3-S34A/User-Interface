@@ -3,8 +3,9 @@ package nl.soccar.ui.fx.drawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.text.TextAlignment;
 import nl.soccar.library.Notification;
+import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.Drawable;
-import nl.soccar.ui.fx.GameCanvasFx;
+import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.util.PhysicsUtilities;
 
 /**
@@ -22,7 +23,7 @@ public class NotificationUiFx extends Drawable<Notification> {
      * @param canvas       The canvas on which this Notification is placed.
      * @param notification The notification model to keep track of.
      */
-    public NotificationUiFx(GameCanvasFx canvas, Notification notification) {
+    public NotificationUiFx(GameCanvas canvas, Notification notification) {
         super(canvas, notification);
     }
 
@@ -30,13 +31,18 @@ public class NotificationUiFx extends Drawable<Notification> {
     public void draw(GraphicsContext context) {
         Notification notification = super.getModel();
 
+        if (!notification.isActive()) {
+            return;
+        }
+
         float x = PhysicsUtilities.toPixelX(notification.getX());
         float y = PhysicsUtilities.toPixelY(notification.getY());
 
+        context.setLineWidth(DisplayConstants.NOTIFICATION_OUTLINE_WIDTH);
         context.setTextAlign(TextAlignment.CENTER);
-        context.setFont(notification.getFont());
-        context.setFill(notification.getFill());
-        context.setStroke(notification.getStroke());
+        context.setFont(DisplayConstants.NOTIFICATION_FONT);
+        context.setFill(DisplayConstants.NOTIFICATION_FILL);
+        context.setStroke(DisplayConstants.NOTIFICATION_STROKE);
         context.fillText(notification.getContent(), x, y);
         context.strokeText(notification.getContent(), x, y);
     }
