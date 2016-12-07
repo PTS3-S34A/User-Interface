@@ -33,7 +33,8 @@ public final class PlayerJoinedSessionMessageHandler extends MessageHandler<Play
 
         Object controller = Main.getInstance().getController();
         if (controller != null && controller instanceof SessionViewFXMLController) {
-            Platform.runLater(() -> ((SessionViewFXMLController) controller).setRoomInfo());
+            SessionViewFXMLController view = (SessionViewFXMLController) controller;
+            Platform.runLater(view::setRoomInfo);
         }
     }
 
