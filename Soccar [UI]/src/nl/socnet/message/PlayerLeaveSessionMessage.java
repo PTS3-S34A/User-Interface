@@ -2,6 +2,7 @@ package nl.socnet.message;
 
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.message.Message;
+import nl.soccar.socnet.message.MessageConstants;
 import nl.soccar.socnet.message.MessageEvent;
 import nl.socnet.message.handler.PlayerLeaveSessionMessageHandler;
 
@@ -9,10 +10,8 @@ import nl.socnet.message.handler.PlayerLeaveSessionMessageHandler;
  *
  * @author PTS34A
  */
-@MessageEvent(id = 5, handler = PlayerLeaveSessionMessageHandler.class)
+@MessageEvent(id = MessageConstants.PLAYER_LEAVE_SESSION_MESSAGE_ID, handler = PlayerLeaveSessionMessageHandler.class)
 public class PlayerLeaveSessionMessage extends Message {
-
-    private static final int PLAYER_LEAVE_SESSION_MESSAGE_ID = 5;
     
     private final String username;
     private final TeamColour colour;
@@ -32,7 +31,7 @@ public class PlayerLeaveSessionMessage extends Message {
     
     @Override
     public int getId() {
-        return PLAYER_LEAVE_SESSION_MESSAGE_ID;
+        return MessageConstants.PLAYER_LEAVE_SESSION_MESSAGE_ID;
     }
     
 }
