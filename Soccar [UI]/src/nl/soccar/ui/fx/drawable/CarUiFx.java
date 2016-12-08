@@ -60,7 +60,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     public void draw(GraphicsContext context) {
         CarPhysics physics = super.getPhysicsModel();
 
-        if (ClientController.getInstance().getCurrentPlayer() == super.getModel().getPlayer()) {
+        if (ClientController.getInstance().getCurrentPlayer().getUsername().equals(super.getModel().getPlayer().getUsername())) {
             SteerAction steerAction = Keyboard.getSteerAction();
             HandbrakeAction handbrakeAction = Keyboard.getHandbrakeAction();
             ThrottleAction throttleAction = Keyboard.getThrottleAction();
