@@ -43,6 +43,16 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
     @Override
     protected MovePlayerMessage decode(Connection connection, ByteBuf buf) throws Exception {
         String username = ByteBufUtilities.readString(buf);
+        if (username == null) {
+            buf.resetReaderIndex();
+            return null;
+        }
+
+        if (buf.readableBytes() < 3) {
+            buf.resetReaderIndex();
+            return null;
+        }
+
         SteerAction steerAction = SteerAction.parse(buf.readByte());
         HandbrakeAction handbrakeAction = HandbrakeAction.parse(buf.readByte());
         ThrottleAction throttleAction = ThrottleAction.parse(buf.readByte());
