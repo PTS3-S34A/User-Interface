@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import nl.soccar.library.Game;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
@@ -22,6 +23,7 @@ import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 import nl.socnet.message.PlayerLeaveSessionMessage;
+import nl.socnet.message.StartGameMessage;
 
 /**
  * FXML Controller class
@@ -71,13 +73,6 @@ public class SessionViewFXMLController implements Initializable {
 
         setRoomInfo();
 
-        Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
-        if (!session.isPresent()) {
-            LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
-            return;
-        }
-
-        btnStartGame.setVisible(session.get().getHostName().equals(currentPlayer.getUsername()));
     }
 
     /**
@@ -93,6 +88,14 @@ public class SessionViewFXMLController implements Initializable {
 
         lvPlayersBlue.setItems(FXCollections.observableArrayList(room.getTeamBlue().getPlayers()));
         lvPlayersRed.setItems(FXCollections.observableArrayList(room.getTeamRed().getPlayers()));
+        
+        Optional<SessionData> session = ClientController.getInstance().getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
+        if (!session.isPresent()) {
+            LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
+            return;
+        }
+
+        btnStartGame.setVisible(session.get().getHostName().equals(currentPlayer.getUsername()));
 
         // TODO: btnStartGame.setDisable(occupancy != capacity);
     }
@@ -126,8 +129,8 @@ public class SessionViewFXMLController implements Initializable {
      * full screen mode.
      */
     public void startGame() {
-        Main main = Main.getInstance();
-        main.setScene(FXMLConstants.LOCATION_GAME_VIEW);
-        main.setFullScreen(true);
+        Connection connection = ClientController.getInstance().getCurrentConnection();
+        
+        connection.send(new StartGameMessage());
     }
 }
