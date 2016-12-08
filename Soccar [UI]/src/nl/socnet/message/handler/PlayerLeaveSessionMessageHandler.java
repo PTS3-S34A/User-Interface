@@ -20,12 +20,12 @@ public class PlayerLeaveSessionMessageHandler extends MessageHandler<PlayerLeave
     @Override
     protected void encode(Connection connection, PlayerLeaveSessionMessage message, ByteBuf buf) throws Exception {
         ByteBufUtilities.writeString(message.getUsername(), buf);
-        ByteBufUtilities.writeString(message.getTeamColour().name(), buf);
+        buf.writeByte(message.getTeamColour().getId());
     }
 
     @Override
     protected PlayerLeaveSessionMessage decode(Connection connection, ByteBuf buf) throws Exception {
         throw new UnsupportedOperationException("Decoding is not supported for the Client.");
     }
-    
+
 }

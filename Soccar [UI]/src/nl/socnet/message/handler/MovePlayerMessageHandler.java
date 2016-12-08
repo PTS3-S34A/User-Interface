@@ -25,10 +25,10 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
     protected void handle(Connection connection, MovePlayerMessage message) throws Exception {
         Player player = ClientController.getInstance().getCurrentPlayer();
         Session currentSession = player.getCurrentSession();
-        
+
         Map map = currentSession.getGame().getMap();
         List<Player> players = currentSession.getRoom().getAllPlayers();
-        
+
         Car car = players.stream().filter(p -> p.getUsername().equals(message.getUsername())).map(map::getCarFromPlayer).findFirst().get();
         car.setHandbrakeAction(message.getHandbrakAction());
         car.setSteerAction(message.getSteerAction());
@@ -56,8 +56,8 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
         SteerAction steerAction = SteerAction.parse(buf.readByte());
         HandbrakeAction handbrakeAction = HandbrakeAction.parse(buf.readByte());
         ThrottleAction throttleAction = ThrottleAction.parse(buf.readByte());
-        
+
         return new MovePlayerMessage(username, steerAction, handbrakeAction, throttleAction);
     }
-    
+
 }

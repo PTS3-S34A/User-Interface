@@ -23,7 +23,7 @@ public final class StartGameMessageHandler extends MessageHandler<StartGameMessa
 
     @Override
     protected StartGameMessage decode(Connection connection, ByteBuf buf) throws Exception {
-        throw new UnsupportedOperationException("Decoding is not supported for the Client."); 
+        throw new UnsupportedOperationException("Decoding is not supported for the Client.");
     }
-    
+
 }

@@ -4,14 +4,10 @@ import io.netty.buffer.ByteBuf;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Platform;
-import nl.soccar.library.Game;
-import nl.soccar.library.Player;
-import nl.soccar.library.Session;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
-import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.PlayerStartedGameMessage;
 
 /**
