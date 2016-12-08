@@ -18,6 +18,7 @@ public final class StartGameMessageHandler extends MessageHandler<StartGameMessa
 
     @Override
     protected void encode(Connection connection, StartGameMessage message, ByteBuf buf) throws Exception {
+        // There is no data to encode for the message.
     }
 
     @Override
