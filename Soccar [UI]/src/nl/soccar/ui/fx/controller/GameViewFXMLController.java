@@ -115,8 +115,9 @@ public class GameViewFXMLController implements Initializable {
         float degree = getAngle(x, y, ballX, ballY) -90;
 
         Car car = new Car(x, y, degree, player.getCarType(), player);
+        map.addCar(car);
+        
         CarUiFx carUiFx = new CarUiFx(canvas, car, colour);
-
         canvas.addDrawable(carUiFx);
     }
 
