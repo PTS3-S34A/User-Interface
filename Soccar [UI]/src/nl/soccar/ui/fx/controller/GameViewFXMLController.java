@@ -63,6 +63,8 @@ public class GameViewFXMLController implements Initializable {
 
         GameEngine engine = gameCanvas.getGameEngine();
         engine.start();
+        
+        session.getGame().start();
     }
 
     private void initializeMap(Session session, GameCanvas canvas) {

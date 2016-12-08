@@ -24,11 +24,6 @@ public final class PlayerStartedGameMessageHandler extends MessageHandler<Player
 
     @Override
     protected void handle(Connection connection, PlayerStartedGameMessage message) throws Exception {
-        Player player = ClientController.getInstance().getCurrentPlayer();
-        Session session = player.getCurrentSession();
-        Game game = session.getGame();
-        game.start();
-
         Platform.runLater(() -> {
             Main main = Main.getInstance();
             main.setScene(FXMLConstants.LOCATION_GAME_VIEW);

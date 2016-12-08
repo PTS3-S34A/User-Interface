@@ -68,7 +68,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         super.getModel().setSteerAction(steerAction);
         super.getModel().setHandbrakeAction(handbrakeAction);
         super.getModel().setThrottleAction(throttleAction);
-
+        
         // TODO : Change location of sending this message (Ugly implementation for now)
         Connection connection = ClientController.getInstance().getCurrentConnection();
         connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));

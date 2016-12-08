@@ -19,9 +19,9 @@ public final class PlayerMovedMessageHandler extends MessageHandler<PlayerMovedM
 
     @Override
     protected void encode(Connection connection, PlayerMovedMessage message, ByteBuf buf) throws Exception {
-        ByteBufUtilities.writeString(message.getSteerAction().name(), buf);
-        ByteBufUtilities.writeString(message.getHandbrakAction().name(), buf);
-        ByteBufUtilities.writeString(message.getThrottleAction().name(), buf);
+        buf.writeByte(message.getSteerAction().getId());
+        buf.writeByte(message.getHandbrakAction().getId());
+        buf.writeByte(message.getThrottleAction().getId());
     }
 
     @Override

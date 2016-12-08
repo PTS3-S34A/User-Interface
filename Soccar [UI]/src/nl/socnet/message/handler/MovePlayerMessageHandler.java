@@ -3,6 +3,7 @@ package nl.socnet.message.handler;
 import io.netty.buffer.ByteBuf;
 import java.util.List;
 import nl.soccar.gamecommuncation.util.ByteBufUtilities;
+import nl.soccar.library.Car;
 import nl.soccar.library.Map;
 import nl.soccar.library.Player;
 import nl.soccar.library.Session;
@@ -28,11 +29,10 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
         Map map = currentSession.getGame().getMap();
         List<Player> players = currentSession.getRoom().getAllPlayers();
         
-        players.stream().filter(p -> p != player).map(map::getCarFromPlayer).forEach(c -> {
-            c.setHandbrakeAction(message.getHandbrakAction());
-            c.setSteerAction(message.getSteerAction());
-            c.setThrottleAction(message.getThrottleAction());
-        });
+        Car car = players.stream().filter(p -> p.getUsername().equals(message.getUsername())).map(map::getCarFromPlayer).findFirst().get();
+        car.setHandbrakeAction(message.getHandbrakAction());
+        car.setSteerAction(message.getSteerAction());
+        car.setThrottleAction(message.getThrottleAction());
     }
 
     @Override
@@ -43,9 +43,9 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
     @Override
     protected MovePlayerMessage decode(Connection connection, ByteBuf buf) throws Exception {
         String username = ByteBufUtilities.readString(buf);
-        SteerAction steerAction = SteerAction.valueOf(ByteBufUtilities.readString(buf));
-        HandbrakeAction handbrakeAction = HandbrakeAction.valueOf(ByteBufUtilities.readString(buf));
-        ThrottleAction throttleAction = ThrottleAction.valueOf(ByteBufUtilities.readString(buf));
+        SteerAction steerAction = SteerAction.parse(buf.readByte());
+        HandbrakeAction handbrakeAction = HandbrakeAction.parse(buf.readByte());
+        ThrottleAction throttleAction = ThrottleAction.parse(buf.readByte());
         
         return new MovePlayerMessage(username, steerAction, handbrakeAction, throttleAction);
     }
