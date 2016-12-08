@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import nl.soccar.library.Game;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
@@ -22,6 +23,7 @@ import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 import nl.socnet.message.PlayerLeaveSessionMessage;
+import nl.socnet.message.StartGameMessage;
 
 /**
  * FXML Controller class
@@ -126,8 +128,8 @@ public class SessionViewFXMLController implements Initializable {
      * full screen mode.
      */
     public void startGame() {
-        Main main = Main.getInstance();
-        main.setScene(FXMLConstants.LOCATION_GAME_VIEW);
-        main.setFullScreen(true);
+        Connection connection = ClientController.getInstance().getCurrentConnection();
+        
+        connection.send(new StartGameMessage());
     }
 }
