@@ -6,14 +6,20 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import nl.soccar.library.Car;
+import nl.soccar.library.enumeration.HandbrakeAction;
+import nl.soccar.library.enumeration.SteerAction;
 import nl.soccar.library.enumeration.TeamColour;
+import nl.soccar.library.enumeration.ThrottleAction;
 import nl.soccar.physics.models.CarPhysics;
 import nl.soccar.physics.models.WheelPhysics;
+import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
 import nl.soccar.ui.input.Keyboard;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.ImageUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;
+import nl.socnet.message.PlayerMovedMessage;
 
 /**
  * A CarUiFx object represents a JavaFX Drawable of a Car. It keeps track of the
@@ -55,10 +61,18 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     public void draw(GraphicsContext context) {
         CarPhysics physics = super.getPhysicsModel();
         
-        super.getModel().setSteerAction(Keyboard.getSteerAction());
-        super.getModel().setHandbrakeAction(Keyboard.getHandbrakeAction());
-        super.getModel().setThrottleAction(Keyboard.getThrottleAction());
+        SteerAction steerAction = Keyboard.getSteerAction();
+        HandbrakeAction handbrakeAction = Keyboard.getHandbrakeAction();
+        ThrottleAction throttleAction = Keyboard.getThrottleAction();
+        
+        super.getModel().setSteerAction(steerAction);
+        super.getModel().setHandbrakeAction(handbrakeAction);
+        super.getModel().setThrottleAction(throttleAction);
 
+        // TODO : Change location of sending this message (Ugly implementation for now)
+        Connection connection = ClientController.getInstance().getCurrentConnection();
+        connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
+        
         physics.getWheels().forEach(w -> drawWheel(w, context));
         drawBody(context);
     }
