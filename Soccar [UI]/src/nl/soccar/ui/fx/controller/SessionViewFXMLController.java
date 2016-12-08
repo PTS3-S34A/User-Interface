@@ -73,13 +73,6 @@ public class SessionViewFXMLController implements Initializable {
 
         setRoomInfo();
 
-        Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
-        if (!session.isPresent()) {
-            LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
-            return;
-        }
-
-        btnStartGame.setVisible(session.get().getHostName().equals(currentPlayer.getUsername()));
     }
 
     /**
@@ -95,6 +88,14 @@ public class SessionViewFXMLController implements Initializable {
 
         lvPlayersBlue.setItems(FXCollections.observableArrayList(room.getTeamBlue().getPlayers()));
         lvPlayersRed.setItems(FXCollections.observableArrayList(room.getTeamRed().getPlayers()));
+        
+        Optional<SessionData> session = ClientController.getInstance().getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
+        if (!session.isPresent()) {
+            LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
+            return;
+        }
+
+        btnStartGame.setVisible(session.get().getHostName().equals(currentPlayer.getUsername()));
 
         // TODO: btnStartGame.setDisable(occupancy != capacity);
     }
