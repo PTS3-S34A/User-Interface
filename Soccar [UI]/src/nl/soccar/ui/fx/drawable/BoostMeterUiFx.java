@@ -16,10 +16,13 @@ import nl.soccar.ui.util.PhysicsUtilities;
  */
 public class BoostMeterUiFx extends Drawable<Car> {
 
+
+
     /**
-     * Initiates a new NotificationUiFx Object using the given parameters.
+     * Initiates a new BoostMeterUiFx Object using the given parameters.
      *
      * @param canvas The canvas on which this Notification is placed.
+     * @param car The car to retrieve the boost amount from.
      */
     public BoostMeterUiFx(GameCanvas canvas, Car car) {
         super(canvas, car);

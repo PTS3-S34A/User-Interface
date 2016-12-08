@@ -19,9 +19,10 @@ import nl.soccar.ui.util.PhysicsUtilities;
 public class ScoreBoardUiFx extends Drawable<Game> {
 
     /**
-     * Initiates a new NotificationUiFx Object using the given parameters.
+     * Initiates a new ScoreBoardUiFx Object using the given parameters.
      *
      * @param canvas The canvas on which this Notification is placed.
+     * @param game The game object.
      */
     public ScoreBoardUiFx(GameCanvas canvas, Game game) {
         super(canvas, game);
@@ -29,7 +30,11 @@ public class ScoreBoardUiFx extends Drawable<Game> {
 
     @Override
     public void draw(GraphicsContext context) {
-        float width, height, x, y;
+        float width;
+        float height;
+        float x;
+        float y;
+
         Game game = super.getModel();
 
         // Prepare text to display
@@ -37,7 +42,7 @@ public class ScoreBoardUiFx extends Drawable<Game> {
 
         width = PhysicsUtilities.toPixelWidth(DisplayConstants.SCOREBOARD_WIDTH);
         height = PhysicsUtilities.toPixelHeight(DisplayConstants.SCOREBOARD_HEIGHT);
-        x = PhysicsUtilities.toPixelX((float) (game.getMap().getSize().getWidth() / 2) - (DisplayConstants.SCOREBOARD_WIDTH / 2));//PhysicsUtilities.toPixelX(game.getX());
+        x = PhysicsUtilities.toPixelX((float) (game.getMap().getSize().getWidth() / 2) - (DisplayConstants.SCOREBOARD_WIDTH / 2));
         y = PhysicsUtilities.toPixelY((float) game.getMap().getSize().getHeight());
 
         // Draw scoreboard background
@@ -47,8 +52,8 @@ public class ScoreBoardUiFx extends Drawable<Game> {
         context.fillRect(x, y, width, height);
         context.strokeRect(x, y, width, height);
 
-        x = PhysicsUtilities.toPixelX((float) game.getMap().getSize().getWidth() / 2);//PhysicsUtilities.toPixelX(game.getX());
-        y = PhysicsUtilities.toPixelY((float) game.getMap().getSize().getHeight() - 4);//PhysicsUtilities.toPixelY(game.getY());
+        x = PhysicsUtilities.toPixelX((float) game.getMap().getSize().getWidth() / 2);
+        y = PhysicsUtilities.toPixelY((float) game.getMap().getSize().getHeight() - 4);
 
         // Draw scoreboard text
         context.setTextAlign(TextAlignment.CENTER);

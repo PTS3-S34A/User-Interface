@@ -111,14 +111,19 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
     private void drawBoostTrail(List<Point2D> trail, GraphicsContext gc) {
 
-        double prevX, prevY, x, y;
+        double prevX;
+        double prevY;
+        double x;
+        double y;
         double o = 0.0;
+
+        // TODO: Boost color should be the color of the team the player is in.
         int r = 30;
         int g = 30;
         int b = 230;
 
         // Cancel when there is no trail.
-        if (trail.size() == 0) {
+        if (trail.isEmpty()) {
             return;
         }
 

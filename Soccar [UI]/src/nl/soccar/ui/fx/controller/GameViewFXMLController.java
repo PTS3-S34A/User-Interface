@@ -1,27 +1,25 @@
 package nl.soccar.ui.fx.controller;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.shape.Rectangle;
 import nl.soccar.library.*;
-import nl.soccar.library.enumeration.Duration;
+import nl.soccar.library.enumeration.TeamColour;
+import nl.soccar.physics.GameEngine;
 import nl.soccar.ui.DisplayConstants;
+import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.fx.GameCanvasFx;
 import nl.soccar.ui.fx.drawable.*;
+import nl.soccar.ui.rmi.ClientController;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.shape.Rectangle;
-import nl.soccar.library.enumeration.TeamColour;
-import nl.soccar.physics.GameEngine;
-import nl.soccar.ui.rmi.ClientController;
-import nl.soccar.ui.drawable.GameCanvas;
 
 /**
  * FXML Controller class
@@ -108,7 +106,7 @@ public class GameViewFXMLController implements Initializable {
     private void addCars(Map map, Team team, GameCanvas canvas) {
         List<Player> players = new ArrayList<>(team.getPlayers());
         Collections.shuffle(players);
-        
+
         int teamSize = players.size();
 
         for (int i = 0; i < teamSize; i++) {
@@ -121,16 +119,16 @@ public class GameViewFXMLController implements Initializable {
         Rectangle size = map.getSize();
         float width = (float) size.getWidth();
         float height = (float) size.getHeight();
-        
+
         Ball ball = map.getBall();
         float ballX = ball.getX();
         float ballY = ball.getY();
 
         TeamColour colour = team.getTeamColour();
-        
+
         float x = colour == TeamColour.BLUE ? 30.0F : width - 30.0F;
         float y = (height / (teamSize + 1)) * (number + 1);
-        float degree = getAngle(x, y, ballX, ballY) -90;
+        float degree = getAngle(x, y, ballX, ballY) - 90;
 
         Car car = new Car(x, y, degree, player.getCarType(), player);
         CarUiFx carUiFx = new CarUiFx(canvas, car, colour);
