@@ -28,7 +28,9 @@ import nl.socnet.message.JoinSessionMessage;
 import nl.socnet.message.PlayerJoinedSessionMessage;
 import nl.socnet.message.PlayerLeaveSessionMessage;
 import nl.socnet.message.PlayerLeftSessionMessage;
+import nl.socnet.message.PlayerStartedGameMessage;
 import nl.socnet.message.RegisterPlayerMessage;
+import nl.socnet.message.StartGameMessage;
 
 /**
  * Controller class that is responsible for handling RMI network communication
@@ -73,7 +75,7 @@ public final class ClientController {
 
         initializeConnection();
     }
-    
+
     private void initializeConnection() {
         MessageRegistry registry = client.getMessageRegistry();
         registry.register(RegisterPlayerMessage.class);
@@ -81,9 +83,11 @@ public final class ClientController {
         registry.register(PlayerJoinedSessionMessage.class);
         registry.register(PlayerLeftSessionMessage.class);
         registry.register(PlayerLeaveSessionMessage.class);
-        
+        registry.register(PlayerStartedGameMessage.class);
+        registry.register(StartGameMessage.class);
+
         client.addListener(new ClientConnectionListener());
-        
+
     }
 
     /**
@@ -154,7 +158,7 @@ public final class ClientController {
 
         return null;
     }
-    
+
     public Client getClient() {
         return client;
     }
@@ -174,5 +178,5 @@ public final class ClientController {
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
-    
+
 }
