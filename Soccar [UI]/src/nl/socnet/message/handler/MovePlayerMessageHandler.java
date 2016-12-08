@@ -1,0 +1,53 @@
+package nl.socnet.message.handler;
+
+import io.netty.buffer.ByteBuf;
+import java.util.List;
+import nl.soccar.gamecommuncation.util.ByteBufUtilities;
+import nl.soccar.library.Map;
+import nl.soccar.library.Player;
+import nl.soccar.library.Session;
+import nl.soccar.library.enumeration.HandbrakeAction;
+import nl.soccar.library.enumeration.SteerAction;
+import nl.soccar.library.enumeration.ThrottleAction;
+import nl.soccar.socnet.connection.Connection;
+import nl.soccar.socnet.message.MessageHandler;
+import nl.soccar.ui.rmi.ClientController;
+import nl.socnet.message.MovePlayerMessage;
+
+/**
+ *
+ * @author PTS34A
+ */
+public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMessage> {
+
+    @Override
+    protected void handle(Connection connection, MovePlayerMessage message) throws Exception {
+        Player player = ClientController.getInstance().getCurrentPlayer();
+        Session currentSession = player.getCurrentSession();
+        
+        Map map = currentSession.getGame().getMap();
+        List<Player> players = currentSession.getRoom().getAllPlayers();
+        
+        players.stream().filter(p -> p != player).map(map::getCarFromPlayer).forEach(c -> {
+            c.setHandbrakeAction(message.getHandbrakAction());
+            c.setSteerAction(message.getSteerAction());
+            c.setThrottleAction(message.getThrottleAction());
+        });
+    }
+
+    @Override
+    protected void encode(Connection connection, MovePlayerMessage message, ByteBuf buf) throws Exception {
+        throw new UnsupportedOperationException("Encoding is not supported for the Client.");
+    }
+
+    @Override
+    protected MovePlayerMessage decode(Connection connection, ByteBuf buf) throws Exception {
+        String username = ByteBufUtilities.readString(buf);
+        SteerAction steerAction = SteerAction.valueOf(ByteBufUtilities.readString(buf));
+        HandbrakeAction handbrakeAction = HandbrakeAction.valueOf(ByteBufUtilities.readString(buf));
+        ThrottleAction throttleAction = ThrottleAction.valueOf(ByteBufUtilities.readString(buf));
+        
+        return new MovePlayerMessage(username, steerAction, handbrakeAction, throttleAction);
+    }
+    
+}
