@@ -57,6 +57,8 @@ public class GameViewFXMLController implements Initializable {
 
         GameEngine engine = gameCanvas.getGameEngine();
         engine.start();
+        
+        session.getGame().start();
     }
 
     private void initializeMap(Session session, GameCanvas canvas) {
@@ -131,8 +133,9 @@ public class GameViewFXMLController implements Initializable {
         float degree = getAngle(x, y, ballX, ballY) - 90;
 
         Car car = new Car(x, y, degree, player.getCarType(), player);
+        map.addCar(car);
+        
         CarUiFx carUiFx = new CarUiFx(canvas, car, colour);
-
         canvas.addDrawable(carUiFx);
         initializeBoostMeter(car, canvas);
     }

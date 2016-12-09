@@ -33,9 +33,9 @@ public final class PlayerLeftSessionMessageHandler extends MessageHandler<Player
         if (!optional.isPresent()) {
             return;
         }
-        
+
         team.leave(optional.get());
-        
+
         Object controller = Main.getInstance().getController();
         if (controller != null && controller instanceof SessionViewFXMLController) {
             Platform.runLater(() -> ((SessionViewFXMLController) controller).setRoomInfo());
@@ -50,7 +50,16 @@ public final class PlayerLeftSessionMessageHandler extends MessageHandler<Player
     @Override
     protected PlayerLeftSessionMessage decode(Connection connection, ByteBuf buf) throws Exception {
         String username = ByteBufUtilities.readString(buf);
-        TeamColour colour = TeamColour.valueOf(ByteBufUtilities.readString(buf));
+        if (username == null) {
+            return null;
+        }
+
+        if (buf.readableBytes() < 1) {
+            buf.resetReaderIndex();
+            return null;
+        }
+
+        TeamColour colour = TeamColour.parse(buf.readByte());
 
         return new PlayerLeftSessionMessage(username, colour);
     }

@@ -8,16 +8,22 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import nl.soccar.library.Car;
+import nl.soccar.library.enumeration.HandbrakeAction;
+import nl.soccar.library.enumeration.SteerAction;
 import nl.soccar.library.enumeration.TeamColour;
+import nl.soccar.library.enumeration.ThrottleAction;
 import nl.soccar.physics.PhysicsConstants;
 import nl.soccar.physics.models.CarPhysics;
 import nl.soccar.physics.models.WheelPhysics;
+import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
 import nl.soccar.ui.input.Keyboard;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.ImageUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;
+import nl.socnet.message.PlayerMovedMessage;
 
 import java.util.List;
 
@@ -32,14 +38,13 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     private static final Font PLAYER_FONT;
     private static final Color COLOR_WHEEL;
 
-
     static {
         COLOR_WHEEL = Color.grayRgb(50);
         PLAYER_FONT = new Font("Arial", 20);
     }
 
     private Image carTexture;
-    
+
     public CarUiFx(GameCanvas canvas, Car car, TeamColour colour) {
         this(canvas, car, new CarPhysics(car, canvas.getGameEngine().getWorld()), colour);
     }
@@ -47,8 +52,8 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     /**
      * Initiates a new CarUiFx Object using the given parameters.
      *
-     * @param canvas  The canvas on which this Car is placed.
-     * @param car     The model to keep track of.
+     * @param canvas The canvas on which this Car is placed.
+     * @param car The model to keep track of.
      * @param physics The physics-model to keep track of.
      */
     public CarUiFx(GameCanvas canvas, Car car, CarPhysics physics, TeamColour colour) {
@@ -60,10 +65,20 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     @Override
     public void draw(GraphicsContext context) {
         CarPhysics physics = super.getPhysicsModel();
-        
-        super.getModel().setSteerAction(Keyboard.getSteerAction());
-        super.getModel().setHandbrakeAction(Keyboard.getHandbrakeAction());
-        super.getModel().setThrottleAction(Keyboard.getThrottleAction());
+
+        if (ClientController.getInstance().getCurrentPlayer().getUsername().equals(super.getModel().getPlayer().getUsername())) {
+            SteerAction steerAction = Keyboard.getSteerAction();
+            HandbrakeAction handbrakeAction = Keyboard.getHandbrakeAction();
+            ThrottleAction throttleAction = Keyboard.getThrottleAction();
+
+            super.getModel().setSteerAction(steerAction);
+            super.getModel().setHandbrakeAction(handbrakeAction);
+            super.getModel().setThrottleAction(throttleAction);
+
+            // TODO : Change location of sending this message (Ugly implementation for now)
+            Connection connection = ClientController.getInstance().getCurrentConnection();
+            connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
+        }
 
         drawBoostTrail(physics.getTrail(), context);
         physics.getWheels().forEach(w -> drawWheel(w, context));
@@ -146,5 +161,4 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
             o = Math.min(1.0F, o + (1.0F / PhysicsConstants.CAR_BOOST_TRAIL_SIZE));
         }
     }
-
 }

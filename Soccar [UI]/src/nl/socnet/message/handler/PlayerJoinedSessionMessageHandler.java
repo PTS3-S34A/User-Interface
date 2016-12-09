@@ -46,9 +46,18 @@ public final class PlayerJoinedSessionMessageHandler extends MessageHandler<Play
     @Override
     protected PlayerJoinedSessionMessage decode(Connection connection, ByteBuf buf) throws Exception {
         String username = ByteBufUtilities.readString(buf);
-        Privilege privilege = Privilege.valueOf(ByteBufUtilities.readString(buf));
-        CarType type = CarType.valueOf(ByteBufUtilities.readString(buf));
-        TeamColour colour = TeamColour.valueOf(ByteBufUtilities.readString(buf));
+        if (username == null) {
+            return null;
+        }
+
+        if (buf.readableBytes() < 3) {
+            buf.resetReaderIndex();
+            return null;
+        }
+
+        Privilege privilege = Privilege.parse(buf.readByte());
+        CarType type = CarType.parse(buf.readByte());
+        TeamColour colour = TeamColour.parse(buf.readByte());
 
         return new PlayerJoinedSessionMessage(new Player(username, privilege, type), colour);
     }
