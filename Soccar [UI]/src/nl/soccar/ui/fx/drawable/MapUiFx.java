@@ -218,9 +218,6 @@ public class MapUiFx extends Drawable<Map> {
 
         // Draw the grid lines on the map.
         drawGridLines(context, size);
-
-        // Draw the scoreboard
-        drawScoreboard(context, size);
     }
 
     /**
@@ -322,17 +319,6 @@ public class MapUiFx extends Drawable<Map> {
 
         // Right goal
         context.strokeRect(rightGoalX, rightGoalY, rightGoalWidth, rightGoalHeight);
-    }
-
-    private void drawScoreboard(GraphicsContext context, Rectangle mapSize) {
-        float width = PhysicsUtilities.toPixelWidth(MapConstants.SCOREBOARD_WIDTH);
-        float height = PhysicsUtilities.toPixelHeight(MapConstants.SCOREBOARD_HEIGHT);
-
-        float x = PhysicsUtilities.toPixelX(MapUtilities.getCentreX(mapSize) - (MapConstants.SCOREBOARD_WIDTH / 2));
-        float y = PhysicsUtilities.toPixelY((float) mapSize.getHeight());
-
-        context.setFill(Color.BROWN);
-        context.fillRect(x, y, width, height);
     }
 
 }

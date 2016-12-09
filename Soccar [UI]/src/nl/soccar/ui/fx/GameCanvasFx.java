@@ -6,12 +6,13 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
 import nl.soccar.library.Game;
+import nl.soccar.library.enumeration.GameStatus;
+import nl.soccar.physics.PhysicsConstants;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.input.Keyboard;
 
 import java.util.List;
-import nl.soccar.physics.PhysicsConstants;
 
 /**
  * This class is an extension to the GameCanvas class, it provides a way to run the game loop using JavaFX classes.
@@ -35,9 +36,9 @@ public class GameCanvasFx extends GameCanvas {
 
         gameTimer = new Timeline();
         gameTimer.setCycleCount(Timeline.INDEFINITE);
-        gameTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0F / PhysicsConstants.FPS), e -> render()));
+        gameTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0F / PhysicsConstants.UI_FPS), e -> render()));
         gameTimer.playFromStart();
-        
+
         Canvas canvas = context.getCanvas();
         canvas.setOnKeyPressed(e -> Keyboard.setKeyPressed(e.getCode()));
         canvas.setOnKeyReleased(e -> Keyboard.setKeyReleased(e.getCode()));
@@ -47,10 +48,12 @@ public class GameCanvasFx extends GameCanvas {
      * Clears the canvas and renders a frame by drawing all Drawable items.
      */
     private void render() {
-        clear();
 
-        List<Drawable> drawables = super.getDrawables();
-        drawables.forEach(d -> d.draw(context));
+        if (getGameEngine().getGame().getStatus() == GameStatus.RUNNING) {
+            clear();
+            List<Drawable> drawables = super.getDrawables();
+            drawables.forEach(d -> d.draw(context));
+        }
     }
 
     /**
