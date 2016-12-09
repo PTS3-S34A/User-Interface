@@ -59,7 +59,7 @@ public final class PlayerLeftSessionMessageHandler extends MessageHandler<Player
             return null;
         }
 
-        TeamColour colour = TeamColour.valueOf(ByteBufUtilities.readString(buf));
+        TeamColour colour = TeamColour.parse(buf.readByte());
 
         return new PlayerLeftSessionMessage(username, colour);
     }
