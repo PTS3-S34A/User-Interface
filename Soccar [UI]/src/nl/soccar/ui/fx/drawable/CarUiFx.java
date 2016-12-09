@@ -58,7 +58,6 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
      */
     public CarUiFx(GameCanvas canvas, Car car, CarPhysics physics, TeamColour colour) {
         super(canvas, car, physics);
-
         carTexture = ImageUtilities.getCarImage(car.getCarType(), colour); // TODO get team colour.
     }
 
@@ -80,9 +79,9 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
             connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
         }
 
-        drawBoostTrail(physics.getTrail(), context);
+        this.drawBoostTrail(physics.getTrail(), context);
         physics.getWheels().forEach(w -> drawWheel(w, context));
-        drawBody(context);
+        this.drawBody(context);
     }
 
     private void drawBody(GraphicsContext gc) {
