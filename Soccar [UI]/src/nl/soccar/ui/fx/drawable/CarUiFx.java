@@ -61,29 +61,6 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         carTexture = ImageUtilities.getCarImage(car.getCarType(), colour); // TODO get team colour.
     }
 
-    @Override
-    public void draw(GraphicsContext context) {
-        CarPhysics physics = super.getPhysicsModel();
-
-        if (ClientController.getInstance().getCurrentPlayer().getUsername().equals(super.getModel().getPlayer().getUsername())) {
-            SteerAction steerAction = Keyboard.getSteerAction();
-            HandbrakeAction handbrakeAction = Keyboard.getHandbrakeAction();
-            ThrottleAction throttleAction = Keyboard.getThrottleAction();
-
-            super.getModel().setSteerAction(steerAction);
-            super.getModel().setHandbrakeAction(handbrakeAction);
-            super.getModel().setThrottleAction(throttleAction);
-
-            // TODO : Change location of sending this message (Ugly implementation for now)
-            Connection connection = ClientController.getInstance().getCurrentConnection();
-            connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
-        }
-
-        this.drawBoostTrail(physics.getTrail(), context);
-        physics.getWheels().forEach(w -> drawWheel(w, context));
-        this.drawBody(context);
-    }
-
     private void drawBody(GraphicsContext gc) {
         Car car = super.getModel();
 
@@ -159,5 +136,28 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
             gc.strokeLine(prevX, prevY, x, y);
             o = Math.min(1.0F, o + (1.0F / PhysicsConstants.CAR_BOOST_TRAIL_SIZE));
         }
+    }
+
+    @Override
+    public void draw(GraphicsContext context) {
+        CarPhysics physics = super.getPhysicsModel();
+
+        if (ClientController.getInstance().getCurrentPlayer().getUsername().equals(super.getModel().getPlayer().getUsername())) {
+            SteerAction steerAction = Keyboard.getSteerAction();
+            HandbrakeAction handbrakeAction = Keyboard.getHandbrakeAction();
+            ThrottleAction throttleAction = Keyboard.getThrottleAction();
+
+            super.getModel().setSteerAction(steerAction);
+            super.getModel().setHandbrakeAction(handbrakeAction);
+            super.getModel().setThrottleAction(throttleAction);
+
+            // TODO : Change location of sending this message (Ugly implementation for now)
+            Connection connection = ClientController.getInstance().getCurrentConnection();
+            connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
+        }
+
+        this.drawBoostTrail(physics.getTrail(), context);
+        physics.getWheels().forEach(w -> drawWheel(w, context));
+        this.drawBody(context);
     }
 }
