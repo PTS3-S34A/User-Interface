@@ -5,6 +5,7 @@ import nl.soccar.library.Car;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.PhysicsUtilities;
 
 /**
@@ -31,7 +32,8 @@ public class BoostMeterUiFx extends Drawable<Car> {
     @Override
     public void draw(GraphicsContext context) {
         Car car = super.getModel();
-
+        
+        if (car.getPlayer().getUsername().equals(ClientController.getInstance().getCurrentPlayer().getUsername())) {
         float x = PhysicsUtilities.toPixelX(DisplayConstants.BOOST_METER_X);
         float y = PhysicsUtilities.toPixelY(DisplayConstants.BOOST_METER_Y);
         float w = PhysicsUtilities.toPixelWidth(DisplayConstants.BOOST_METER_WIDTH);
@@ -40,6 +42,8 @@ public class BoostMeterUiFx extends Drawable<Car> {
         context.setStroke(DisplayConstants.BOOST_METER_STROKE_COLOR);
         context.setFill(DisplayConstants.BOOST_METER_FILL_COLOR);
         context.fillRect(x, y, w / 100.0F * car.getBoostAmount(), h);
+            
+        }
     }
 
 }
