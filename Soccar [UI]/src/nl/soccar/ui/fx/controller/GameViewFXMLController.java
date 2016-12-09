@@ -83,8 +83,6 @@ public class GameViewFXMLController implements Initializable {
         Room room = session.getRoom();
         Map map = session.getGame().getMap();
 
-        room.getTeamBlue().join(ClientController.getInstance().getCurrentPlayer());
-
         addCars(map, room.getTeamBlue(), canvas);
         addCars(map, room.getTeamRed(), canvas);
     }
