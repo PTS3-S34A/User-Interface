@@ -25,9 +25,11 @@ import nl.soccar.socnet.message.MessageRegistry;
 import nl.soccar.ui.util.PasswordUtilities;
 import nl.socnet.connection.ClientConnectionListener;
 import nl.socnet.message.JoinSessionMessage;
+import nl.socnet.message.MovePlayerMessage;
 import nl.socnet.message.PlayerJoinedSessionMessage;
 import nl.socnet.message.PlayerLeaveSessionMessage;
 import nl.socnet.message.PlayerLeftSessionMessage;
+import nl.socnet.message.PlayerMovedMessage;
 import nl.socnet.message.PlayerStartedGameMessage;
 import nl.socnet.message.RegisterPlayerMessage;
 import nl.socnet.message.StartGameMessage;
@@ -85,6 +87,8 @@ public final class ClientController {
         registry.register(PlayerLeaveSessionMessage.class);
         registry.register(PlayerStartedGameMessage.class);
         registry.register(StartGameMessage.class);
+        registry.register(MovePlayerMessage.class);
+        registry.register(PlayerMovedMessage.class);
 
         client.addListener(new ClientConnectionListener());
 

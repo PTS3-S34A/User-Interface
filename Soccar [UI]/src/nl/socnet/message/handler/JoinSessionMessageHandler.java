@@ -51,22 +51,36 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
 
     @Override
     protected JoinSessionMessage decode(Connection connection, ByteBuf buf) throws Exception {
-        Status status = Status.valueOf(ByteBufUtilities.readString(buf));
+        String statStr = ByteBufUtilities.readString(buf);
+        if (statStr == null) {
+            return null;
+        }
+
+        Status status = Status.valueOf(statStr);
         if (status != Status.SUCCESS) {
             return new JoinSessionMessage(status);
         }
 
         String roomName = ByteBufUtilities.readString(buf);
+        if (roomName == null) {
+            return null;
+        }
+
+        if (buf.readableBytes() < 4) {
+            buf.resetReaderIndex();
+            return null;
+        }
+
         int capacity = buf.readByte();
-        MapType mapType = MapType.valueOf(ByteBufUtilities.readString(buf));
-        BallType ballType = BallType.valueOf(ByteBufUtilities.readString(buf));
-        Duration duration = Duration.valueOf(ByteBufUtilities.readString(buf));
+        MapType mapType = MapType.parse(buf.readByte());
+        BallType ballType = BallType.parse(buf.readByte());
+        Duration duration = Duration.parse(buf.readByte());
 
         GameSettings settings = new GameSettings();
         settings.setBallType(ballType);
         settings.setMapType(mapType);
         settings.setDuration(duration);
-  
+
         return new JoinSessionMessage(status, roomName, capacity, settings);
     }
 

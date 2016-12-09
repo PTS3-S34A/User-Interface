@@ -20,12 +20,12 @@ public final class RegisterPlayerMessageHandler extends MessageHandler<RegisterP
     @Override
     protected void encode(Connection connection, RegisterPlayerMessage message, ByteBuf buf) throws Exception {
         ByteBufUtilities.writeString(message.getUsername(), buf);
-        ByteBufUtilities.writeString(message.getCarType().name(), buf);
+        buf.writeByte(message.getCarType().getId());
     }
 
     @Override
     protected RegisterPlayerMessage decode(Connection connection, ByteBuf buf) throws Exception {
         throw new UnsupportedOperationException("Decoding not supported for Client.");
     }
-    
+
 }
