@@ -12,11 +12,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import nl.soccar.library.Event;
 import nl.soccar.library.Game;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
 import nl.soccar.library.SessionData;
+import nl.soccar.library.enumeration.EventType;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
@@ -65,10 +67,9 @@ public class GameResultsFXMLController implements Initializable {
         currentPlayer = controller.getCurrentPlayer();
         currentSession = currentPlayer.getCurrentSession(); // Will never be null.
 
-        
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
         btnExitResults.setOnAction(e -> closeResults());
-        
+
         tbclBlueUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         tbclRedUsername.setCellValueFactory(new PropertyValueFactory<>("username"));
         tbclBlueGoalsScored.setCellValueFactory(new PropertyValueFactory<>("goalsScored"));
@@ -87,45 +88,52 @@ public class GameResultsFXMLController implements Initializable {
     }
 
     /**
-     * Method that display the current settings of the room on the session view.
+     * Method that displays a summary of the game on the GameResults scene.
      */
     public void setGameInfo() {
         Room room = currentSession.getRoom();
         Game game = currentSession.getGame();
 
-        for(Player p : room.getTeamBlue().getPlayers()) {
+        for (Player p : room.getTeamBlue().getPlayers()) {
             int goals = 0;
+            for (Event e : game.getEvents()) {
+                if (e.getType() == EventType.GOAL_BLUE && e.getPlayer().equals(p)) {
+                    goals++;
+                }
+            }
+
             ResultTableItem r = new ResultTableItem(p.getUsername(), goals);
             tblBlueGoalsList.getItems().add(r);
         }
-      
-        for(Player p : room.getTeamRed().getPlayers()) {
+
+        for (Player p : room.getTeamRed().getPlayers()) {
             int goals = 0;
+            for (Event e : game.getEvents()) {
+                if (e.getType() == EventType.GOAL_BLUE && e.getPlayer().equals(p)) {
+                    goals++;
+                }
+            }
+
             ResultTableItem r = new ResultTableItem(p.getUsername(), goals);
             tblRedGoalsList.getItems().add(r);
         }
-        //TODO: count goals per username.
-        
+
+        StringBuilder scoreString = new StringBuilder();
+        scoreString.append("RED ");
+        scoreString.append(game.getEventCountByType(EventType.GOAL_RED));
+        scoreString.append(" - ");
+        scoreString.append(game.getEventCountByType(EventType.GOAL_BLUE));
+        scoreString.append(" BLUE");
+
+        lblScoreEnd.setText(scoreString.toString());
         lblRoomName.setText("Game Results - " + room.getName());
-        //TODO: Set endscore
-        
     }
 
     /**
-     * Method that navigates to the game view and set the application window to
-     * full screen mode.
-     */
-    public void startGame() {
-        Main main = Main.getInstance();
-        main.setScene(FXMLConstants.LOCATION_GAME_VIEW);
-        main.setFullScreen(true);
-    }
-    
-        /**
      * Method that navigates to back the SessionView screen (Room information).
      */
     public void closeResults() {
         Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
     }
-    
+
 }
