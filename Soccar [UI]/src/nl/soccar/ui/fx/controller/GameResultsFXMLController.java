@@ -121,7 +121,7 @@ public class GameResultsFXMLController implements Initializable {
     private int countGoalsUser(EventType type, Player p) {
         int goals = 0;
         for (Event e : game.getEvents()) {
-            if (e.getType() == EventType.GOAL_BLUE && e.getPlayer().getUsername().equals(p.getUsername())) {
+            if (e.getType() == type && e.getPlayer().getUsername().equals(p.getUsername())) {
                 goals++;
             }
         }
