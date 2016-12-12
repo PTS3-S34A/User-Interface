@@ -109,8 +109,7 @@ public class SessionViewFXMLController implements Initializable {
         Connection connection = controller.getCurrentConnection();
         Room room = currentPlayer.getCurrentSession().getRoom();
         
-        TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(p -> p.getUsername().equals(currentPlayer.getUsername())).count() > 0 ? TeamColour.BLUE: TeamColour.RED;
-        
+        TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(currentPlayer::equals).count() > 0 ? TeamColour.BLUE: TeamColour.RED;
         connection.send(new PlayerLeaveSessionMessage(currentPlayer.getUsername(), colour));
         
         Main main = Main.getInstance();
