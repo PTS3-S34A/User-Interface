@@ -25,6 +25,8 @@ public class RegisterFXMLController implements Initializable {
     @FXML
     private PasswordField txtFieldPassword;
     @FXML
+    private Label lblTitel;
+    @FXML
     private Label lblUsername;
     @FXML
     private Label lblUsernameDescription;
@@ -37,7 +39,7 @@ public class RegisterFXMLController implements Initializable {
         txtFieldPassword.setOnAction(e -> loginOrRegister());
         btnLoginRegister.setOnAction(e -> loginOrRegister());
         btnCancel.setOnAction(e -> Main.getInstance().setScene(FXMLConstants.LOCATION_LOGIN));
-        
+
         setState();
     }
 
@@ -49,15 +51,17 @@ public class RegisterFXMLController implements Initializable {
         ClientController controller = ClientController.getInstance();
         username = controller.getCurrentPlayer().getUsername();
         userExists = controller.checkIfExists(username);
-        
+
         if (userExists) {
+            lblTitel.setText(FXMLConstants.MESSAGE_USERNAME_EXISTS);
             lblUsername.setText(username);
             lblUsernameDescription.setText(FXMLConstants.WARNING_USERNAME_EXISTS);
-            btnLoginRegister.setText(FXMLConstants.BUTTON_USERNAME_EXISTS);
+            btnLoginRegister.setText(FXMLConstants.MESSAGE_USERNAME_EXISTS);
         } else {
+            lblTitel.setText(FXMLConstants.MESSAGE_NEW_USERNAME);
             lblUsername.setText(username);
             lblUsernameDescription.setText(FXMLConstants.WARNING_NEW_USERNAME);
-            btnLoginRegister.setText(FXMLConstants.BUTTON_NEW_USERNAME);
+            btnLoginRegister.setText(FXMLConstants.MESSAGE_NEW_USERNAME);
         }
     }
 
@@ -66,7 +70,7 @@ public class RegisterFXMLController implements Initializable {
         if (!checkInput(password)) {
             return;
         }
-        
+
         ClientController controller = ClientController.getInstance();
 
         if (userExists && controller.checkPassword(username, password) || !userExists && controller.add(username, password)) {
@@ -77,11 +81,11 @@ public class RegisterFXMLController implements Initializable {
     }
 
     private boolean checkInput(String password) {
-        
+
         if (password.length() >= 8) {
             return true;
         }
-        
+
         txtFieldPassword.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         return false;
     }

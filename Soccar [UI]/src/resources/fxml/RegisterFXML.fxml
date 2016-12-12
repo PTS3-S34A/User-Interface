@@ -43,27 +43,27 @@
          <children>
             <AnchorPane prefHeight="600.0" prefWidth="1202.0">
                <children>
-                  <Label fx:id="lblUsername" alignment="CENTER" layoutX="140.0" layoutY="37.0" text="USERNAME" textFill="WHITE" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
-                     <font>
-                        <Font name="Century Gothic" size="24.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="lblUsernameDescription" alignment="CENTER" layoutX="10.0" layoutY="104.0" text="USERNAME EXISTS" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0">
+                  <Label fx:id="lblUsername" alignment="CENTER" layoutX="22.0" layoutY="139.0" text="USERNAME" textFill="WHITE" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="18.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER" layoutX="50.0" layoutY="177.0" text="PASSWORD" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                  <Label fx:id="lblUsernameDescription" alignment="CENTER" layoutX="12.0" layoutY="104.0" text="USERNAME EXISTS" textFill="WHITE" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="8.0">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Label>
-                  <PasswordField fx:id="txtFieldPassword" alignment="CENTER" layoutX="352.0" layoutY="250.0" prefHeight="60.0" prefWidth="497.0" promptText="PASSWORD">
+                  <Label alignment="CENTER" layoutX="50.0" layoutY="198.0" text="PASSWORD" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="txtFieldPassword" alignment="CENTER" layoutX="352.0" layoutY="271.0" prefHeight="60.0" prefWidth="497.0" promptText="PASSWORD">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </PasswordField>
-                  <Button id="play" fx:id="btnLoginRegister" layoutX="528.0" layoutY="349.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="144.0" stylesheets="@../css/Style.css" text="REGISTER" textFill="WHITE" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="528.0">
+                  <Button id="play" fx:id="btnLoginRegister" layoutX="528.0" layoutY="370.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="144.0" stylesheets="@../css/Style.css" text="LOGIN" textFill="WHITE" AnchorPane.leftAnchor="528.0" AnchorPane.rightAnchor="528.0">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
@@ -73,9 +73,14 @@
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Button>
-                  <Label alignment="CENTER" layoutX="490.0" layoutY="215.0" text="ENTER YOUR PASSWORD" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="490.0" layoutY="236.0" text="ENTER YOUR PASSWORD" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblTitel" alignment="CENTER" layoutX="20.0" layoutY="33.0" prefHeight="46.0" prefWidth="1160.0" text="LOGIN" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="36.0" />
                      </font>
                   </Label>
                </children>

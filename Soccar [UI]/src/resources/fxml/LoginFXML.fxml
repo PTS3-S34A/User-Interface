@@ -48,7 +48,7 @@
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Label>
-                  <Label layoutX="305.0" layoutY="38.0" text="CHOOSE YOUR PLAYERNAME" textFill="WHITE">
+                  <Label layoutX="322.0" layoutY="38.0" text="ENTER YOUR PLAYERNAME" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
