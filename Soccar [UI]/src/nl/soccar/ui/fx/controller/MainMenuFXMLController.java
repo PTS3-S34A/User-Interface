@@ -138,9 +138,27 @@ public class MainMenuFXMLController implements Initializable {
 
         Timeline timer = new Timeline();
         timer.setCycleCount(Timeline.INDEFINITE);
-        timer.getKeyFrames().add(new KeyFrame(Duration.millis(1000.0D), e -> updateSessionTable()));
+        timer.getKeyFrames().add(new KeyFrame(Duration.millis(1000.0D), e -> {
+            SessionTableItem selectedItem = model.getSelectedItem();
+            String selected = selectedItem == null ? null : selectedItem.getRoomName();
+
+            updateSessionTable();
+
+            if (selected == null) {
+                return;
+            }
+
+            Optional<SessionTableItem> optional = tblSessionList.getItems().stream().filter(r -> r.getRoomName().equals(selected)).findFirst();
+            if (!optional.isPresent()) {
+                return;
+            }
+
+            tblSessionList.requestFocus();
+            model.select(optional.get());
+            tblSessionList.getFocusModel().focus(model.getSelectedIndex());
+        }));
         timer.playFromStart();
-        
+
         updateSessionTable();
         updateStatisticTable();
     }
@@ -199,7 +217,7 @@ public class MainMenuFXMLController implements Initializable {
                     LOGGER.log(Level.WARNING, "An error while connecting to the game server.", e);
 
                     DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
-                    
+
                     return;
                 }
             }
