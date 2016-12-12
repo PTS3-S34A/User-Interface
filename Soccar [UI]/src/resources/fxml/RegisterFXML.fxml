@@ -43,7 +43,7 @@
          <children>
             <AnchorPane prefHeight="600.0" prefWidth="1202.0">
                <children>
-                  <Label fx:id="lblUsername" alignment="CENTER" layoutX="22.0" layoutY="139.0" text="USERNAME" textFill="WHITE" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="18.0">
+                  <Label fx:id="lblUsername" alignment="CENTER" layoutX="22.0" layoutY="139.0" text="usernamePlaceholder" textFill="WHITE" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="18.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
