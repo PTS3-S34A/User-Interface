@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.soccar.library.Player;
-import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.CarType;
 import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.Client;
@@ -52,14 +51,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
 
         primaryStage.setOnCloseRequest(e -> {
-            ClientController controller = ClientController.getInstance();
-
-            Client client = controller.getClient();
-            Session session = controller.getCurrentPlayer().getCurrentSession();
-
-            if (session != null) {
-                session = null;
-            }
+            Client client = ClientController.getInstance().getClient();
 
             if (client != null) {
                 client.disconnect();

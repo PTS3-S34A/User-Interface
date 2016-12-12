@@ -31,7 +31,7 @@ public class BoostMeterUiFx extends Drawable<Car> {
     public void draw(GraphicsContext context) {
         Car car = super.getModel();
 
-        if (car.getPlayer().getUsername().equals(ClientController.getInstance().getCurrentPlayer().getUsername())) {
+        if (car.getPlayer().equals(ClientController.getInstance().getCurrentPlayer())) {
             float x = PhysicsUtilities.toPixelX(DisplayConstants.BOOST_METER_X);
             float y = PhysicsUtilities.toPixelY(DisplayConstants.BOOST_METER_Y);
             float w = PhysicsUtilities.toPixelWidth(DisplayConstants.BOOST_METER_WIDTH);

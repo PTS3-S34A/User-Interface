@@ -45,6 +45,10 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         PLAYER_FONT = new Font("Arial", 20);
     }
 
+    private ThrottleAction previousThrottleAction;
+    private SteerAction previousSteerAction;
+    private HandbrakeAction previousHandbrakeAction;
+
     private Image carTexture;
 
     public CarUiFx(GameCanvas canvas, Car car, TeamColour colour, Color textColor) {
@@ -54,12 +58,18 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     /**
      * Initiates a new CarUiFx Object using the given parameters.
      *
-     * @param canvas The canvas on which this Car is placed.
-     * @param car The model to keep track of.
+     * @param canvas  The canvas on which this Car is placed.
+     * @param car     The model to keep track of.
      * @param physics The physics-model to keep track of.
      */
     public CarUiFx(GameCanvas canvas, Car car, CarPhysics physics, TeamColour colour, Color textColor) {
         super(canvas, car, physics);
+
+        previousThrottleAction = ThrottleAction.IDLE;
+        previousSteerAction = SteerAction.NONE;
+        previousHandbrakeAction = HandbrakeAction.INACTIVE;
+
+        carTexture = ImageUtilities.getCarImage(car.getCarType(), colour); // TODO get team colour.
         this.textColor = textColor;
         carTexture = ImageUtilities.getCarImage(car.getCarType(), colour);
         
@@ -146,7 +156,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     public void draw(GraphicsContext context) {
         CarPhysics physics = super.getPhysicsModel();
 
-        if (ClientController.getInstance().getCurrentPlayer().getUsername().equals(super.getModel().getPlayer().getUsername())) {
+        if (ClientController.getInstance().getCurrentPlayer().equals(super.getModel().getPlayer())) {
             SteerAction steerAction = Keyboard.getSteerAction();
             HandbrakeAction handbrakeAction = Keyboard.getHandbrakeAction();
             ThrottleAction throttleAction = Keyboard.getThrottleAction();
@@ -156,12 +166,19 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
             super.getModel().setThrottleAction(throttleAction);
 
             // TODO : Change location of sending this message (Ugly implementation for now)
-            Connection connection = ClientController.getInstance().getCurrentConnection();
-            connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
+            if (previousThrottleAction != throttleAction || previousSteerAction != steerAction || previousHandbrakeAction != handbrakeAction) {
+                Connection connection = ClientController.getInstance().getCurrentConnection();
+                connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
+
+                previousThrottleAction = throttleAction;
+                previousSteerAction = steerAction;
+                previousHandbrakeAction = handbrakeAction;
+            }
         }
 
         this.drawBoostTrail(physics.getTrail(), context);
         physics.getWheels().forEach(w -> drawWheel(w, context));
+
         this.drawBody(context);
     }
 }
