@@ -45,7 +45,7 @@
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <TableView id="table" fx:id="tblBlueGoalsList" layoutX="118.0" layoutY="430.0" prefHeight="173.0" prefWidth="652.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
+                  <TableView id="table" fx:id="tblBlueGoalsList" layoutX="108.0" layoutY="432.0" prefHeight="154.0" prefWidth="665.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
                      <columns>
                         <TableColumn fx:id="tbclBlueUsername" prefWidth="412.0" text="USERNAME" />
                         <TableColumn fx:id="tbclBlueGoalsScored" prefWidth="238.0" text="GOALS SCORED" />
@@ -56,7 +56,7 @@
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <TableView id="table" fx:id="tblRedGoalsList" layoutX="118.0" layoutY="229.0" prefHeight="163.0" prefWidth="652.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
+                  <TableView id="table" fx:id="tblRedGoalsList" layoutX="111.0" layoutY="232.0" prefHeight="154.0" prefWidth="665.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
                     <columns>
                       <TableColumn fx:id="tbclRedUsername" prefWidth="412.0" text="USERNAME" />
                       <TableColumn fx:id="tbclRedGoalsScored" prefWidth="238.0" text="GOALS SCORED" />
