@@ -27,9 +27,12 @@ public final class PlayerJoinedSessionMessageHandler extends MessageHandler<Play
     protected void handle(Connection connection, PlayerJoinedSessionMessage message) throws Exception {
         Session currentSession = ClientController.getInstance().getCurrentPlayer().getCurrentSession();
 
+        Player newPlayer = message.getPlayer();
+        newPlayer.setCurrentSession(currentSession);
+        
         Room room = currentSession.getRoom();
         Team team = message.getTeamColour() == TeamColour.BLUE ? room.getTeamBlue() : room.getTeamRed();
-        team.join(message.getPlayer());
+        team.join(newPlayer);
 
         Object controller = Main.getInstance().getController();
         if (controller != null && controller instanceof SessionViewFXMLController) {
