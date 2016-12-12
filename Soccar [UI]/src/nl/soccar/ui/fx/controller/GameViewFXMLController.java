@@ -1,10 +1,13 @@
 package nl.soccar.ui.fx.controller;
 
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Rectangle;
+
 import nl.soccar.library.*;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.physics.GameEngine;
@@ -14,12 +17,13 @@ import nl.soccar.ui.fx.GameCanvasFx;
 import nl.soccar.ui.fx.drawable.*;
 import nl.soccar.ui.rmi.ClientController;
 
-import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.scene.paint.Color;
+import nl.soccar.library.enumeration.MapType;
 
 /**
  * FXML Controller class
@@ -33,6 +37,8 @@ public class GameViewFXMLController implements Initializable {
 
     @FXML
     private Canvas canvas;
+
+    private Color textColor;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -49,6 +55,8 @@ public class GameViewFXMLController implements Initializable {
         Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
         GameCanvas gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
 
+        textColor = session.getGame().getGameSettings().getMapType() == MapType.ICE ? Color.BLACK : Color.WHITE;
+
         initializeMap(session, gameCanvas);
         initializeScoreboard(session, gameCanvas);
         initializeBall(session, gameCanvas);
@@ -57,13 +65,13 @@ public class GameViewFXMLController implements Initializable {
 
         GameEngine engine = gameCanvas.getGameEngine();
         engine.start();
-        
+
         session.getGame().start();
     }
 
     private void initializeMap(Session session, GameCanvas canvas) {
         Map map = session.getGame().getMap();
-        MapUiFx mapUiFx = new MapUiFx(canvas, map);
+        MapUiFx mapUiFx = new MapUiFx(canvas, map, textColor);
 
         canvas.addDrawable(mapUiFx);
         mapUiFx.addWalls();
@@ -96,7 +104,7 @@ public class GameViewFXMLController implements Initializable {
         float x = (float) session.getGame().getMap().getSize().getWidth() / 2;
         float y = (float) session.getGame().getMap().getSize().getHeight() / 2;
 
-        Notification notification = new Notification(x, y, 0, DisplayConstants.NOTIFICATION_DISPLAY_TIME);
+        Notification notification = new Notification(x, y, 0, DisplayConstants.NOTIFICATION_DISPLAY_TIME, textColor);
         NotificationUiFx notificationUiFx = new NotificationUiFx(canvas, notification);
 
         session.getGame().setNotification(notification);
@@ -132,8 +140,8 @@ public class GameViewFXMLController implements Initializable {
 
         Car car = new Car(x, y, degree, player.getCarType(), player);
         map.addCar(car);
-        
-        CarUiFx carUiFx = new CarUiFx(canvas, car, colour);
+
+        CarUiFx carUiFx = new CarUiFx(canvas, car, colour, textColor);
         canvas.addDrawable(carUiFx);
         initializeBoostMeter(car, canvas);
     }

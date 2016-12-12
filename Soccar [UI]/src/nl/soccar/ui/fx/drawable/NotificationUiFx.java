@@ -41,7 +41,7 @@ public class NotificationUiFx extends Drawable<Notification> {
         context.setLineWidth(DisplayConstants.NOTIFICATION_OUTLINE_WIDTH);
         context.setTextAlign(TextAlignment.CENTER);
         context.setFont(DisplayConstants.NOTIFICATION_FONT);
-        context.setFill(DisplayConstants.NOTIFICATION_FILL);
+        context.setFill(notification.getTextColor());
         context.setStroke(DisplayConstants.NOTIFICATION_STROKE);
         context.fillText(notification.getContent(), x, y);
         context.strokeText(notification.getContent(), x, y);
