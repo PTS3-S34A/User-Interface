@@ -13,9 +13,12 @@ import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.input.Keyboard;
 
 import java.util.List;
+import javafx.application.Platform;
+import nl.soccar.ui.Main;
 
 /**
- * This class is an extension to the GameCanvas class, it provides a way to run the game loop using JavaFX classes.
+ * This class is an extension to the GameCanvas class, it provides a way to run
+ * the game loop using JavaFX classes.
  *
  * @author PTS34A
  */
@@ -27,7 +30,8 @@ public class GameCanvasFx extends GameCanvas {
     /**
      * Initiates a new GameCanvasFx object using the given parameters.
      *
-     * @param context The context which can be used by Drawables to actually draw on a Canvas.
+     * @param context The context which can be used by Drawables to actually
+     * draw on a Canvas.
      */
     public GameCanvasFx(Game game, GraphicsContext context) {
         super(game);
@@ -48,11 +52,20 @@ public class GameCanvasFx extends GameCanvas {
      * Clears the canvas and renders a frame by drawing all Drawable items.
      */
     private void render() {
+        GameStatus gameStatus = getGameEngine().getGame().getStatus();
 
-        if (getGameEngine().getGame().getStatus() == GameStatus.RUNNING) {
+        if (gameStatus == GameStatus.RUNNING) {
             clear();
             List<Drawable> drawables = super.getDrawables();
             drawables.forEach(d -> d.draw(context));
+        } else if (gameStatus == GameStatus.STOPPED) {
+            gameTimer.stop();
+            Platform.runLater(() -> {
+                Main main = Main.getInstance();
+                main.setScene(FXMLConstants.LOCATION_GAME_RESULTS);
+                main.setFullScreen(false);
+
+            });
         }
     }
 
