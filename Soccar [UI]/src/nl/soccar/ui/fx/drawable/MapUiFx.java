@@ -44,6 +44,7 @@ public class MapUiFx extends Drawable<Map> {
      *
      * @param canvas The canvas on which this Map is placed.
      * @param model The model to keep track of.
+     * @param lineColor The color of the drawable lines.
      */
     public MapUiFx(GameCanvas canvas, Map model, Color lineColor) {
         super(canvas, model);
