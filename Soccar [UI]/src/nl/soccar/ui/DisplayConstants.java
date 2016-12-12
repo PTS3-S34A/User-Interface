@@ -25,8 +25,8 @@ public final class DisplayConstants {
     /**
      * Map image location constants.
      */
-    public static final String LOCATION_TEXTURE_MOON = "resources/images/moon_texture.jpg";
-    public static final String LOCATION_TEXTURE_DESERT = "resources/images/desert_texture.jpg";
+    public static final String LOCATION_TEXTURE_CHRISTMAS = "resources/images/christmas_texture.jpg";
+    public static final String LOCATION_TEXTURE_ICE = "resources/images/ice_texture.jpg";
     public static final String LOCATION_TEXTURE_GRASS = "resources/images/grass_texture.jpg";
 
     /**
@@ -65,7 +65,9 @@ public final class DisplayConstants {
     /**
      * Entity images properties
      */
-    public static final String LOCATION_TEXTURE_BALL = "resources/images/ball_texture.png";
+    public static final String LOCATION_TEXTURE_SNOWBALL = "resources/images/snowball_texture.png";
+    public static final String LOCATION_TEXTURE_PUCK = "resources/images/puck_texture.png";
+    public static final String LOCATION_TEXTURE_FOOTBALL = "resources/images/football_texture.png";
 
     /**
      * Stage constants.

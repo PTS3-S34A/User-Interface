@@ -23,15 +23,15 @@ import org.jbox2d.dynamics.World;
  */
 public class MapUiFx extends Drawable<Map> {
 
-    private static final Image TEXTURE_MOON;
-    private static final Image TEXTURE_DESERT;
+    private static final Image TEXTURE_CHRISTMAS;
+    private static final Image TEXTURE_ICE;
     private static final Image TEXTURE_GRASS;
     private static final float WALL_WIDTH;
     private static final float CORNER_SIZE;
 
     static {
-        TEXTURE_MOON = new Image(DisplayConstants.LOCATION_TEXTURE_MOON);
-        TEXTURE_DESERT = new Image(DisplayConstants.LOCATION_TEXTURE_DESERT);
+        TEXTURE_ICE = new Image(DisplayConstants.LOCATION_TEXTURE_ICE);
+        TEXTURE_CHRISTMAS = new Image(DisplayConstants.LOCATION_TEXTURE_CHRISTMAS);
         TEXTURE_GRASS = new Image(DisplayConstants.LOCATION_TEXTURE_GRASS);
         WALL_WIDTH = 5.0F;
         CORNER_SIZE = 15.0F;
@@ -203,11 +203,11 @@ public class MapUiFx extends Drawable<Map> {
         double height = PhysicsUtilities.toPixelHeight((float) size.getHeight());
 
         switch (map.getMapType()) {
-            case DESERT:
-                context.drawImage(TEXTURE_DESERT, 0, 0, width, height);
+            case CHRISTMAS:
+                context.drawImage(TEXTURE_CHRISTMAS, 0, 0, width, height);
                 break;
-            case MOON:
-                context.drawImage(TEXTURE_MOON, 0, 0, width, height);
+            case ICE:
+                context.drawImage(TEXTURE_ICE, 0, 0, width, height);
                 break;
             case GRASSLAND:
                 context.drawImage(TEXTURE_GRASS, 0, 0, width, height);
