@@ -7,6 +7,8 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,6 +23,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.TableViewSelectionModel;
 import javafx.scene.control.TextInputDialog;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Duration;
 import nl.soccar.library.Player;
 import nl.soccar.library.SessionData;
 import nl.soccar.library.Statistics;
@@ -133,6 +136,11 @@ public class MainMenuFXMLController implements Initializable {
         tabSession.setOnSelectionChanged(e -> updateSessionTable());
         tabStatistic.setOnSelectionChanged(e -> updateStatisticTable());
 
+        Timeline timer = new Timeline();
+        timer.setCycleCount(Timeline.INDEFINITE);
+        timer.getKeyFrames().add(new KeyFrame(Duration.millis(1000.0D), e -> updateSessionTable()));
+        timer.playFromStart();
+        
         updateSessionTable();
         updateStatisticTable();
     }
