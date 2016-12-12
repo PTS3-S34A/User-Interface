@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.soccar.library.Player;
+import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.CarType;
 import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.Client;
@@ -49,6 +50,21 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
+
+        primaryStage.setOnCloseRequest(e -> {
+            ClientController controller = ClientController.getInstance();
+
+            Client client = controller.getClient();
+            Session session = controller.getCurrentPlayer().getCurrentSession();
+
+            if (session != null) {
+                session = null;
+            }
+
+            if (client != null) {
+                client.disconnect();
+            }
+        });
 
         setScene(FXMLConstants.LOCATION_LOGIN);
     }
@@ -96,21 +112,22 @@ public class Main extends Application {
     }
 
     /**
-     * Logs out the current user and changes the scene to the loginOrRegister menu.
+     * Logs out the current user and changes the scene to the loginOrRegister
+     * menu.
      */
     public void logOut() {
         ClientController controller = ClientController.getInstance();
         controller.setCurrentPlayer(null);
-        
+
         Client client = controller.getClient();
         client.disconnect();
-        
+
         setScene(FXMLConstants.LOCATION_LOGIN);
     }
-    
+
     /**
      * Gets the controller of the current Scene.
-     * 
+     *
      * @return The controller of the current Scene.
      */
     public Object getController() {
@@ -128,15 +145,14 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource(sceneName));
             Parent root = loader.load();
-            
+
             Scene scene = new Scene(root, DisplayConstants.SCREEN_WIDTH, DisplayConstants.SCREEN_HEIGHT);
             scene.setUserData(loader.getController());
-            
 
             primaryStage.setTitle(DisplayConstants.APPLICATION_NAME);
             primaryStage.setScene(scene);
             primaryStage.getIcons().add(new Image(DisplayConstants.LOCATION_STAGE_ICON));
-            
+
             primaryStage.show();
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "An error occurred while changing a scene.", e);
