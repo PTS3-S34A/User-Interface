@@ -69,9 +69,8 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         previousSteerAction = SteerAction.NONE;
         previousHandbrakeAction = HandbrakeAction.INACTIVE;
 
-        carTexture = ImageUtilities.getCarImage(car.getCarType(), colour); // TODO get team colour.
-        this.textColor = textColor;
         carTexture = ImageUtilities.getCarImage(car.getCarType(), colour);
+        this.textColor = textColor;
         
     }
 
