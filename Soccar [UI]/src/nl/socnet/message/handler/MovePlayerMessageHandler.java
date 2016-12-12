@@ -4,9 +4,11 @@ import io.netty.buffer.ByteBuf;
 import java.util.List;
 import nl.soccar.gamecommuncation.util.ByteBufUtilities;
 import nl.soccar.library.Car;
+import nl.soccar.library.Game;
 import nl.soccar.library.Map;
 import nl.soccar.library.Player;
 import nl.soccar.library.Session;
+import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.library.enumeration.HandbrakeAction;
 import nl.soccar.library.enumeration.SteerAction;
 import nl.soccar.library.enumeration.ThrottleAction;
@@ -26,13 +28,16 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
         Player player = ClientController.getInstance().getCurrentPlayer();
         Session currentSession = player.getCurrentSession();
 
-        Map map = currentSession.getGame().getMap();
+        Game game = currentSession.getGame();
+        Map map = game.getMap();
         List<Player> players = currentSession.getRoom().getAllPlayers();
 
-        Car car = players.stream().filter(p -> p.getUsername().equals(message.getUsername())).map(map::getCarFromPlayer).findFirst().get();
-        car.setHandbrakeAction(message.getHandbrakAction());
-        car.setSteerAction(message.getSteerAction());
-        car.setThrottleAction(message.getThrottleAction());
+        if (game.getStatus() == GameStatus.RUNNING) {
+            Car car = players.stream().filter(p -> p.getUsername().equals(message.getUsername())).map(map::getCarFromPlayer).findFirst().get();
+            car.setHandbrakeAction(message.getHandbrakAction());
+            car.setSteerAction(message.getSteerAction());
+            car.setThrottleAction(message.getThrottleAction());
+        }
     }
 
     @Override
