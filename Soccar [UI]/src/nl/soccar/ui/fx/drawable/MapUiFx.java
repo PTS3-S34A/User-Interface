@@ -29,6 +29,8 @@ public class MapUiFx extends Drawable<Map> {
     private static final float WALL_WIDTH;
     private static final float CORNER_SIZE;
 
+    private Color lineColor;
+
     static {
         TEXTURE_ICE = new Image(DisplayConstants.LOCATION_TEXTURE_ICE);
         TEXTURE_CHRISTMAS = new Image(DisplayConstants.LOCATION_TEXTURE_CHRISTMAS);
@@ -43,8 +45,9 @@ public class MapUiFx extends Drawable<Map> {
      * @param canvas The canvas on which this Map is placed.
      * @param model The model to keep track of.
      */
-    public MapUiFx(GameCanvas canvas, Map model) {
+    public MapUiFx(GameCanvas canvas, Map model, Color lineColor) {
         super(canvas, model);
+        this.lineColor = lineColor;
     }
 
     /**
@@ -167,7 +170,7 @@ public class MapUiFx extends Drawable<Map> {
     private void addCornerWalls(float mapWidth, float mapHeight) {
         GameCanvas canvas = super.getGameCanvas();
         World world = canvas.getGameEngine().getWorld();
-        
+
         ObstacleUiFx northWestWallUi = new ObstacleBuilder(canvas, world)
                 .x(0).y(mapHeight).degree(45)
                 .width(CORNER_SIZE).height(CORNER_SIZE)
@@ -260,8 +263,8 @@ public class MapUiFx extends Drawable<Map> {
         double rightGoalHeight = PhysicsUtilities.toPixelHeight((float) rightGoal.getHeight());
 
         // Line color
-        context.setStroke(Color.WHITE);
-        context.setFill(Color.WHITE);
+        context.setStroke(lineColor);
+        context.setFill(lineColor);
 
         // Line width
         context.setLineWidth(lineWidth);

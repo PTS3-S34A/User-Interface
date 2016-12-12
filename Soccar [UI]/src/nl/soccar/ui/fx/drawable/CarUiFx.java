@@ -37,6 +37,8 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
     private static final Font PLAYER_FONT;
     private static final Color COLOR_WHEEL;
+    
+    private Color textColor;
 
     static {
         COLOR_WHEEL = Color.grayRgb(50);
@@ -45,8 +47,8 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
     private Image carTexture;
 
-    public CarUiFx(GameCanvas canvas, Car car, TeamColour colour) {
-        this(canvas, car, new CarPhysics(car, canvas.getGameEngine().getWorld()), colour);
+    public CarUiFx(GameCanvas canvas, Car car, TeamColour colour, Color textColor) {
+        this(canvas, car, new CarPhysics(car, canvas.getGameEngine().getWorld()), colour, textColor);
     }
 
     /**
@@ -56,9 +58,11 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
      * @param car The model to keep track of.
      * @param physics The physics-model to keep track of.
      */
-    public CarUiFx(GameCanvas canvas, Car car, CarPhysics physics, TeamColour colour) {
+    public CarUiFx(GameCanvas canvas, Car car, CarPhysics physics, TeamColour colour, Color textColor) {
         super(canvas, car, physics);
-        carTexture = ImageUtilities.getCarImage(car.getCarType(), colour); // TODO get team colour.
+        this.textColor = textColor;
+        carTexture = ImageUtilities.getCarImage(car.getCarType(), colour);
+        
     }
 
     private void drawBody(GraphicsContext gc) {
@@ -79,7 +83,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
         gc.setTextAlign(TextAlignment.CENTER);
         gc.setFont(PLAYER_FONT);
-        gc.setFill(Color.WHITE);
+        gc.setFill(textColor);
         gc.fillText(car.getPlayer().getUsername(), x, y - height / 1.5); // Draw playername.
 
     }
