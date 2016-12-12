@@ -40,23 +40,23 @@
          <children>
             <AnchorPane prefHeight="569.0" prefWidth="881.0">
                <children>
-                  <Label layoutX="393.0" layoutY="189.0" text="TEAM BLUE" textFill="WHITE">
+                  <Label layoutX="394.0" layoutY="398.0" text="TEAM BLUE" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <TableView id="table" fx:id="tblBlueGoalsList" layoutX="115.0" layoutY="222.0" prefHeight="173.0" prefWidth="651.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
+                  <TableView id="table" fx:id="tblBlueGoalsList" layoutX="118.0" layoutY="430.0" prefHeight="173.0" prefWidth="652.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
                      <columns>
                         <TableColumn fx:id="tbclBlueUsername" prefWidth="412.0" text="USERNAME" />
                         <TableColumn fx:id="tbclBlueGoalsScored" prefWidth="238.0" text="GOALS SCORED" />
                      </columns>
                   </TableView>
-                  <Label layoutX="397.0" layoutY="408.0" text="TEAM RED" textFill="WHITE">
+                  <Label layoutX="398.0" layoutY="198.0" text="TEAM RED" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <TableView id="table" fx:id="tblRedGoalsList" layoutX="117.0" layoutY="442.0" prefHeight="163.0" prefWidth="651.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
+                  <TableView id="table" fx:id="tblRedGoalsList" layoutX="118.0" layoutY="229.0" prefHeight="163.0" prefWidth="652.0" style="-fx-background-color: white;" stylesheets="@../css/Style.css">
                     <columns>
                       <TableColumn fx:id="tbclRedUsername" prefWidth="412.0" text="USERNAME" />
                       <TableColumn fx:id="tbclRedGoalsScored" prefWidth="238.0" text="GOALS SCORED" />
@@ -67,14 +67,19 @@
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Button>
-                  <Label fx:id="lblRoomName" alignment="CENTER" layoutX="206.0" layoutY="35.0" text="Game Results - roomName" textFill="WHITE">
+                  <Label fx:id="lblRoomName" alignment="CENTER" layoutX="17.0" layoutY="82.0" prefHeight="31.0" prefWidth="855.0" text="roomNamePlaceHolder" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="lblScoreEnd" alignment="CENTER" layoutX="324.0" layoutY="147.0" text="RED 0 - 0 BLUE" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="36.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblScoreEnd" alignment="CENTER" layoutX="309.0" layoutY="105.0" text="RED 0 - 0 BLUE" textFill="WHITE">
+                  <Label layoutX="317.0" layoutY="36.0" text="GAME RESULTS" textFill="WHITE">
                      <font>
-                        <Font name="Century Gothic" size="40.0" />
+                        <Font name="Century Gothic" size="36.0" />
                      </font>
                   </Label>
                </children>
