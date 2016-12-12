@@ -18,10 +18,10 @@ public final class FXMLConstants {
     public static final String LOCATION_REGISTER = "resources/fxml/RegisterFXML.fxml";
 
     // GUI warnings & description
-    public static final String WARNING_USERNAME_EXISTS = "THIS USERNAME EXISTS";
-    public static final String WARNING_NEW_USERNAME = "REGISTER THIS USERNAME";
-    public static final String BUTTON_USERNAME_EXISTS = "LOGIN";
-    public static final String BUTTON_NEW_USERNAME = "REGISTER";
+    public static final String WARNING_USERNAME_EXISTS = "USERNAME EXISTS";
+    public static final String WARNING_NEW_USERNAME = "REGISTER USERNAME";
+    public static final String MESSAGE_USERNAME_EXISTS = "LOGIN";
+    public static final String MESSAGE_NEW_USERNAME = "REGISTER";
 
     private FXMLConstants() {
     }
