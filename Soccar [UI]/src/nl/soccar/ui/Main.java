@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import nl.soccar.library.Player;
 import nl.soccar.library.enumeration.CarType;
 import nl.soccar.library.enumeration.Privilege;
+import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.fx.FXMLConstants;
 
@@ -98,7 +99,12 @@ public class Main extends Application {
      * Logs out the current user and changes the scene to the loginOrRegister menu.
      */
     public void logOut() {
-        ClientController.getInstance().setCurrentPlayer(null);
+        ClientController controller = ClientController.getInstance();
+        controller.setCurrentPlayer(null);
+        
+        Client client = controller.getClient();
+        client.disconnect();
+        
         setScene(FXMLConstants.LOCATION_LOGIN);
     }
     
