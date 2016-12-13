@@ -115,7 +115,7 @@ public class GameResultsFXMLController implements Initializable {
         scoreString.append(" BLUE");
         
         lblScoreEnd.setText(scoreString.toString());
-        lblRoomName.setText("Game Results - " + room.getName());
+        lblRoomName.setText(room.getName());
     }
     
     private int countGoalsUser(EventType type, Player p) {
