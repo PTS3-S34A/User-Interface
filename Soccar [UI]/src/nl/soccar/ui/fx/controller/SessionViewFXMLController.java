@@ -29,6 +29,7 @@ import nl.soccar.ui.fx.FXMLConstants;
 import nl.socnet.message.ChatMessage;
 import nl.socnet.message.PlayerLeaveSessionMessage;
 import nl.socnet.message.StartGameMessage;
+import nl.socnet.message.SwitchTeamMessage;
 
 /**
  * FXML Controller class
@@ -36,7 +37,7 @@ import nl.socnet.message.StartGameMessage;
  * @author PTS34A
  */
 public class SessionViewFXMLController implements Initializable {
-    
+
     @FXML
     private Label lblRoomName;
     @FXML
@@ -61,13 +62,17 @@ public class SessionViewFXMLController implements Initializable {
     private TextField txtChat;
     @FXML
     private Button btnChat;
-    
+    @FXML
+    private Button btnSwitchToBlue;
+    @FXML
+    private Button btnSwitchToRed;
+
     private static final Logger LOGGER = Logger.getLogger(SessionViewFXMLController.class.getSimpleName());
-    
+
     private Session currentSession;
-    
+
     private Player currentPlayer;
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ClientController controller = ClientController.getInstance();
@@ -77,29 +82,32 @@ public class SessionViewFXMLController implements Initializable {
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
         btnLeaveRoom.setOnAction(e -> leaveRoom());
         btnStartGame.setOnAction(e -> startGame());
-        
+
         lblUsername.setText(currentPlayer.getUsername());
         lblCar.setText(currentPlayer.getCarType().toString());
-        
+
+        btnSwitchToBlue.setOnAction(e -> switchTeam());
+        btnSwitchToRed.setOnAction(e -> switchTeam());
+
         btnChat.disableProperty().bind(txtChat.textProperty().isEmpty().or(txtChat.textProperty().length().greaterThanOrEqualTo(75)));
         btnChat.setOnAction(e -> sendChatMessage());
         txtChat.setOnAction(e -> sendChatMessage());
-        
+
         lvChat.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
             @Override
             public ListCell<String> call(ListView<String> list) {
                 ListCell cell = new ListCell();
-                
+
                 Text text = new Text();
                 text.wrappingWidthProperty().bind(lvChat.widthProperty().subtract(25));
                 text.textProperty().bind(cell.itemProperty());
-                
+
                 cell.setGraphic(text);
                 cell.setWrapText(true);
                 return cell;
             }
         });
-        
+
         setRoomInfo();
     }
 
@@ -110,19 +118,23 @@ public class SessionViewFXMLController implements Initializable {
         Room room = currentSession.getRoom();
         int occupancy = room.getOccupancy();
         int capacity = room.getCapacity();
-        
+
         lblRoomName.setText(room.getName());
         lblOccupancy.setText(String.format("OCCUPATION: %d/%d", occupancy, capacity));
-        
+
         lvPlayersBlue.setItems(FXCollections.observableArrayList(room.getTeamBlue().getPlayers()));
         lvPlayersRed.setItems(FXCollections.observableArrayList(room.getTeamRed().getPlayers()));
-        
+
         Optional<SessionData> session = ClientController.getInstance().getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
         if (!session.isPresent()) {
             LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
             return;
         }
-        
+
+        TeamColour kut = room.getTeamRed().getPlayers().contains(currentPlayer) ? TeamColour.RED : TeamColour.BLUE;
+        btnSwitchToRed.setDisable(kut == TeamColour.RED);
+        btnSwitchToBlue.setDisable(kut == TeamColour.BLUE);
+
         btnStartGame.setVisible(session.get().getHostName().equals(currentPlayer.getUsername()));
 
         // TODO: btnStartGame.setDisable(occupancy != capacity);
@@ -136,16 +148,16 @@ public class SessionViewFXMLController implements Initializable {
         ClientController controller = ClientController.getInstance();
         Connection connection = controller.getCurrentConnection();
         Room room = currentPlayer.getCurrentSession().getRoom();
-        
+
         TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(currentPlayer::equals).count() > 0 ? TeamColour.BLUE : TeamColour.RED;
         connection.send(new PlayerLeaveSessionMessage(currentPlayer.getUsername(), colour));
-        
+
         Main main = Main.getInstance();
         main.setScene(FXMLConstants.LOCATION_MAIN_MENU);
-        
+
         Client client = controller.getClient();
         client.disconnect();
-        
+
         controller.setCurrentConnection(null);
         currentPlayer.setCurrentSession(null);
     }
@@ -156,7 +168,7 @@ public class SessionViewFXMLController implements Initializable {
      */
     private void startGame() {
         Connection connection = ClientController.getInstance().getCurrentConnection();
-        
+
         connection.send(new StartGameMessage());
     }
 
@@ -168,17 +180,32 @@ public class SessionViewFXMLController implements Initializable {
         if (message.trim().isEmpty() || message.length() >= 75) {
             return;
         }
-        
+
         ClientController.getInstance().getCurrentConnection().send(new ChatMessage(message));
-        
+
         txtChat.clear();
     }
-    
+
+    /**
+     * Adds a new chat message to the list view that is used to display all chat
+     * messages.
+     *
+     * @param username The username of the player that sent the chatmessage.
+     * @param privilege The privilege of the player that sent the chatmessage.
+     * @param message The actual content of the message.
+     */
     public void addChatMessage(String username, Privilege privilege, String message) {
         lvChat.getItems().add(String.format("%s%s: %s", getPrivilegePrefix(privilege), username, message));
         lvChat.scrollTo(lvChat.getItems().size() - 1);
     }
-    
+
+    /**
+     * Gets the privilege prefix that is shown in front of a username is a chat
+     * message.
+     *
+     * @param privilege The privilege that needs to be shortened.
+     * @return The shortened privilege.
+     */
     private String getPrivilegePrefix(Privilege privilege) {
         switch (privilege) {
             case ADMINISTRATOR:
@@ -191,5 +218,9 @@ public class SessionViewFXMLController implements Initializable {
                 throw new UnsupportedOperationException("Unknown user privilege");
         }
     }
-    
+
+    private void switchTeam() {
+        ClientController.getInstance().getCurrentConnection().send(new SwitchTeamMessage());
+    }
+
 }
