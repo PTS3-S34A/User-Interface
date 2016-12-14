@@ -13,24 +13,24 @@ import nl.socnet.message.handler.ChatMessageHandler;
 @MessageEvent(id = MessageConstants.CHAT_MESSAGE_ID, handler = ChatMessageHandler.class)
 public final class ChatMessage extends Message {
 
-    private final String username;
+    private final int playerId;
     private final Privilege privilege;
     private final String message;
 
-    public ChatMessage(String username, Privilege privilege, String message) {
-        this.username = username;
+    public ChatMessage(int playerId, Privilege privilege, String message) {
+        this.playerId = playerId;
         this.privilege = privilege;
         this.message = message;
     }
 
     public ChatMessage(String message) {
-        username = null;
+        playerId = 0;
         privilege = null;
         this.message = message;
     }
 
-    public String getUsername() {
-        return username;
+    public int getPlayerId() {
+        return playerId;
     }
 
     public Privilege getPrivilege() {

@@ -33,7 +33,7 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
         List<Player> players = currentSession.getRoom().getAllPlayers();
 
         if (game.getStatus() == GameStatus.RUNNING) {
-            Car car = players.stream().filter(p -> p.getUsername().equals(message.getUsername())).map(map::getCarFromPlayer).findFirst().get();
+            Car car = players.stream().filter(p -> p.getPlayerId() == message.getPlayerId()).map(map::getCarFromPlayer).findFirst().get();
             car.setHandbrakeAction(message.getHandbrakAction());
             car.setSteerAction(message.getSteerAction());
             car.setThrottleAction(message.getThrottleAction());
@@ -47,22 +47,17 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
 
     @Override
     protected MovePlayerMessage decode(Connection connection, ByteBuf buf) throws Exception {
-        String username = ByteBufUtilities.readString(buf);
-        if (username == null) {
+        if (buf.readableBytes() < 4) {
             buf.resetReaderIndex();
             return null;
         }
 
-        if (buf.readableBytes() < 3) {
-            buf.resetReaderIndex();
-            return null;
-        }
-
+        int id = buf.readByte();
         SteerAction steerAction = SteerAction.parse(buf.readByte());
         HandbrakeAction handbrakeAction = HandbrakeAction.parse(buf.readByte());
         ThrottleAction throttleAction = ThrottleAction.parse(buf.readByte());
 
-        return new MovePlayerMessage(username, steerAction, handbrakeAction, throttleAction);
+        return new MovePlayerMessage(id, steerAction, handbrakeAction, throttleAction);
     }
 
 }
