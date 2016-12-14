@@ -11,12 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.library.SessionData;
+import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
@@ -50,6 +52,11 @@ public class SessionViewFXMLController implements Initializable {
     @FXML
     private Button btnStartGame;
     @FXML
+    private ListView lvChat;
+    @FXML
+    private TextField txtChat;
+    @FXML
+    private Button btnChat;
 
     private static final Logger LOGGER = Logger.getLogger(SessionViewFXMLController.class.getSimpleName());
 
@@ -70,11 +77,15 @@ public class SessionViewFXMLController implements Initializable {
         lblUsername.setText(currentPlayer.getUsername());
         lblCar.setText(currentPlayer.getCarType().toString());
 
+        btnChat.disableProperty().bind(txtChat.textProperty().isEmpty());
+        btnChat.setOnAction(e -> sendChatMessage());
+        txtChat.setOnAction(e -> sendChatMessage());
+
         setRoomInfo();
     }
 
     /**
-     * Method that display the current settings of the room on the session view.
+     * Displays the current settings of the room on the session view.
      */
     public void setRoomInfo() {
         Room room = currentSession.getRoom();
@@ -82,11 +93,11 @@ public class SessionViewFXMLController implements Initializable {
         int capacity = room.getCapacity();
 
         lblRoomName.setText(room.getName());
-        lblOccupancy.setText(String.format("OCCUPANCY: %d/%d", occupancy, capacity));
+        lblOccupancy.setText(String.format("OCCUPATION: %d/%d", occupancy, capacity));
 
         lvPlayersBlue.setItems(FXCollections.observableArrayList(room.getTeamBlue().getPlayers()));
         lvPlayersRed.setItems(FXCollections.observableArrayList(room.getTeamRed().getPlayers()));
-        
+
         Optional<SessionData> session = ClientController.getInstance().getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
         if (!session.isPresent()) {
             LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
@@ -99,34 +110,64 @@ public class SessionViewFXMLController implements Initializable {
     }
 
     /**
-     * Method that removes the player from the current session and navigates to
-     * the main menu view.
+     * Removes the player from the current session and navigates to the main
+     * menu view.
      */
     private void leaveRoom() {
         ClientController controller = ClientController.getInstance();
         Connection connection = controller.getCurrentConnection();
         Room room = currentPlayer.getCurrentSession().getRoom();
-        
-        TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(currentPlayer::equals).count() > 0 ? TeamColour.BLUE: TeamColour.RED;
+
+        TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(currentPlayer::equals).count() > 0 ? TeamColour.BLUE : TeamColour.RED;
         connection.send(new PlayerLeaveSessionMessage(currentPlayer.getUsername(), colour));
-        
+
         Main main = Main.getInstance();
         main.setScene(FXMLConstants.LOCATION_MAIN_MENU);
-        
+
         Client client = controller.getClient();
         client.disconnect();
-        
+
         controller.setCurrentConnection(null);
         currentPlayer.setCurrentSession(null);
     }
 
     /**
-     * Method that navigates to the game view and set the application window to
-     * full screen mode.
+     * Navigates to the game view and set the application window to full screen
+     * mode.
      */
-    public void startGame() {
+    private void startGame() {
         Connection connection = ClientController.getInstance().getCurrentConnection();
-        
+
         connection.send(new StartGameMessage());
     }
+
+    /**
+     * Sends the chatmessage to all players in this session.
+     */
+    private void sendChatMessage() {
+        String message = txtChat.getText();
+        if (message.trim().isEmpty()) {
+            return;
+        }
+
+        txtChat.clear();
+    }
+
+    public void addChatMessage(String username, Privilege privilege, String message) {
+        lvChat.getItems().add(String.format("%s%s: %s", getPrivilegePrefix(privilege), username, message));
+    }
+
+    private String getPrivilegePrefix(Privilege privilege) {
+        switch (privilege) {
+            case ADMINISTRATOR:
+                return "[ADMIN] ";
+            case NORMAL:
+                return "[R] ";
+            case GUEST:
+                return "";
+            default:
+                throw new UnsupportedOperationException("Unknown user privilege");
+        }
+    }
+
 }

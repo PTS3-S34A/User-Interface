@@ -40,41 +40,57 @@
          <children>
             <AnchorPane prefHeight="569.0" prefWidth="881.0">
                <children>
-                  <Label fx:id="lblRoomName" alignment="CENTER" layoutX="218.0" layoutY="81.0" text="roomNamePlaceholder" textFill="WHITE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+                  <Label fx:id="lblRoomName" alignment="CENTER" layoutX="100.0" layoutY="78.0" text="roomNamePlaceholder" textFill="WHITE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
                      <font>
                         <Font name="Century Gothic" size="36.0" />
                      </font>
                   </Label>
-                  <Label layoutX="171.0" layoutY="160.0" text="TEAM BLUE" textFill="WHITE">
+                  <Label layoutX="161.0" layoutY="136.0" text="TEAM BLUE" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <ListView id="list" fx:id="lvPlayersRed" layoutX="8.0" layoutY="192.0" prefHeight="258.0" prefWidth="424.0" stylesheets="@../css/Style.css" />
-                  <Label fx:id="lblRoomStatus" alignment="CENTER" layoutX="105.0" layoutY="466.0" text="STATUS: WAITING FOR OTHER PLAYERS" textFill="WHITE" AnchorPane.leftAnchor="105.0" AnchorPane.rightAnchor="95.0">
+                  <ListView id="list" fx:id="lvPlayersRed" layoutX="73.0" layoutY="168.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
+                  <Label fx:id="lblRoomStatus" layoutX="75.0" layoutY="517.0" prefHeight="24.0" prefWidth="445.0" text="STATUS: WAITING FOR OTHER PLAYERS" textFill="WHITE" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="361.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <ListView id="list" fx:id="lvPlayersBlue" layoutX="452.0" layoutY="192.0" prefHeight="258.0" prefWidth="424.0" stylesheets="@../css/Style.css" />
-                  <Label layoutX="619.0" layoutY="160.0" text="TEAM RED" textFill="WHITE">
+                  <ListView id="list" fx:id="lvPlayersBlue" layoutX="74.0" layoutY="349.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
+                  <Label layoutX="164.0" layoutY="319.0" text="TEAM RED" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblOccupancy" alignment="CENTER" layoutX="96.0" layoutY="499.0" text="OCCUPANCY: 1/2" textFill="WHITE" AnchorPane.leftAnchor="96.0" AnchorPane.rightAnchor="104.0">
+                  <Label fx:id="lblOccupancy" layoutX="74.0" layoutY="550.0" prefHeight="24.0" prefWidth="445.0" text="OCCUPANCY: 1/2" textFill="WHITE" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="362.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <Button id="button" fx:id="btnStartGame" layoutX="392.0" layoutY="539.0" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="START" textFill="WHITE" visible="false">
+                  <Button id="button" fx:id="btnStartGame" layoutX="722.0" layoutY="508.0" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="START" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Button>
-                  <Label alignment="CENTER" layoutX="382.0" layoutY="35.0" text="ROOM" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="382.0" layoutY="32.0" text="ROOM" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="36.0" />
+                     </font>
+                  </Label>
+                  <ListView id="list" fx:id="lvChat" layoutX="401.0" layoutY="168.0" prefHeight="271.0" prefWidth="418.0" stylesheets="@../css/Style.css" />
+                  <TextField fx:id="txtChat" layoutX="401.0" layoutY="447.0" prefHeight="35.0" prefWidth="341.0" promptText="TYPE HERE">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </TextField>
+                  <Button fx:id="btnChat" layoutX="749.0" layoutY="447.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="SEND" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="585.0" layoutY="136.0" text="CHAT" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
                </children>

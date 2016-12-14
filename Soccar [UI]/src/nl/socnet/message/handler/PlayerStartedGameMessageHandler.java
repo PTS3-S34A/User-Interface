@@ -27,7 +27,6 @@ public final class PlayerStartedGameMessageHandler extends MessageHandler<Player
 
         });
         LOGGER.log(Level.INFO, "Started Game.");
-
     }
 
     @Override
