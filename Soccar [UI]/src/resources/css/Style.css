@@ -62,3 +62,9 @@
     -fx-font-size: 24;
     -fx-font-family: "Century Gothic";  
 }
+
+#chat .list-cell {
+    -fx-list-cell-border-color: white;
+    -fx-font-size: 16;
+    -fx-font-family: "Century Gothic";  
+}
