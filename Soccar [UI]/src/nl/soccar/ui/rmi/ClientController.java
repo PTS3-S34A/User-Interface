@@ -24,6 +24,7 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageRegistry;
 import nl.soccar.ui.util.PasswordUtilities;
 import nl.socnet.connection.ClientConnectionListener;
+import nl.socnet.message.ChatMessage;
 import nl.socnet.message.JoinSessionMessage;
 import nl.socnet.message.MovePlayerMessage;
 import nl.socnet.message.PlayerJoinedSessionMessage;
@@ -89,6 +90,7 @@ public final class ClientController {
         registry.register(StartGameMessage.class);
         registry.register(MovePlayerMessage.class);
         registry.register(PlayerMovedMessage.class);
+        registry.register(ChatMessage.class);
 
         client.addListener(new ClientConnectionListener());
 
