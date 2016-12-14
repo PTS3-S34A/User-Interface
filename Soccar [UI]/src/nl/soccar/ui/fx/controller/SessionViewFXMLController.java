@@ -157,7 +157,8 @@ public class SessionViewFXMLController implements Initializable {
     }
 
     public void addChatMessage(String username, Privilege privilege, String message) {
-        lvChat.getItems().add(String.format("%s%s: %s", getPrivilegePrefix(privilege), username, message));
+        lvChat.getItems().add(String.format("%s%s: %s", getPrivilegePrefix(privilege), username, message));        
+        lvChat.scrollTo(lvChat.getItems().size() - 1);
     }
 
     private String getPrivilegePrefix(Privilege privilege) {
