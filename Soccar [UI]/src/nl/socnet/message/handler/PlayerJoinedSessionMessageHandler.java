@@ -27,7 +27,8 @@ public final class PlayerJoinedSessionMessageHandler extends MessageHandler<Play
     protected void handle(Connection connection, PlayerJoinedSessionMessage message) throws Exception {
         Session currentSession = ClientController.getInstance().getCurrentPlayer().getCurrentSession();
 
-        Player newPlayer = message.getPlayer();
+        Player newPlayer = new Player(message.getUsername(), message.getPrivilege(), message.getCarType());
+        newPlayer.setPlayerId(message.getPlayerId());
         newPlayer.setCurrentSession(currentSession);
 
         Room room = currentSession.getRoom();
@@ -48,6 +49,13 @@ public final class PlayerJoinedSessionMessageHandler extends MessageHandler<Play
 
     @Override
     protected PlayerJoinedSessionMessage decode(Connection connection, ByteBuf buf) throws Exception {
+        if (buf.readableBytes() < 1) {
+            buf.resetReaderIndex();
+            return null;
+        }
+
+        int id = buf.readByte();
+
         String username = ByteBufUtilities.readString(buf);
         if (username == null) {
             return null;
@@ -62,7 +70,7 @@ public final class PlayerJoinedSessionMessageHandler extends MessageHandler<Play
         CarType type = CarType.parse(buf.readByte());
         TeamColour colour = TeamColour.parse(buf.readByte());
 
-        return new PlayerJoinedSessionMessage(new Player(username, privilege, type), colour);
+        return new PlayerJoinedSessionMessage(id, username, privilege, type, colour);
     }
 
 }
