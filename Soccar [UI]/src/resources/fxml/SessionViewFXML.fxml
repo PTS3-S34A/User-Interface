@@ -50,19 +50,19 @@
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <ListView id="list" fx:id="lvPlayersRed" layoutX="73.0" layoutY="168.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
+                  <ListView id="list" fx:id="lvPlayersRed" layoutX="72.0" layoutY="349.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
                   <Label fx:id="lblRoomStatus" layoutX="75.0" layoutY="517.0" prefHeight="24.0" prefWidth="445.0" text="STATUS: WAITING FOR OTHER PLAYERS" textFill="WHITE" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="361.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <ListView id="list" fx:id="lvPlayersBlue" layoutX="74.0" layoutY="349.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
+                  <ListView id="list" fx:id="lvPlayersBlue" layoutX="72.0" layoutY="168.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
                   <Label layoutX="164.0" layoutY="319.0" text="TEAM RED" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblOccupancy" layoutX="74.0" layoutY="550.0" prefHeight="24.0" prefWidth="445.0" text="OCCUPANCY: 1/2" textFill="WHITE" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="362.0">
+                  <Label fx:id="lblOccupancy" layoutX="74.0" layoutY="550.0" prefHeight="24.0" prefWidth="445.0" text="OCCUPATION: 1/2" textFill="WHITE" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="362.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
