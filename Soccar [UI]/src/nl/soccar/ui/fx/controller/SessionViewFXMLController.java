@@ -128,9 +128,8 @@ public class SessionViewFXMLController implements Initializable {
      */
     private void leaveRoom() {
         ClientController controller = ClientController.getInstance();
-        Connection connection = controller.getCurrentConnection();
-        Room room = currentPlayer.getCurrentSession().getRoom();
 
+        Connection connection = controller.getCurrentConnection();
         connection.send(new PlayerLeaveSessionMessage());
         
         Main main = Main.getInstance();
