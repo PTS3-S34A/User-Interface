@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
@@ -17,7 +12,7 @@ import nl.socnet.message.ChatMessage;
 
 /**
  *
- * @author Raymond
+ * @author PTS34A
  */
 public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
 
