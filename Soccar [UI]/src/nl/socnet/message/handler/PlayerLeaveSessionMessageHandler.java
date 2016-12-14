@@ -19,8 +19,7 @@ public class PlayerLeaveSessionMessageHandler extends MessageHandler<PlayerLeave
 
     @Override
     protected void encode(Connection connection, PlayerLeaveSessionMessage message, ByteBuf buf) throws Exception {
-        ByteBufUtilities.writeString(message.getUsername(), buf);
-        buf.writeByte(message.getTeamColour().getId());
+        // There's nothing to encode.
     }
 
     @Override

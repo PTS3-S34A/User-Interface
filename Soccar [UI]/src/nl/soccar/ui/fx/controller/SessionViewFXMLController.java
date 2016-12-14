@@ -1,34 +1,30 @@
 package nl.soccar.ui.fx.controller;
 
-import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.text.Text;
 import javafx.util.Callback;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
-import nl.soccar.library.enumeration.TeamColour;
-import nl.soccar.socnet.connection.Connection;
 import nl.soccar.library.SessionData;
 import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.Client;
-import nl.soccar.ui.rmi.ClientController;
+import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.ChatMessage;
 import nl.socnet.message.PlayerLeaveSessionMessage;
 import nl.socnet.message.StartGameMessage;
+
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FXML Controller class
@@ -36,7 +32,8 @@ import nl.socnet.message.StartGameMessage;
  * @author PTS34A
  */
 public class SessionViewFXMLController implements Initializable {
-    
+
+    private static final Logger LOGGER = Logger.getLogger(SessionViewFXMLController.class.getSimpleName());
     @FXML
     private Label lblRoomName;
     @FXML
@@ -61,9 +58,6 @@ public class SessionViewFXMLController implements Initializable {
     private TextField txtChat;
     @FXML
     private Button btnChat;
-    
-    private static final Logger LOGGER = Logger.getLogger(SessionViewFXMLController.class.getSimpleName());
-    
     private Session currentSession;
     
     private Player currentPlayer;
@@ -134,11 +128,9 @@ public class SessionViewFXMLController implements Initializable {
      */
     private void leaveRoom() {
         ClientController controller = ClientController.getInstance();
+
         Connection connection = controller.getCurrentConnection();
-        Room room = currentPlayer.getCurrentSession().getRoom();
-        
-        TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(currentPlayer::equals).count() > 0 ? TeamColour.BLUE : TeamColour.RED;
-        connection.send(new PlayerLeaveSessionMessage(currentPlayer.getUsername(), colour));
+        connection.send(new PlayerLeaveSessionMessage());
         
         Main main = Main.getInstance();
         main.setScene(FXMLConstants.LOCATION_MAIN_MENU);
