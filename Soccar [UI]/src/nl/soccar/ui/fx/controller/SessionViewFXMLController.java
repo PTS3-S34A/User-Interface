@@ -23,6 +23,7 @@ import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.socnet.message.ChatMessage;
 import nl.socnet.message.PlayerLeaveSessionMessage;
 import nl.socnet.message.StartGameMessage;
 
@@ -149,6 +150,8 @@ public class SessionViewFXMLController implements Initializable {
         if (message.trim().isEmpty()) {
             return;
         }
+        
+        ClientController.getInstance().getCurrentConnection().send(new ChatMessage(message));
 
         txtChat.clear();
     }
