@@ -40,7 +40,7 @@
          <children>
             <AnchorPane prefHeight="569.0" prefWidth="881.0">
                <children>
-                  <Label fx:id="lblRoomName" alignment="CENTER" layoutX="100.0" layoutY="78.0" text="roomNamePlaceholder" textFill="WHITE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+                  <Label fx:id="lblRoomName" alignment="CENTER" layoutX="100.0" layoutY="76.0" text="roomNamePlaceholder" textFill="WHITE" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
                      <font>
                         <Font name="Century Gothic" size="36.0" />
                      </font>
@@ -50,40 +50,35 @@
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <ListView id="list" fx:id="lvPlayersRed" layoutX="72.0" layoutY="349.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
-                  <Label fx:id="lblRoomStatus" layoutX="75.0" layoutY="517.0" prefHeight="24.0" prefWidth="445.0" text="STATUS: WAITING FOR OTHER PLAYERS" textFill="WHITE" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="361.0">
+                  <ListView id="list" fx:id="lvPlayersRed" layoutX="72.0" layoutY="388.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
+                  <Label fx:id="lblRoomStatus" layoutX="402.0" layoutY="503.0" prefHeight="24.0" prefWidth="303.0" text="WAITING FOR OTHER PLAYERS" textFill="WHITE" AnchorPane.leftAnchor="402.0" AnchorPane.rightAnchor="176.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
                   <ListView id="list" fx:id="lvPlayersBlue" layoutX="72.0" layoutY="168.0" prefHeight="133.0" prefWidth="276.0" stylesheets="@../css/Style.css" />
-                  <Label layoutX="164.0" layoutY="319.0" text="TEAM RED" textFill="WHITE">
+                  <Label layoutX="164.0" layoutY="358.0" text="TEAM RED" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <Label fx:id="lblOccupancy" layoutX="74.0" layoutY="550.0" prefHeight="24.0" prefWidth="445.0" text="OCCUPATION: 1/2" textFill="WHITE" AnchorPane.leftAnchor="74.0" AnchorPane.rightAnchor="362.0">
+                  <Label fx:id="lblOccupancy" layoutX="401.0" layoutY="536.0" prefHeight="24.0" prefWidth="303.0" text="OCCUPATION: 1/2" textFill="WHITE" AnchorPane.leftAnchor="401.0" AnchorPane.rightAnchor="177.0">
                      <font>
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
-                  <Button id="button" fx:id="btnStartGame" layoutX="722.0" layoutY="508.0" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="START" textFill="WHITE">
-                     <font>
-                        <Font name="Century Gothic" size="24.0" />
-                     </font>
-                  </Button>
-                  <Label alignment="CENTER" layoutX="382.0" layoutY="32.0" text="ROOM" textFill="WHITE">
+                  <Label alignment="CENTER" layoutX="382.0" layoutY="30.0" text="ROOM" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="36.0" />
                      </font>
                   </Label>
-                  <ListView id="chat" fx:id="lvChat" layoutX="401.0" layoutY="168.0" prefHeight="271.0" prefWidth="418.0" stylesheets="@../css/Style.css" />
-                  <TextField fx:id="txtChat" layoutX="401.0" layoutY="447.0" prefHeight="35.0" prefWidth="341.0" promptText="TYPE HERE">
+                  <ListView id="chat" fx:id="lvChat" layoutX="401.0" layoutY="168.0" prefHeight="262.0" prefWidth="418.0" stylesheets="@../css/Style.css" />
+                  <TextField fx:id="txtChat" layoutX="401.0" layoutY="437.0" prefHeight="35.0" prefWidth="341.0" promptText="TYPE HERE">
                      <font>
                         <Font name="Century Gothic" size="18.0" />
                      </font>
                   </TextField>
-                  <Button fx:id="btnChat" layoutX="749.0" layoutY="447.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="SEND" textFill="WHITE">
+                  <Button fx:id="btnChat" layoutX="749.0" layoutY="437.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="SEND" textFill="WHITE">
                      <font>
                         <Font name="Century Gothic" size="18.0" />
                      </font>
@@ -93,6 +88,21 @@
                         <Font name="Century Gothic" size="19.0" />
                      </font>
                   </Label>
+                  <Button fx:id="btnSwitchToRed" disable="true" layoutX="72.0" layoutY="529.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="276.0" style="-fx-background-color: red;" stylesheets="@../css/Style.css" text="SWITCH TO TEAM RED" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnSwitchToBlue" disable="true" layoutX="72.0" layoutY="309.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="276.0" stylesheets="@../css/Style.css" text="SWITCH TO TEAM BLUE" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button id="button" fx:id="btnStartGame" layoutX="722.0" layoutY="496.0" mnemonicParsing="false" prefHeight="66.0" stylesheets="@../css/Style.css" text="START" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>
