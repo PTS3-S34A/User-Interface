@@ -7,6 +7,7 @@ package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
 import nl.soccar.gamecommuncation.util.ByteBufUtilities;
+import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
 import nl.socnet.message.ChatMessage;
@@ -35,13 +36,19 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
             return null;
         }
         
+        if (buf.readableBytes() < 1) {
+            return null;
+        }
+        
+        Privilege privilege = Privilege.parse(buf.readByte());
+        
         String message = ByteBufUtilities.readString(buf);
         
         if (message == null) {
             return null;
         }
         
-        return new ChatMessage(username, message);
+        return new ChatMessage(username, privilege, message);
     }
 
 }
