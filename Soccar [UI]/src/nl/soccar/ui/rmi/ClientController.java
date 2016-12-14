@@ -34,6 +34,7 @@ import nl.socnet.message.PlayerMovedMessage;
 import nl.socnet.message.PlayerStartedGameMessage;
 import nl.socnet.message.RegisterPlayerMessage;
 import nl.socnet.message.StartGameMessage;
+import nl.socnet.message.SwitchTeamMessage;
 
 /**
  * Controller class that is responsible for handling RMI network communication
@@ -91,6 +92,7 @@ public final class ClientController {
         registry.register(MovePlayerMessage.class);
         registry.register(PlayerMovedMessage.class);
         registry.register(ChatMessage.class);
+        registry.register(SwitchTeamMessage.class);
 
         client.addListener(new ClientConnectionListener());
 
