@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import javafx.application.Platform;
 import nl.soccar.gamecommuncation.util.ByteBufUtilities;
 import nl.soccar.library.Player;
-import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;

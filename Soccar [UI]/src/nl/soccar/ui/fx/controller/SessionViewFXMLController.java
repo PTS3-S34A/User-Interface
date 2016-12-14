@@ -11,6 +11,7 @@ import nl.soccar.library.Room;
 import nl.soccar.library.Session;
 import nl.soccar.library.SessionData;
 import nl.soccar.library.enumeration.Privilege;
+import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.Client;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.Main;
@@ -34,6 +35,7 @@ import java.util.logging.Logger;
  */
 public class SessionViewFXMLController implements Initializable {
 
+    private static final Logger LOGGER = Logger.getLogger(SessionViewFXMLController.class.getSimpleName());
     @FXML
     private Label lblRoomName;
     @FXML
@@ -62,9 +64,6 @@ public class SessionViewFXMLController implements Initializable {
     private Button btnSwitchToBlue;
     @FXML
     private Button btnSwitchToRed;
-
-    private static final Logger LOGGER = Logger.getLogger(SessionViewFXMLController.class.getSimpleName());
-
     private Session currentSession;
 
     private Player currentPlayer;
@@ -147,7 +146,7 @@ public class SessionViewFXMLController implements Initializable {
         Room room = currentPlayer.getCurrentSession().getRoom();
 
         TeamColour colour = room.getTeamBlue().getPlayers().stream().filter(currentPlayer::equals).count() > 0 ? TeamColour.BLUE : TeamColour.RED;
-        connection.send(new PlayerLeaveSessionMessage(currentPlayer.getUsername(), colour));
+        connection.send(new PlayerLeaveSessionMessage());
 
         Main main = Main.getInstance();
         main.setScene(FXMLConstants.LOCATION_MAIN_MENU);

@@ -1,13 +1,7 @@
 package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
-import java.util.List;
-import nl.soccar.gamecommuncation.util.ByteBufUtilities;
-import nl.soccar.library.Car;
-import nl.soccar.library.Game;
-import nl.soccar.library.Map;
-import nl.soccar.library.Player;
-import nl.soccar.library.Session;
+import nl.soccar.library.*;
 import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.library.enumeration.HandbrakeAction;
 import nl.soccar.library.enumeration.SteerAction;
@@ -16,6 +10,8 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
 import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.MovePlayerMessage;
+
+import java.util.List;
 
 /**
  *

@@ -1,7 +1,6 @@
 package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
-import nl.soccar.gamecommuncation.util.ByteBufUtilities;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
 import nl.socnet.message.PlayerLeaveSessionMessage;

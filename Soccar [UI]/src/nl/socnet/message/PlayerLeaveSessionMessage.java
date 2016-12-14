@@ -1,6 +1,5 @@
 package nl.socnet.message;
 
-import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.message.Message;
 import nl.soccar.socnet.message.MessageConstants;
 import nl.soccar.socnet.message.MessageEvent;

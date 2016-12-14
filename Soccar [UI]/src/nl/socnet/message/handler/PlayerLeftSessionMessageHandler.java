@@ -5,8 +5,6 @@ import javafx.application.Platform;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
-import nl.soccar.library.Team;
-import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
 import nl.soccar.ui.Main;
