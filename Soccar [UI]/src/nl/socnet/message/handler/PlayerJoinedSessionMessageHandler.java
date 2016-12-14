@@ -29,7 +29,7 @@ public final class PlayerJoinedSessionMessageHandler extends MessageHandler<Play
 
         Player newPlayer = message.getPlayer();
         newPlayer.setCurrentSession(currentSession);
-        
+
         Room room = currentSession.getRoom();
         Team team = message.getTeamColour() == TeamColour.BLUE ? room.getTeamBlue() : room.getTeamRed();
         team.join(newPlayer);
