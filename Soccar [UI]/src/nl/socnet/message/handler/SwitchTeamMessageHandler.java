@@ -45,7 +45,6 @@ public final class SwitchTeamMessageHandler extends MessageHandler<SwitchTeamMes
 
     @Override
     protected void encode(Connection connection, SwitchTeamMessage message, ByteBuf buf) throws Exception {
-        throw new UnsupportedOperationException("Encoding not supported on client.");
     }
 
     @Override
