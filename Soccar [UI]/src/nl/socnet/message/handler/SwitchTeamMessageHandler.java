@@ -1,9 +1,7 @@
 package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
-import java.util.Optional;
 import javafx.application.Platform;
-import nl.soccar.gamecommuncation.util.ByteBufUtilities;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Team;
@@ -14,6 +12,8 @@ import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.controller.SessionViewFXMLController;
 import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.SwitchTeamMessage;
+
+import java.util.Optional;
 
 /**
  *
@@ -27,14 +27,14 @@ public final class SwitchTeamMessageHandler extends MessageHandler<SwitchTeamMes
         Team oldTeam = message.getTeamColour() == TeamColour.BLUE ? room.getTeamRed() : room.getTeamBlue();
         Team newTeam = oldTeam.getTeamColour() == TeamColour.BLUE ? room.getTeamRed() : room.getTeamBlue();
 
-        Optional<Player> player = room.getAllPlayers().stream().filter(p -> p.getUsername().equals(message.getUsername())).findFirst();
-
-        if (!player.isPresent()) {
+        Optional<Player> optional = room.getAllPlayers().stream().filter(p -> p.getPlayerId() == message.getPlayerId()).findFirst();
+        if (!optional.isPresent()) {
             return;
         }
 
-        oldTeam.leave(player.get());
-        newTeam.join(player.get());
+        Player player = optional.get();
+        oldTeam.leave(player);
+        newTeam.join(player);
 
         Object controller = Main.getInstance().getController();
         if (controller != null && controller instanceof SessionViewFXMLController) {
@@ -49,20 +49,14 @@ public final class SwitchTeamMessageHandler extends MessageHandler<SwitchTeamMes
 
     @Override
     protected SwitchTeamMessage decode(Connection connection, ByteBuf buf) throws Exception {
-        String username = ByteBufUtilities.readString(buf);
-
-        if (username == null) {
-            return null;
-        }
-
-        if (buf.readableBytes() < 1) {
+        if (buf.readableBytes() < 2) {
             buf.resetReaderIndex();
             return null;
         }
 
+        int id = buf.readByte();
         TeamColour team = TeamColour.parse(buf.readByte());
-
-        return new SwitchTeamMessage(username, team);
+        return new SwitchTeamMessage(id, team);
     }
 
 }
