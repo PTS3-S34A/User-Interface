@@ -1,15 +1,5 @@
 package nl.soccar.ui.rmi;
 
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.util.List;
-import java.util.Properties;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import nl.soccar.library.Player;
 import nl.soccar.library.SessionData;
 import nl.soccar.library.Statistics;
@@ -24,17 +14,18 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageRegistry;
 import nl.soccar.ui.util.PasswordUtilities;
 import nl.socnet.connection.ClientConnectionListener;
-import nl.socnet.message.ChatMessage;
-import nl.socnet.message.JoinSessionMessage;
-import nl.socnet.message.MovePlayerMessage;
-import nl.socnet.message.PlayerJoinedSessionMessage;
-import nl.socnet.message.PlayerLeaveSessionMessage;
-import nl.socnet.message.PlayerLeftSessionMessage;
-import nl.socnet.message.PlayerMovedMessage;
-import nl.socnet.message.PlayerStartedGameMessage;
-import nl.socnet.message.RegisterPlayerMessage;
-import nl.socnet.message.StartGameMessage;
-import nl.socnet.message.SwitchTeamMessage;
+import nl.socnet.message.*;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.util.List;
+import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Controller class that is responsible for handling RMI network communication
@@ -48,11 +39,9 @@ public final class ClientController {
     private static final Logger LOGGER = Logger.getLogger(ClientController.class.getSimpleName());
 
     private static final ClientController INSTANCE = new ClientController();
-
+    private final Client client = new Client();
     private IClientUnauthenticated clientUnauthenticated;
     private IClientAuthenticated clientAuthenticated;
-
-    private final Client client = new Client();
     private Connection currentConnection;
     private Player currentPlayer;
 
@@ -80,6 +69,15 @@ public final class ClientController {
         initializeConnection();
     }
 
+    /**
+     * Gets the Singleton instance of the ClientController class.
+     *
+     * @return The Singleton instance of the ClientController class.
+     */
+    public static ClientController getInstance() {
+        return INSTANCE;
+    }
+
     private void initializeConnection() {
         MessageRegistry registry = client.getMessageRegistry();
         registry.register(RegisterPlayerMessage.class);
@@ -93,18 +91,11 @@ public final class ClientController {
         registry.register(PlayerMovedMessage.class);
         registry.register(ChatMessage.class);
         registry.register(SwitchTeamMessage.class);
+        registry.register(PlayerSyncMessage.class);
+        registry.register(BallSyncMessage.class);
 
         client.addListener(new ClientConnectionListener());
 
-    }
-
-    /**
-     * Gets the Singleton instance of the ClientController class.
-     *
-     * @return The Singleton instance of the ClientController class.
-     */
-    public static ClientController getInstance() {
-        return INSTANCE;
     }
 
     public boolean add(String username, String password) {

@@ -37,14 +37,13 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
     private static final Font PLAYER_FONT;
     private static final Color COLOR_WHEEL;
-    
-    private Color textColor;
 
     static {
         COLOR_WHEEL = Color.grayRgb(50);
         PLAYER_FONT = new Font("Arial", 20);
     }
 
+    private Color textColor;
     private ThrottleAction previousThrottleAction;
     private SteerAction previousSteerAction;
     private HandbrakeAction previousHandbrakeAction;
@@ -71,7 +70,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
         carTexture = ImageUtilities.getCarImage(car.getCarType(), colour);
         this.textColor = textColor;
-        
+
     }
 
     private void drawBody(GraphicsContext gc) {
