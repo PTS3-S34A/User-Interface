@@ -63,6 +63,11 @@ public final class ClientController {
         return INSTANCE;
     }
 
+    /**
+     * Initializes the main-server connection
+     * @throws IOException
+     * @throws NotBoundException 
+     */
     public void initialize() throws IOException, NotBoundException {
         Properties props = new Properties();
 

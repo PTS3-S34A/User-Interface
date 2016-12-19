@@ -16,7 +16,6 @@ import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.fx.FXMLConstants;
 import java.rmi.NotBoundException;
-import java.rmi.RemoteException;
 import javafx.scene.control.Alert;
 import nl.soccar.ui.util.FxUtilities;
 
