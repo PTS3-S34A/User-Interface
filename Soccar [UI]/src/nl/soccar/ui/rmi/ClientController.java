@@ -65,14 +65,16 @@ public final class ClientController {
 
     /**
      * Initializes the main-server connection
+     *
      * @throws IOException
-     * @throws NotBoundException 
+     * @throws NotBoundException
      */
     public void initialize() throws IOException, NotBoundException {
         Properties props = new Properties();
 
-        FileInputStream input = new FileInputStream(LOCATION_PROPERTIES);
-        props.load(input);
+        try (FileInputStream input = new FileInputStream(LOCATION_PROPERTIES)) {
+            props.load(input);
+        }
 
         Registry r = LocateRegistry.getRegistry(props.getProperty("mainserver"), RmiConstants.PORT_NUMBER_CLIENT);
         clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_MAIN_SERVER_FOR_CLIENT);

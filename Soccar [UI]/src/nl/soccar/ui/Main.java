@@ -97,7 +97,6 @@ public class Main extends Application {
         } catch (IOException | NotBoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
-            setScene(FXMLConstants.LOCATION_LOGIN);
             return;
         }
 
@@ -119,7 +118,6 @@ public class Main extends Application {
         } catch (IOException | NotBoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
-            setScene(FXMLConstants.LOCATION_LOGIN);
             return;
         }
 
