@@ -159,16 +159,10 @@ public class CreateRoomFXMLController implements Initializable {
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(roomName);
 
-        boolean accepted = true;
+        boolean accepted = m.matches();
 
-        if (!m.matches()) {
-            accepted = false;
+        if (!accepted) {
             textFieldRoomName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
-        }
-
-        if (password.length() > 0 && password.length() < 8) {
-            accepted = false;
-            textFieldPassword.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         }
 
         return accepted;
