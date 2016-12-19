@@ -200,6 +200,10 @@ public class SessionViewFXMLController implements Initializable {
      * @return The shortened privilege.
      */
     private String getPrivilegePrefix(Privilege privilege) {
+        if (privilege == null) {
+            return "";
+        }
+
         switch (privilege) {
             case ADMINISTRATOR:
                 return "[ADMIN] ";

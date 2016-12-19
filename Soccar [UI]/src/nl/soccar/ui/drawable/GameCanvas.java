@@ -1,13 +1,13 @@
 package nl.soccar.ui.drawable;
 
-import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.library.Game;
+import nl.soccar.physics.GameEngine;
+import nl.soccar.physics.WorldObject;
+import nl.soccar.physics.models.CarPhysics;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import nl.soccar.physics.GameEngine;
-import nl.soccar.ui.drawable.PhysicsDrawable;
 
 /**
  * A canvas keeps track of Drawables. It updates them and provides a way to draw
@@ -45,7 +45,15 @@ public abstract class GameCanvas {
     
     public final void addDrawable(PhysicsDrawable drawable) {
         drawables.add(drawable);
-        engine.addWorldObject(drawable.getPhysicsModel());
+
+        WorldObject object = drawable.getPhysicsModel();
+        if (object instanceof CarPhysics) {
+            CarPhysics car = (CarPhysics) object;
+
+            engine.addCar(car.getCar().getPlayer(), car);
+        } else {
+            engine.addWorldObject(drawable.getPhysicsModel());
+        }
     }
 
     /**
@@ -60,7 +68,15 @@ public abstract class GameCanvas {
     
     public final void removeDrawable(PhysicsDrawable drawable) {
         drawables.remove(drawable);
-        engine.removeWorldObject(drawable.getPhysicsModel());
+
+        WorldObject object = drawable.getPhysicsModel();
+        if (object instanceof CarPhysics) {
+            CarPhysics car = (CarPhysics) object;
+
+            engine.removeCar(car.getCar().getPlayer());
+        } else {
+            engine.removeWorldObject(drawable.getPhysicsModel());
+        }
     }
 
     public final GameEngine getGameEngine() {

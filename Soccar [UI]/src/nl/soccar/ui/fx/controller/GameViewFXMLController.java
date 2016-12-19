@@ -1,14 +1,13 @@
 package nl.soccar.ui.fx.controller;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
-
 import nl.soccar.library.*;
+import nl.soccar.library.enumeration.MapType;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.physics.GameEngine;
 import nl.soccar.ui.DisplayConstants;
@@ -17,13 +16,12 @@ import nl.soccar.ui.fx.GameCanvasFx;
 import nl.soccar.ui.fx.drawable.*;
 import nl.soccar.ui.rmi.ClientController;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.ResourceBundle;
-import javafx.scene.paint.Color;
-import nl.soccar.library.enumeration.MapType;
 
 /**
  * FXML Controller class
@@ -38,7 +36,18 @@ public class GameViewFXMLController implements Initializable {
     @FXML
     private Canvas canvas;
 
+    private GameCanvas gameCanvas;
     private Color textColor;
+
+    private static float getAngle(float sourceX, float sourceY, float targetX, float targetY) {
+        float angle = (float) Math.toDegrees(Math.atan2(targetY - sourceY, targetX - sourceX));
+
+        if (angle < 0) {
+            angle += 360;
+        }
+
+        return angle;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -53,7 +62,7 @@ public class GameViewFXMLController implements Initializable {
         canvas.setFocusTraversable(true);
 
         Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
-        GameCanvas gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
+        gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
 
         textColor = session.getGame().getGameSettings().getMapType() == MapType.ICE ? Color.BLACK : Color.WHITE;
 
@@ -143,17 +152,12 @@ public class GameViewFXMLController implements Initializable {
 
         CarUiFx carUiFx = new CarUiFx(canvas, car, colour, textColor);
         canvas.addDrawable(carUiFx);
+
         initializeBoostMeter(car, canvas);
     }
 
-    private static float getAngle(float sourceX, float sourceY, float targetX, float targetY) {
-        float angle = (float) Math.toDegrees(Math.atan2(targetY - sourceY, targetX - sourceX));
-
-        if (angle < 0) {
-            angle += 360;
-        }
-
-        return angle;
+    public GameCanvas getGameCanvas() {
+        return gameCanvas;
     }
 
 }

@@ -24,13 +24,24 @@ public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
     protected void handle(Connection connection, ChatMessage message) throws Exception {
         Object controller = Main.getInstance().getController();
         if (controller != null && controller instanceof SessionViewFXMLController) {
-            Optional<Player> optional = ClientController.getInstance().getCurrentPlayer().getCurrentSession().getRoom().getAllPlayers().stream().filter(p -> p.getPlayerId() == message.getPlayerId()).findFirst();
-            if (!optional.isPresent()) {
-                return;
+            String username;
+            Privilege privilege;
+
+            if (message.getPlayerId() == -1) {
+                username = "[SYSTEM]";
+                privilege = null;
+            } else {
+                Optional<Player> optional = ClientController.getInstance().getCurrentPlayer().getCurrentSession().getRoom().getAllPlayers().stream().filter(p -> p.getPlayerId() == message.getPlayerId()).findFirst();
+                if (!optional.isPresent()) {
+                    return;
+                }
+
+                username = optional.get().getUsername();
+                privilege = message.getPrivilege();
             }
 
             SessionViewFXMLController view = (SessionViewFXMLController) controller;
-            Platform.runLater(() -> view.addChatMessage(optional.get().getUsername(), message.getPrivilege(), message.getMessage()));
+            Platform.runLater(() -> view.addChatMessage(username, privilege, message.getMessage()));
         }
     }
 
