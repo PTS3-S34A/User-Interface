@@ -15,6 +15,9 @@ import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.fx.FXMLConstants;
+import java.rmi.NotBoundException;
+import javafx.scene.control.Alert;
+import nl.soccar.ui.util.FxUtilities;
 
 /**
  * Entry point of the Soccar application. The Main class keeps track of the user
@@ -87,7 +90,16 @@ public class Main extends Application {
      * @param selectedCar The selected car of the Player.
      */
     public void loginOrRegister(String username, CarType selectedCar) {
-        ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.NORMAL, selectedCar));
+        ClientController clientController = ClientController.getInstance();
+        clientController.setCurrentPlayer(new Player(username, Privilege.NORMAL, selectedCar));
+        try {
+            clientController.initialize();
+        } catch (IOException | NotBoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
+            return;
+        }
+
         setScene(FXMLConstants.LOCATION_REGISTER);
     }
 
@@ -99,7 +111,16 @@ public class Main extends Application {
      * @param selectedCar The selected car of the Player.
      */
     public void playAsGuest(String username, CarType selectedCar) {
-        ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.GUEST, selectedCar));
+        ClientController clientController = ClientController.getInstance();
+        clientController.setCurrentPlayer(new Player(username, Privilege.GUEST, selectedCar));
+        try {
+            clientController.initialize();
+        } catch (IOException | NotBoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
+            return;
+        }
+
         setScene(FXMLConstants.LOCATION_MAIN_MENU);
     }
 

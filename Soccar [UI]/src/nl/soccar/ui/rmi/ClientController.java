@@ -51,21 +51,6 @@ public final class ClientController {
      * that is supplied in the properties file.
      */
     private ClientController() {
-        Properties props = new Properties();
-
-        try (FileInputStream input = new FileInputStream(LOCATION_PROPERTIES)) {
-            props.load(input);
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "An error occurred while loading the mainserver properties file.", e);
-        }
-
-        try {
-            Registry r = LocateRegistry.getRegistry(props.getProperty("mainserver"), RmiConstants.PORT_NUMBER_CLIENT);
-            clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_MAIN_SERVER_FOR_CLIENT);
-        } catch (RemoteException | NotBoundException e) {
-            LOGGER.log(Level.WARNING, "An error occurred while connecting to the Main server through RMI.", e);
-        }
-
         initializeConnection();
     }
 
@@ -76,6 +61,23 @@ public final class ClientController {
      */
     public static ClientController getInstance() {
         return INSTANCE;
+    }
+
+    /**
+     * Initializes the main-server connection
+     *
+     * @throws IOException
+     * @throws NotBoundException
+     */
+    public void initialize() throws IOException, NotBoundException {
+        Properties props = new Properties();
+
+        try (FileInputStream input = new FileInputStream(LOCATION_PROPERTIES)) {
+            props.load(input);
+        }
+
+        Registry r = LocateRegistry.getRegistry(props.getProperty("mainserver"), RmiConstants.PORT_NUMBER_CLIENT);
+        clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_MAIN_SERVER_FOR_CLIENT);
     }
 
     private void initializeConnection() {
