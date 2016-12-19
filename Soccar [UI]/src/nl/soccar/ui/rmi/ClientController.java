@@ -63,14 +63,11 @@ public final class ClientController {
         return INSTANCE;
     }
 
-    public void initialize() throws RemoteException, NotBoundException {
+    public void initialize() throws IOException, NotBoundException {
         Properties props = new Properties();
 
-        try (FileInputStream input = new FileInputStream(LOCATION_PROPERTIES)) {
-            props.load(input);
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "An error occurred while loading the mainserver properties file.", e);
-        }
+        FileInputStream input = new FileInputStream(LOCATION_PROPERTIES);
+        props.load(input);
 
         Registry r = LocateRegistry.getRegistry(props.getProperty("mainserver"), RmiConstants.PORT_NUMBER_CLIENT);
         clientUnauthenticated = (IClientUnauthenticated) r.lookup(RmiConstants.BINDING_NAME_MAIN_SERVER_FOR_CLIENT);
@@ -175,5 +172,5 @@ public final class ClientController {
     public void setCurrentPlayer(Player currentPlayer) {
         this.currentPlayer = currentPlayer;
     }
-    
+
 }

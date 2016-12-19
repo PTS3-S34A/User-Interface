@@ -30,8 +30,8 @@ public final class FXMLConstants {
     public static final String MESSAGE_CAR_NOT_SELECTED = "You'll need to select a car.";
 
     // Alert titles & messages
-    public static final String ALERT_TITLE_CAR_NOT_SELECTED = "Couldn't connect to the server.";
-    public static final String ALERT_MESSAGE_CAR_NOT_SELECTED = "Did a mice chew on your internetcable?";
+    public static final String ALERT_TITLE_NO_CONNECTION = "Couldn't connect to the server.";
+    public static final String ALERT_MESSAGE_NO_CONNECTION = "Did a mice chew on your internetcable?";
 
     private FXMLConstants() {
     }

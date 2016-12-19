@@ -91,12 +91,13 @@ public class Main extends Application {
      * @param selectedCar The selected car of the Player.
      */
     public void loginOrRegister(String username, CarType selectedCar) {
-        ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.NORMAL, selectedCar));
+        ClientController clientController = ClientController.getInstance();
+        clientController.setCurrentPlayer(new Player(username, Privilege.NORMAL, selectedCar));
         try {
-            ClientController.getInstance().initialize();
-        } catch (RemoteException | NotBoundException ex) {
+            clientController.initialize();
+        } catch (IOException | NotBoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_CAR_NOT_SELECTED, FXMLConstants.ALERT_MESSAGE_CAR_NOT_SELECTED, Alert.AlertType.ERROR);
+            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
             setScene(FXMLConstants.LOCATION_LOGIN);
             return;
         }
@@ -112,12 +113,13 @@ public class Main extends Application {
      * @param selectedCar The selected car of the Player.
      */
     public void playAsGuest(String username, CarType selectedCar) {
-        ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.GUEST, selectedCar));
+        ClientController clientController = ClientController.getInstance();
+        clientController.setCurrentPlayer(new Player(username, Privilege.GUEST, selectedCar));
         try {
-            ClientController.getInstance().initialize();
-        } catch (RemoteException | NotBoundException ex) {
+            clientController.initialize();
+        } catch (IOException | NotBoundException ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_CAR_NOT_SELECTED, FXMLConstants.ALERT_MESSAGE_CAR_NOT_SELECTED, Alert.AlertType.ERROR);
+            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
             setScene(FXMLConstants.LOCATION_LOGIN);
             return;
         }
