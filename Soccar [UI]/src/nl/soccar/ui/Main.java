@@ -15,6 +15,10 @@ import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.Client;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.fx.FXMLConstants;
+import java.rmi.NotBoundException;
+import java.rmi.RemoteException;
+import javafx.scene.control.Alert;
+import nl.soccar.ui.util.FxUtilities;
 
 /**
  * Entry point of the Soccar application. The Main class keeps track of the user
@@ -88,6 +92,15 @@ public class Main extends Application {
      */
     public void loginOrRegister(String username, CarType selectedCar) {
         ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.NORMAL, selectedCar));
+        try {
+            ClientController.getInstance().initialize();
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_CAR_NOT_SELECTED, FXMLConstants.ALERT_MESSAGE_CAR_NOT_SELECTED, Alert.AlertType.ERROR);
+            setScene(FXMLConstants.LOCATION_LOGIN);
+            return;
+        }
+
         setScene(FXMLConstants.LOCATION_REGISTER);
     }
 
@@ -100,6 +113,15 @@ public class Main extends Application {
      */
     public void playAsGuest(String username, CarType selectedCar) {
         ClientController.getInstance().setCurrentPlayer(new Player(username, Privilege.GUEST, selectedCar));
+        try {
+            ClientController.getInstance().initialize();
+        } catch (RemoteException | NotBoundException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_CAR_NOT_SELECTED, FXMLConstants.ALERT_MESSAGE_CAR_NOT_SELECTED, Alert.AlertType.ERROR);
+            setScene(FXMLConstants.LOCATION_LOGIN);
+            return;
+        }
+
         setScene(FXMLConstants.LOCATION_MAIN_MENU);
     }
 
