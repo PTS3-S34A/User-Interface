@@ -57,8 +57,7 @@ public final class GamePad {
             return;
         }
 
-        Component[] components = controller.getComponents();
-        for (Component c : components) {
+        for (Component c : controller.getComponents()) {
             Component.Identifier componentIdentifier = c.getIdentifier();
             processButtonActions(c, componentIdentifier);
             processAnalogActions(c, componentIdentifier);
@@ -118,7 +117,6 @@ public final class GamePad {
         } else if (componentIdentifier == Component.Identifier.Button._0 && !isPressed && throttleAction != ThrottleAction.ACCELERATE && throttleAction != ThrottleAction.REVERSE) {
             throttleAction = ThrottleAction.IDLE;
         }
-
     }
 
     private void processBrakeAction(Component.Identifier componentIdentifier, boolean isPressed) {
@@ -139,7 +137,7 @@ public final class GamePad {
      * @return value of axis in percentage.
      */
     private int getAxisValueInPercentage(float axisValue) {
-        return (int) (((2 - (1 - axisValue)) * 100) / 2);
+        return (int) (2 - (1 - axisValue)) * 100 / 2;
     }
 
     public boolean isConnected() {

@@ -18,6 +18,7 @@ import nl.soccar.library.enumeration.ThrottleAction;
 public final class InputController {
 
     private static final InputController INSTANCE = new InputController();
+    private static final int POLL_TIME = 50;
 
     private ThrottleAction throttleAction;
     private HandbrakeAction handbrakeAction;
@@ -44,7 +45,7 @@ public final class InputController {
             public void run() {
                 poll();
             }
-        }, 0, 50);
+        }, 0, POLL_TIME);
     }
 
     private void poll() {
@@ -61,7 +62,7 @@ public final class InputController {
 
     private void pollKeyboard() {
         setThrottleAction(keyboard.getThrottleAction());
-        setHandbrakeAction(keyboard.getHandbrakAction());
+        setHandbrakeAction(keyboard.getHandbrakeAction());
         setSteerAction(keyboard.getSteerAction());
     }
 

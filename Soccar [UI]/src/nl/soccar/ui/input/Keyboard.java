@@ -72,10 +72,8 @@ public final class Keyboard {
      * @param code The keycode that needs to be added to the pressedKeys list.
      */
     public void setKeyPressed(KeyCode code) {
-        synchronized (PRESSED_KEYS) {
-            if (!PRESSED_KEYS.contains(code)) {
-                PRESSED_KEYS.add(0, code); // Prepend to the list, so the last key pressed gets first priority
-            }
+        if (!PRESSED_KEYS.contains(code)) {
+            PRESSED_KEYS.add(0, code); // Prepend to the list, so the last key pressed gets first priority
         }
     }
 
@@ -85,9 +83,7 @@ public final class Keyboard {
      * @param code The keycode that needs to be removed of the pressedKeys list.
      */
     public void setKeyReleased(KeyCode code) {
-        synchronized (PRESSED_KEYS) {
-            PRESSED_KEYS.remove(code);
-        }
+        PRESSED_KEYS.remove(code);
     }
 
     /**
@@ -139,9 +135,9 @@ public final class Keyboard {
     /**
      * Returns the correct HandbrakeAction based on the current pressed keys
      *
-     * @return HandbtakeAction
+     * @return HandbrakeAction
      */
-    HandbrakeAction getHandbrakAction() {
+    HandbrakeAction getHandbrakeAction  () {
 
         for (KeyCode pressedKey : PRESSED_KEYS) {
 
