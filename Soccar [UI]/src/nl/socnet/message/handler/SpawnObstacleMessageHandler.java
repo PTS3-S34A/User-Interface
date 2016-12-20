@@ -2,13 +2,11 @@ package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
 import nl.soccar.library.Obstacle;
-import nl.soccar.library.Player;
 import nl.soccar.library.enumeration.ObstacleType;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.controller.GameViewFXMLController;
-import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.SpawnObstacleMessage;
 
 /**
@@ -20,7 +18,6 @@ public final class SpawnObstacleMessageHandler extends MessageHandler<SpawnObsta
     protected void handle(Connection connection, SpawnObstacleMessage message) throws Exception {
         Object controller = Main.getInstance().getController();
         if (controller instanceof GameViewFXMLController) {
-            Player player = ClientController.getInstance().getCurrentPlayer();
             Obstacle obstacle = new Obstacle(message.getX(), message.getY(), message.getAngle(), message.getWidth(), message.getHeight(), message.getObstacleType());
 
             GameViewFXMLController view = (GameViewFXMLController) controller;
