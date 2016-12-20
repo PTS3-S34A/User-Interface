@@ -28,7 +28,7 @@ public final class BallSyncMessageHandler extends MessageHandler<BallSyncMessage
 
     @Override
     protected BallSyncMessage decode(Connection connection, ByteBuf buf) throws Exception {
-        if (buf.readableBytes() < 8 * 5) {
+        if (buf.readableBytes() < 5 * 4) {
             buf.resetReaderIndex();
             return null;
         }

@@ -43,7 +43,7 @@ public final class PlayerSyncMessageHandler extends MessageHandler<PlayerSyncMes
 
     @Override
     protected PlayerSyncMessage decode(Connection connection, ByteBuf buf) throws Exception {
-        if (buf.readableBytes() < 1 + 8 * 6) {
+        if (buf.readableBytes() < 1 + 6 * 4) {
             buf.resetReaderIndex();
             return null;
         }

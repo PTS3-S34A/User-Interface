@@ -81,16 +81,25 @@ public final class ClientController {
     private void initializeConnection() {
         MessageRegistry registry = client.getMessageRegistry();
         registry.register(RegisterPlayerMessage.class);
+
         registry.register(JoinSessionMessage.class);
+        registry.register(LeaveSessionMessage.class);
+
         registry.register(PlayerJoinedSessionMessage.class);
         registry.register(PlayerLeftSessionMessage.class);
-        registry.register(PlayerLeaveSessionMessage.class);
-        registry.register(PlayerStartedGameMessage.class);
-        registry.register(StartGameMessage.class);
-        registry.register(MovePlayerMessage.class);
-        registry.register(PlayerMovedMessage.class);
+
         registry.register(ChatMessage.class);
         registry.register(SwitchTeamMessage.class);
+
+        registry.register(ChangeGameStatusMessage.class);
+        registry.register(PlayerChangedGameStatusMessage.class);
+
+        registry.register(MovePlayerMessage.class);
+        registry.register(PlayerMovedMessage.class);
+
+        registry.register(SpawnCarMessage.class);
+        registry.register(SpawnObstacleMessage.class);
+        registry.register(ChangePlayerStatusMessage.class);
         registry.register(PlayerSyncMessage.class);
         registry.register(BallSyncMessage.class);
 
