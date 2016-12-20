@@ -137,7 +137,7 @@ public final class Keyboard {
      *
      * @return HandbrakeAction
      */
-    HandbrakeAction getHandbrakeAction  () {
+    HandbrakeAction getHandbrakeAction() {
 
         for (KeyCode pressedKey : PRESSED_KEYS) {
 
