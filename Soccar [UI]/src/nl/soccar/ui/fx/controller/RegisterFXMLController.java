@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.util.FxUtilities;
 
 /**
  * FXML Controller class
@@ -49,6 +50,7 @@ public class RegisterFXMLController implements Initializable {
      */
     private void setState() {
         ClientController controller = ClientController.getInstance();
+      
         username = controller.getCurrentPlayer().getUsername();
         userExists = controller.checkIfExists(username);
 
@@ -76,6 +78,7 @@ public class RegisterFXMLController implements Initializable {
         if (userExists && controller.checkPassword(username, password) || !userExists && controller.add(username, password)) {
             Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
         } else {
+            FxUtilities.showInlineMessage(txtFieldPassword, FXMLConstants.MESSAGE_FALSE_USER_PASSWORD);
             clearInput();
         }
     }
@@ -86,6 +89,7 @@ public class RegisterFXMLController implements Initializable {
             return true;
         }
 
+        FxUtilities.showInlineMessage(txtFieldPassword, FXMLConstants.MESSAGE_INVALID_USER_PASSWORD);
         txtFieldPassword.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         return false;
     }

@@ -29,6 +29,7 @@ import nl.soccar.ui.DisplayUtilities;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.util.FxUtilities;
 import nl.socnet.message.JoinSessionMessage;
 import nl.socnet.message.RegisterPlayerMessage;
 
@@ -154,7 +155,6 @@ public class CreateRoomFXMLController implements Initializable {
 
     private boolean checkInput(String roomName, String password) {
         textFieldRoomName.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
-        textFieldPassword.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
 
         Pattern p = Pattern.compile(REGEX);
         Matcher m = p.matcher(roomName);
@@ -162,6 +162,7 @@ public class CreateRoomFXMLController implements Initializable {
         boolean accepted = m.matches();
 
         if (!accepted) {
+            FxUtilities.showInlineMessage(textFieldRoomName, FXMLConstants.MESSAGE_INVALID_ROOM_NAME);
             textFieldRoomName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         }
 
