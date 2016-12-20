@@ -3,13 +3,12 @@ package nl.soccar.ui.util;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Side;
-import javafx.scene.control.Alert;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 
 /**
- *
  * @author PTS34A
  */
 public final class FxUtilities {
@@ -17,8 +16,8 @@ public final class FxUtilities {
     private FxUtilities() {
         // Utility class should not be instantiated.
     }
-    
-        /**
+
+    /**
      * Shows a message next to a Node.
      *
      * @param node    A Node used to calculate the message's position. Should not be null.

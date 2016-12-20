@@ -15,7 +15,7 @@ import nl.soccar.ui.util.PhysicsUtilities;
 /**
  * A MapUiFx object represents a JavaFX Drawable of a Map. It keeps track of the
  * Map model and provides methods to draw and update the model.
- *
+ *  
  * @author PTS34A
  */
 public class MapUiFx extends Drawable<Map> {

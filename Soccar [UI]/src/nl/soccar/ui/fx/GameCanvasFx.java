@@ -12,12 +12,10 @@ import nl.soccar.physics.PhysicsConstants;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
+import nl.soccar.ui.input.InputController;
 import nl.soccar.ui.input.Keyboard;
 
 import java.util.List;
-import javafx.application.Platform;
-import nl.soccar.ui.Main;
-import nl.soccar.ui.input.InputController;
 
 /**
  * This class is an extension to the GameCanvas class, it provides a way to run

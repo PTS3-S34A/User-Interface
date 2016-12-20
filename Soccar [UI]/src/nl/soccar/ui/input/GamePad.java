@@ -1,15 +1,15 @@
 package nl.soccar.ui.input;
 
-import java.util.Timer;
-import java.util.TimerTask;
 import net.java.games.input.Component;
 import net.java.games.input.Controller;
 import nl.soccar.library.enumeration.HandbrakeAction;
 import nl.soccar.library.enumeration.SteerAction;
 import nl.soccar.library.enumeration.ThrottleAction;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 /**
- *
  * @author PTS34A
  */
 public final class GamePad {
@@ -87,7 +87,7 @@ public final class GamePad {
         } else if (axisValueInPercentage >= ACTION_REVERSE) {
             throttleAction = ThrottleAction.REVERSE;
         } else if (throttleAction != ThrottleAction.BOOST) {
-            throttleAction = throttleAction.IDLE;
+            throttleAction = ThrottleAction.IDLE;
         }
     }
 
@@ -123,7 +123,7 @@ public final class GamePad {
         if (componentIdentifier == Component.Identifier.Button._1 && isPressed) {
             handbrakeAction = HandbrakeAction.ACTIVE;
         } else if (componentIdentifier == Component.Identifier.Button._1 && !isPressed) {
-            handbrakeAction = handbrakeAction.INACTIVE;
+            handbrakeAction = HandbrakeAction.INACTIVE;
         }
     }
 

@@ -19,13 +19,13 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
+import nl.soccar.ui.input.InputController;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.ImageUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;
 import nl.socnet.message.PlayerMovedMessage;
 
 import java.util.List;
-import nl.soccar.ui.input.InputController;
 
 /**
  * A CarUiFx object represents a JavaFX Drawable of a Car. It keeps track of the
@@ -152,7 +152,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
         if (ClientController.getInstance().getCurrentPlayer().equals(super.getModel().getPlayer())) {
             InputController controller = InputController.getInstance();
-            
+
             SteerAction steerAction = controller.getSteerAction();
             HandbrakeAction handbrakeAction = controller.getHandbrakeAction();
             ThrottleAction throttleAction = controller.getThrottleAction();

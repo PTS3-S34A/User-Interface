@@ -9,12 +9,12 @@ import nl.socnet.message.handler.LeaveSessionMessageHandler;
  *
  * @author PTS34A
  */
-@MessageEvent(id = MessageConstants.PLAYER_LEAVE_SESSION_MESSAGE_ID, handler = LeaveSessionMessageHandler.class)
+@MessageEvent(id = MessageConstants.LEAVE_SESSION_MESSAGE_ID, handler = LeaveSessionMessageHandler.class)
 public class LeaveSessionMessage extends Message {
     
     @Override
     public int getId() {
-        return MessageConstants.PLAYER_LEAVE_SESSION_MESSAGE_ID;
+        return MessageConstants.LEAVE_SESSION_MESSAGE_ID;
     }
     
 }
