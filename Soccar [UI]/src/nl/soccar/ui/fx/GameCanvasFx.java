@@ -2,19 +2,19 @@ package nl.soccar.ui.fx;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
 import nl.soccar.library.Game;
 import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.physics.PhysicsConstants;
+import nl.soccar.ui.Main;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.input.Keyboard;
 
 import java.util.List;
-import javafx.application.Platform;
-import nl.soccar.ui.Main;
 
 /**
  * This class is an extension to the GameCanvas class, it provides a way to run
@@ -54,8 +54,9 @@ public class GameCanvasFx extends GameCanvas {
     private void render() {
         GameStatus gameStatus = getGameEngine().getGame().getStatus();
 
-        if (gameStatus == GameStatus.RUNNING) {
+        if (gameStatus == GameStatus.RUNNING || gameStatus == GameStatus.PAUSED) {
             clear();
+
             List<Drawable> drawables = super.getDrawables();
             drawables.forEach(d -> d.draw(context));
         } else if (gameStatus == GameStatus.STOPPED) {
