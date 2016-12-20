@@ -17,9 +17,9 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 import nl.soccar.ui.rmi.ClientController;
+import nl.socnet.message.ChangeGameStatusMessage;
 import nl.socnet.message.ChatMessage;
-import nl.socnet.message.PlayerLeaveSessionMessage;
-import nl.socnet.message.StartGameMessage;
+import nl.socnet.message.LeaveSessionMessage;
 import nl.socnet.message.SwitchTeamMessage;
 
 import java.net.URL;
@@ -143,7 +143,7 @@ public class SessionViewFXMLController implements Initializable {
         ClientController controller = ClientController.getInstance();
 
         Connection connection = controller.getCurrentConnection();
-        connection.send(new PlayerLeaveSessionMessage());
+        connection.send(new LeaveSessionMessage());
 
         Main main = Main.getInstance();
         main.setScene(FXMLConstants.LOCATION_MAIN_MENU);
@@ -162,7 +162,7 @@ public class SessionViewFXMLController implements Initializable {
     private void startGame() {
         Connection connection = ClientController.getInstance().getCurrentConnection();
 
-        connection.send(new StartGameMessage());
+        connection.send(new ChangeGameStatusMessage());
     }
 
     /**

@@ -5,11 +5,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import nl.soccar.library.*;
 import nl.soccar.library.enumeration.MapType;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.physics.GameEngine;
+import nl.soccar.physics.models.CarPhysics;
+import nl.soccar.physics.models.ObstaclePhysics;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.fx.GameCanvasFx;
@@ -18,9 +19,6 @@ import nl.soccar.ui.rmi.ClientController;
 
 import java.awt.*;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -39,15 +37,7 @@ public class GameViewFXMLController implements Initializable {
     private GameCanvas gameCanvas;
     private Color textColor;
 
-    private static float getAngle(float sourceX, float sourceY, float targetX, float targetY) {
-        float angle = (float) Math.toDegrees(Math.atan2(targetY - sourceY, targetX - sourceX));
-
-        if (angle < 0) {
-            angle += 360;
-        }
-
-        return angle;
-    }
+    private GameEngine engine;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -69,13 +59,44 @@ public class GameViewFXMLController implements Initializable {
         initializeMap(session, gameCanvas);
         initializeScoreboard(session, gameCanvas);
         initializeBall(session, gameCanvas);
-        initializeCars(session, gameCanvas);
         initializeNotification(session, gameCanvas);
 
-        GameEngine engine = gameCanvas.getGameEngine();
+        engine = gameCanvas.getGameEngine();
         engine.start();
+    }
 
-        session.getGame().start();
+    public void spawnEntity(Entity entity) {
+        if (entity instanceof Car) {
+            ClientController controller = ClientController.getInstance();
+            Session session = controller.getCurrentPlayer().getCurrentSession();
+            Room room = session.getRoom();
+
+            Car car = (Car) entity;
+            CarPhysics physics = new CarPhysics(car, engine.getWorld());
+
+            Player player = car.getPlayer();
+            TeamColour colour = room.getTeamBlue().getPlayers().contains(player) ? TeamColour.BLUE : TeamColour.RED;
+
+            CarUiFx carUiFx = new CarUiFx(gameCanvas, car, physics, colour, textColor);
+            gameCanvas.addDrawable(carUiFx);
+
+            engine.getGame().getMap().addCar(car);
+            engine.addCar(player, physics);
+
+            initializeBoostMeter(car, gameCanvas);
+        } else if (entity instanceof Obstacle) {
+            Obstacle obstacle = (Obstacle) entity;
+            ObstaclePhysics physics = new ObstaclePhysics(obstacle, engine.getWorld());
+
+            ObstacleUiFx obstacleUiFx = new ObstacleUiFx(gameCanvas, obstacle, physics);
+            gameCanvas.addDrawable(obstacleUiFx);
+
+            engine.addWorldObject(physics);
+        }
+    }
+
+    public void setPaused(boolean paused) {
+        engine.getGame().setPaused(paused);
     }
 
     private void initializeMap(Session session, GameCanvas canvas) {
@@ -83,7 +104,6 @@ public class GameViewFXMLController implements Initializable {
         MapUiFx mapUiFx = new MapUiFx(canvas, map, textColor);
 
         canvas.addDrawable(mapUiFx);
-        mapUiFx.addWalls();
     }
 
     private void initializeScoreboard(Session session, GameCanvas canvas) {
@@ -94,14 +114,6 @@ public class GameViewFXMLController implements Initializable {
     private void initializeBall(Session session, GameCanvas canvas) {
         BallUiFx ballUiFx = new BallUiFx(canvas, session.getGame().getMap().getBall());
         canvas.addDrawable(ballUiFx);
-    }
-
-    private void initializeCars(Session session, GameCanvas canvas) {
-        Room room = session.getRoom();
-        Map map = session.getGame().getMap();
-
-        addCars(map, room.getTeamBlue(), canvas);
-        addCars(map, room.getTeamRed(), canvas);
     }
 
     private void initializeBoostMeter(Car car, GameCanvas canvas) {
@@ -118,42 +130,6 @@ public class GameViewFXMLController implements Initializable {
 
         session.getGame().setNotification(notification);
         canvas.addDrawable(notificationUiFx);
-    }
-
-    private void addCars(Map map, Team team, GameCanvas canvas) {
-        List<Player> players = new ArrayList<>(team.getPlayers());
-        Collections.shuffle(players);
-
-        int teamSize = players.size();
-
-        for (int i = 0; i < teamSize; i++) {
-            Player player = players.get(i);
-            addCar(canvas, map, player, team, teamSize, i);
-        }
-    }
-
-    private void addCar(GameCanvas canvas, Map map, Player player, Team team, int teamSize, int number) {
-        Rectangle size = map.getSize();
-        float width = (float) size.getWidth();
-        float height = (float) size.getHeight();
-
-        Ball ball = map.getBall();
-        float ballX = ball.getX();
-        float ballY = ball.getY();
-
-        TeamColour colour = team.getTeamColour();
-
-        float x = colour == TeamColour.BLUE ? 30.0F : width - 30.0F;
-        float y = (height / (teamSize + 1)) * (number + 1);
-        float degree = getAngle(x, y, ballX, ballY) - 90;
-
-        Car car = new Car(x, y, degree, player.getCarType(), player);
-        map.addCar(car);
-
-        CarUiFx carUiFx = new CarUiFx(canvas, car, colour, textColor);
-        canvas.addDrawable(carUiFx);
-
-        initializeBoostMeter(car, canvas);
     }
 
     public GameCanvas getGameCanvas() {

@@ -1,22 +1,9 @@
 package nl.soccar.ui.fx.controller;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import nl.soccar.exception.DuplicateValueException;
 import nl.soccar.library.Player;
 import nl.soccar.library.SessionData;
@@ -26,12 +13,21 @@ import nl.soccar.library.enumeration.MapType;
 import nl.soccar.socnet.Client;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.DisplayUtilities;
-import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.FxUtilities;
 import nl.socnet.message.JoinSessionMessage;
 import nl.socnet.message.RegisterPlayerMessage;
+
+import java.io.IOException;
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * FXML Controller class

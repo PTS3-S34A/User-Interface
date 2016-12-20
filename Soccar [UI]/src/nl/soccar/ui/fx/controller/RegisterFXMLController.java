@@ -1,16 +1,17 @@
 package nl.soccar.ui.fx.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
-import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.FxUtilities;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 /**
  * FXML Controller class
@@ -50,7 +51,7 @@ public class RegisterFXMLController implements Initializable {
      */
     private void setState() {
         ClientController controller = ClientController.getInstance();
-      
+
         username = controller.getCurrentPlayer().getUsername();
         userExists = controller.checkIfExists(username);
 

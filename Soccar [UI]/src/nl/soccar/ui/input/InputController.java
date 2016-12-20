@@ -1,37 +1,39 @@
 package nl.soccar.ui.input;
 
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import net.java.games.input.Controller;
 import net.java.games.input.ControllerEnvironment;
 import nl.soccar.library.enumeration.HandbrakeAction;
 import nl.soccar.library.enumeration.SteerAction;
 import nl.soccar.library.enumeration.ThrottleAction;
 
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 /**
- *
  * @author PTS34A
  */
 public final class InputController {
 
     private static final InputController INSTANCE = new InputController();
     private static final int POLL_TIME = 50;
-
+    private final Timer timer = new Timer(true);
     private ThrottleAction throttleAction;
     private HandbrakeAction handbrakeAction;
     private SteerAction steerAction;
-
     private Keyboard keyboard;
     private GamePad gamePad;
-    private final Timer timer = new Timer(true);
-    
+
     private InputController() {
         throttleAction = ThrottleAction.IDLE;
         handbrakeAction = HandbrakeAction.INACTIVE;
         steerAction = SteerAction.NONE;
+    }
+
+    public static InputController getInstance() {
+        return INSTANCE;
     }
 
     public void initializeInput(Keyboard keyboard) {
@@ -76,36 +78,32 @@ public final class InputController {
         if (controller == null) {
             return;
         }
-        
+
         this.gamePad = new GamePad(controller);
-    }
-
-    void setThrottleAction(ThrottleAction throttleAction) {
-        this.throttleAction = throttleAction;
-    }
-
-    void setHandbrakeAction(HandbrakeAction handbrakeAction) {
-        this.handbrakeAction = handbrakeAction;
-    }
-
-    void setSteerAction(SteerAction steerAction) {
-        this.steerAction = steerAction;
     }
 
     public ThrottleAction getThrottleAction() {
         return throttleAction;
     }
 
+    void setThrottleAction(ThrottleAction throttleAction) {
+        this.throttleAction = throttleAction;
+    }
+
     public HandbrakeAction getHandbrakeAction() {
         return handbrakeAction;
+    }
+
+    void setHandbrakeAction(HandbrakeAction handbrakeAction) {
+        this.handbrakeAction = handbrakeAction;
     }
 
     public SteerAction getSteerAction() {
         return steerAction;
     }
 
-    public static InputController getInstance() {
-        return INSTANCE;
+    void setSteerAction(SteerAction steerAction) {
+        this.steerAction = steerAction;
     }
-    
+
 }

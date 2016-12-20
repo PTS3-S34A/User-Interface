@@ -1,23 +1,24 @@
 package nl.soccar.ui;
 
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import nl.soccar.library.Player;
 import nl.soccar.library.enumeration.CarType;
 import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.socnet.Client;
-import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.fx.FXMLConstants;
-import java.rmi.NotBoundException;
-import javafx.scene.control.Alert;
+import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.FxUtilities;
+
+import java.io.IOException;
+import java.rmi.NotBoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Entry point of the Soccar application. The Main class keeps track of the user
@@ -49,21 +50,6 @@ public class Main extends Application {
         }
     }
 
-    @Override
-    public void start(Stage primaryStage) {
-        this.primaryStage = primaryStage;
-
-        primaryStage.setOnCloseRequest(e -> {
-            Client client = ClientController.getInstance().getClient();
-
-            if (client != null) {
-                client.disconnect();
-            }
-        });
-
-        setScene(FXMLConstants.LOCATION_LOGIN);
-    }
-
     /**
      * Gets the instance of the Singleton Main class.
      *
@@ -80,6 +66,21 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) {
+        this.primaryStage = primaryStage;
+
+        primaryStage.setOnCloseRequest(e -> {
+            Client client = ClientController.getInstance().getClient();
+
+            if (client != null) {
+                client.disconnect();
+            }
+        });
+
+        setScene(FXMLConstants.LOCATION_LOGIN);
     }
 
     /**

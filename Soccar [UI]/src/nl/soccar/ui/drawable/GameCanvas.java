@@ -40,11 +40,15 @@ public abstract class GameCanvas {
      * list of drawables.
      */
     public final void addDrawable(Drawable drawable) {
-        drawables.add(drawable);
+        synchronized (drawables) {
+            drawables.add(drawable);
+        }
     }
     
     public final void addDrawable(PhysicsDrawable drawable) {
-        drawables.add(drawable);
+        synchronized (drawables) {
+            drawables.add(drawable);
+        }
 
         WorldObject object = drawable.getPhysicsModel();
         if (object instanceof CarPhysics) {
@@ -63,11 +67,15 @@ public abstract class GameCanvas {
      * the drawable list.
      */
     public final void removeDrawable(Drawable drawable) {
-        drawables.remove(drawable);
+        synchronized (drawables) {
+            drawables.remove(drawable);
+        }
     }
     
     public final void removeDrawable(PhysicsDrawable drawable) {
-        drawables.remove(drawable);
+        synchronized (drawables) {
+            drawables.remove(drawable);
+        }
 
         WorldObject object = drawable.getPhysicsModel();
         if (object instanceof CarPhysics) {
@@ -89,7 +97,9 @@ public abstract class GameCanvas {
      * @return An unmodifiable List, not null, of Drawables, not null.
      */
     public final List<Drawable> getDrawables() {
-        return Collections.unmodifiableList(drawables);
+        synchronized (drawables) {
+            return Collections.unmodifiableList(drawables);
+        }
     }
 
 }

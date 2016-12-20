@@ -1,9 +1,5 @@
 package nl.soccar.ui.fx.controller;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,6 +10,11 @@ import nl.soccar.library.enumeration.CarType;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 import nl.soccar.ui.util.FxUtilities;
+
+import java.net.URL;
+import java.util.ResourceBundle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * FXML Controller class
