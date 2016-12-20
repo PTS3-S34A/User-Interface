@@ -15,6 +15,9 @@ import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.input.Keyboard;
 
 import java.util.List;
+import javafx.application.Platform;
+import nl.soccar.ui.Main;
+import nl.soccar.ui.input.InputController;
 
 /**
  * This class is an extension to the GameCanvas class, it provides a way to run
@@ -43,9 +46,17 @@ public class GameCanvasFx extends GameCanvas {
         gameTimer.getKeyFrames().add(new KeyFrame(Duration.seconds(1.0F / PhysicsConstants.UI_FPS), e -> render()));
         gameTimer.playFromStart();
 
+        Keyboard keyboard = new Keyboard();
+        InputController controller = InputController.getInstance();
+
+        if (controller.getAllGamePadControllers().size() > 0) {
+            controller.setGamePadController(controller.getAllGamePadControllers().get(0));
+        }
+        controller.initializeInput(keyboard);
+
         Canvas canvas = context.getCanvas();
-        canvas.setOnKeyPressed(e -> Keyboard.setKeyPressed(e.getCode()));
-        canvas.setOnKeyReleased(e -> Keyboard.setKeyReleased(e.getCode()));
+        canvas.setOnKeyPressed(e -> keyboard.setKeyPressed(e.getCode()));
+        canvas.setOnKeyReleased(e -> keyboard.setKeyReleased(e.getCode()));
     }
 
     /**

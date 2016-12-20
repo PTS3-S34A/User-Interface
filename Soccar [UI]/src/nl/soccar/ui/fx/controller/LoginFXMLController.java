@@ -12,6 +12,8 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.control.ToggleGroup;
 import nl.soccar.library.enumeration.CarType;
 import nl.soccar.ui.Main;
+import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.util.FxUtilities;
 
 /**
  * FXML Controller class
@@ -88,6 +90,7 @@ public class LoginFXMLController implements Initializable {
         } else if (btnSelectSportsCar.isSelected()) {
             selectedCar = CarType.SPORTSCAR;
         } else {
+            FxUtilities.showInlineMessage(btnSelectPickup, FXMLConstants.MESSAGE_CAR_NOT_SELECTED);
             btnSelectCasualCar.setStyle(CSS_ERROR_BORDER);
             btnSelectSportsCar.setStyle(CSS_ERROR_BORDER);
             btnSelectPickup.setStyle(CSS_ERROR_BORDER);
@@ -103,6 +106,8 @@ public class LoginFXMLController implements Initializable {
         if (m.matches()) {
             return true;
         }
+
+        FxUtilities.showInlineMessage(txtFieldName, FXMLConstants.MESSAGE_INVALID_USERNAME);
         txtFieldName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         return false;
     }
