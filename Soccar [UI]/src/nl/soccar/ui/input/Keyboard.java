@@ -62,19 +62,8 @@ public final class Keyboard {
     /**
      * Constructor
      */
-    private Keyboard() {
-    }
-
-    /**
-     * Method that checks if the given key is already present in pressedKeys
-     * list.
-     *
-     * @param code The keycode that needs to be checked.
-     * @return boolean True if already pressed, false if not in pressedKeys
-     * list.
-     */
-    public static boolean isPressed(KeyCode code) {
-        return PRESSED_KEYS.contains(code);
+    public Keyboard() {
+        // Doesnt needs anything for initializing.
     }
 
     /**
@@ -82,7 +71,7 @@ public final class Keyboard {
      *
      * @param code The keycode that needs to be added to the pressedKeys list.
      */
-    public static void setKeyPressed(KeyCode code) {
+    public void setKeyPressed(KeyCode code) {
         if (!PRESSED_KEYS.contains(code)) {
             PRESSED_KEYS.add(0, code); // Prepend to the list, so the last key pressed gets first priority
         }
@@ -93,18 +82,16 @@ public final class Keyboard {
      *
      * @param code The keycode that needs to be removed of the pressedKeys list.
      */
-    public static void setKeyReleased(KeyCode code) {
+    public void setKeyReleased(KeyCode code) {
         PRESSED_KEYS.remove(code);
     }
-
 
     /**
      * Returns the correct ThrottleAction based on the current pressed keys
      *
      * @return ThrottleAction
      */
-    public static ThrottleAction getThrottleAction() {
-
+    ThrottleAction getThrottleAction() {
         // The last pressed key
         for (KeyCode pressedKey : PRESSED_KEYS) {
 
@@ -121,7 +108,6 @@ public final class Keyboard {
             }
 
         }
-
         return ThrottleAction.IDLE;
     }
 
@@ -130,7 +116,7 @@ public final class Keyboard {
      *
      * @return SteerAction
      */
-    public static SteerAction getSteerAction() {
+    SteerAction getSteerAction() {
 
         for (KeyCode pressedKey : PRESSED_KEYS) {
 
@@ -143,16 +129,15 @@ public final class Keyboard {
             }
 
         }
-
         return SteerAction.NONE;
     }
 
     /**
      * Returns the correct HandbrakeAction based on the current pressed keys
      *
-     * @return SteerAction
+     * @return HandbrakeAction
      */
-    public static HandbrakeAction getHandbrakeAction() {
+    HandbrakeAction getHandbrakeAction() {
 
         for (KeyCode pressedKey : PRESSED_KEYS) {
 
@@ -161,7 +146,6 @@ public final class Keyboard {
             }
 
         }
-
         return HandbrakeAction.INACTIVE;
     }
 }
