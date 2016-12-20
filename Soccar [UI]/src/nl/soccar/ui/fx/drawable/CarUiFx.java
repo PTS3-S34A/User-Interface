@@ -50,10 +50,6 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
     private Image carTexture;
 
-    public CarUiFx(GameCanvas canvas, Car car, TeamColour colour, Color textColor) {
-        this(canvas, car, new CarPhysics(car, canvas.getGameEngine().getWorld()), colour, textColor);
-    }
-
     /**
      * Initiates a new CarUiFx Object using the given parameters.
      *
