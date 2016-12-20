@@ -6,14 +6,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import nl.soccar.library.Map;
 import nl.soccar.library.MapConstants;
-import nl.soccar.library.enumeration.ObstacleType;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
-import nl.soccar.ui.fx.drawable.ObstacleUiFx.ObstacleBuilder;
 import nl.soccar.ui.util.MapUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;
-import org.jbox2d.dynamics.World;
 
 /**
  * A MapUiFx object represents a JavaFX Drawable of a Map. It keeps track of the
@@ -29,8 +26,6 @@ public class MapUiFx extends Drawable<Map> {
     private static final float WALL_WIDTH;
     private static final float CORNER_SIZE;
 
-    private Color lineColor;
-
     static {
         TEXTURE_ICE = new Image(DisplayConstants.LOCATION_TEXTURE_ICE);
         TEXTURE_CHRISTMAS = new Image(DisplayConstants.LOCATION_TEXTURE_CHRISTMAS);
@@ -38,6 +33,8 @@ public class MapUiFx extends Drawable<Map> {
         WALL_WIDTH = 5.0F;
         CORNER_SIZE = 15.0F;
     }
+
+    private Color lineColor;
 
     /**
      * Initiates a new MapUiFx Object using the given parameters.
@@ -49,153 +46,6 @@ public class MapUiFx extends Drawable<Map> {
     public MapUiFx(GameCanvas canvas, Map model, Color lineColor) {
         super(canvas, model);
         this.lineColor = lineColor;
-    }
-
-    /**
-     * Method that calls all methods that add map obstacles to the map.
-     */
-    public void addWalls() {
-        Map map = super.getModel();
-
-        Rectangle size = map.getSize();
-        float mapWidth = (float) size.getWidth();
-        float mapHeight = (float) size.getHeight();
-
-        addWestWalls(mapHeight);
-        addEastWalls(mapWidth, mapHeight);
-        addNorthAndSouthWalls(mapWidth, mapHeight);
-        addCornerWalls(mapWidth, mapHeight);
-    }
-
-    /**
-     * Method that adds the obstacle drawables to the map that represent the
-     * west wall.
-     *
-     * @param mapHeight The height of the map.
-     */
-    private void addWestWalls(float mapHeight) {
-        Map map = super.getModel();
-        GameCanvas canvas = super.getGameCanvas();
-        World world = canvas.getGameEngine().getWorld();
-
-        Rectangle leftGoal = map.getGoalBlue();
-        float leftGoalY = (float) leftGoal.getY();
-
-        ObstacleUiFx westWallUpperUi = new ObstacleBuilder(canvas, world)
-                .x(WALL_WIDTH / 2).y((mapHeight + leftGoalY) / 2).degree(0)
-                .width(WALL_WIDTH).height(mapHeight - leftGoalY)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx westWallLowerUi = new ObstacleBuilder(canvas, world)
-                .x(WALL_WIDTH / 2).y((mapHeight - leftGoalY) / 2).degree(0)
-                .width(WALL_WIDTH).height(mapHeight - leftGoalY)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx westWallMiddleUi = new ObstacleBuilder(canvas, world)
-                .x(-WALL_WIDTH).y(mapHeight / 2).degree(0)
-                .width(WALL_WIDTH).height(mapHeight)
-                .type(ObstacleType.WALL).build();
-
-        canvas.addDrawable(westWallUpperUi);
-        canvas.addDrawable(westWallLowerUi);
-        canvas.addDrawable(westWallMiddleUi);
-    }
-
-    /**
-     * Method that adds the obstacle drawables to the map that represent the
-     * easts walls.
-     *
-     * @param mapWidth The width of the map.
-     * @param mapHeight The height of the map.
-     */
-    private void addEastWalls(float mapWidth, float mapHeight) {
-        Map map = super.getModel();
-        GameCanvas canvas = super.getGameCanvas();
-        World world = canvas.getGameEngine().getWorld();
-
-        Rectangle rightGoal = map.getGoalRed();
-        float rightGoalY = (float) rightGoal.getY();
-
-        ObstacleUiFx eastWallUpperUi = new ObstacleBuilder(canvas, world)
-                .x(mapWidth - (WALL_WIDTH / 2)).y((mapHeight + rightGoalY) / 2).degree(0)
-                .width(WALL_WIDTH).height(mapHeight - rightGoalY)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx eastWallLowerUi = new ObstacleBuilder(canvas, world)
-                .x(mapWidth - (WALL_WIDTH / 2)).y((mapHeight - rightGoalY) / 2).degree(0)
-                .width(WALL_WIDTH).height(mapHeight - rightGoalY)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx eastWallMiddleUi = new ObstacleBuilder(canvas, world)
-                .x(mapWidth + WALL_WIDTH).y(mapHeight / 2).degree(0)
-                .width(WALL_WIDTH).height(mapHeight)
-                .type(ObstacleType.WALL).build();
-
-        canvas.addDrawable(eastWallUpperUi);
-        canvas.addDrawable(eastWallLowerUi);
-        canvas.addDrawable(eastWallMiddleUi);
-    }
-
-    /**
-     * Method that adds the obstacle drawables to the map that represent the
-     * north and south walls.
-     *
-     * @param mapWidth The width of the map.
-     * @param mapHeight The height of the map.
-     */
-    private void addNorthAndSouthWalls(float mapWidth, float mapHeight) {
-        GameCanvas canvas = super.getGameCanvas();
-        World world = canvas.getGameEngine().getWorld();
-
-        ObstacleUiFx northWallUi = new ObstacleBuilder(canvas, world)
-                .x(mapWidth / 2).y(mapHeight - (WALL_WIDTH / 2)).degree(0)
-                .width(mapWidth).height(WALL_WIDTH)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx southWallUi = new ObstacleBuilder(canvas, world)
-                .x(mapWidth / 2).y(WALL_WIDTH / 2).degree(0)
-                .width(mapWidth).height(WALL_WIDTH)
-                .type(ObstacleType.WALL).build();
-
-        canvas.addDrawable(northWallUi);
-        canvas.addDrawable(southWallUi);
-    }
-
-    /**
-     * Method that adds the obstacle drawables to the map that represent the
-     * nort and south walls.
-     *
-     * @param mapWidth The width of the map.
-     * @param mapHeight The height of the map.
-     */
-    private void addCornerWalls(float mapWidth, float mapHeight) {
-        GameCanvas canvas = super.getGameCanvas();
-        World world = canvas.getGameEngine().getWorld();
-
-        ObstacleUiFx northWestWallUi = new ObstacleBuilder(canvas, world)
-                .x(0).y(mapHeight).degree(45)
-                .width(CORNER_SIZE).height(CORNER_SIZE)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx northEastWallUi = new ObstacleBuilder(canvas, world)
-                .x(mapWidth).y(mapHeight).degree(45)
-                .width(CORNER_SIZE).height(CORNER_SIZE)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx southWestWallUi = new ObstacleBuilder(canvas, world)
-                .x(0).y(0).degree(45)
-                .width(CORNER_SIZE).height(CORNER_SIZE)
-                .type(ObstacleType.WALL).build();
-
-        ObstacleUiFx southEastWallUi = new ObstacleBuilder(canvas, world)
-                .x(mapWidth).y(0).degree(45)
-                .width(CORNER_SIZE).height(CORNER_SIZE)
-                .type(ObstacleType.WALL).build();
-
-        canvas.addDrawable(northWestWallUi);
-        canvas.addDrawable(northEastWallUi);
-        canvas.addDrawable(southWestWallUi);
-        canvas.addDrawable(southEastWallUi);
     }
 
     @Override
