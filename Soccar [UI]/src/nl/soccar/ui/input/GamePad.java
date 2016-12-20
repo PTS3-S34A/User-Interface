@@ -122,7 +122,6 @@ public final class GamePad {
     private void processBrakeAction(Component.Identifier componentIdentifier, boolean isPressed) {
         if (componentIdentifier == Component.Identifier.Button._1 && isPressed) {
             handbrakeAction = HandbrakeAction.ACTIVE;
-            return;
         } else if (componentIdentifier == Component.Identifier.Button._1 && !isPressed) {
             handbrakeAction = handbrakeAction.INACTIVE;
         }
@@ -137,7 +136,7 @@ public final class GamePad {
      * @return value of axis in percentage.
      */
     private int getAxisValueInPercentage(float axisValue) {
-        return (int) (2 - (1 - axisValue)) * 100 / 2;
+        return (int) ((2 - (1 - axisValue)) * 100 / 2);
     }
 
     public boolean isConnected() {
