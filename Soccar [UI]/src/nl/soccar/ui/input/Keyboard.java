@@ -17,7 +17,6 @@ public final class Keyboard {
 
     // Stores the keys that are being pressed at any time.
     private static final List<KeyCode> PRESSED_KEYS;
-    private static final InputController controller = InputController.getInstance();
 
     // Stores the key binds.
     private static final List<KeyCode> ACCELERATE;
@@ -64,6 +63,7 @@ public final class Keyboard {
      * Constructor
      */
     public Keyboard() {
+        // Doesnt needs anything for initializing.
     }
 
     /**

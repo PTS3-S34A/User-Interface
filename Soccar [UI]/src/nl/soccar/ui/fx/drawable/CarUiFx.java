@@ -19,7 +19,6 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
-import nl.soccar.ui.input.Keyboard;
 import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.util.ImageUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;

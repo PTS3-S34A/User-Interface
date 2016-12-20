@@ -26,7 +26,7 @@ public final class GamePad {
     private HandbrakeAction handbrakeAction;
     private SteerAction steerAction;
 
-    private boolean POLL = false;
+    private boolean isPolling = false;
     private Timer timer = new Timer(true);
     private int xAxisPercentage;
 
@@ -38,7 +38,7 @@ public final class GamePad {
 
     public GamePad(Controller controller) {
         this.controller = controller;
-        POLL = true;
+        isPolling = true;
 
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -49,11 +49,11 @@ public final class GamePad {
     }
 
     private void polling(Controller controller) {
-        if (!POLL) {
+        if (!isPolling) {
             return;
         }
         if (!controller.poll()) {
-            POLL = false;
+            isPolling = false;
             return;
         }
 
@@ -107,7 +107,7 @@ public final class GamePad {
             return;
         }
 
-        boolean isPressed = c.getPollData() != 0.0F;
+        boolean isPressed = c.getPollData() != 0;
         processBoostAction(componentIdentifier, isPressed);
         processBrakeAction(componentIdentifier, isPressed);
     }
@@ -122,7 +122,6 @@ public final class GamePad {
     }
 
     private void processBrakeAction(Component.Identifier componentIdentifier, boolean isPressed) {
-        System.out.println(componentIdentifier.toString());
         if (componentIdentifier == Component.Identifier.Button._1 && isPressed) {
             handbrakeAction = HandbrakeAction.ACTIVE;
             return;

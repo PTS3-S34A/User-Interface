@@ -26,6 +26,12 @@ public final class InputController {
     private Keyboard keyboard;
     private GamePad gamePad;
     private final Timer timer = new Timer(true);
+    
+    private InputController() {
+        throttleAction = ThrottleAction.IDLE;
+        handbrakeAction = HandbrakeAction.INACTIVE;
+        steerAction = SteerAction.NONE;
+    }
 
     public void initializeInput(Keyboard keyboard) {
         this.keyboard = keyboard;
@@ -100,10 +106,5 @@ public final class InputController {
     public static InputController getInstance() {
         return INSTANCE;
     }
-
-    private InputController() {
-        throttleAction = ThrottleAction.IDLE;
-        handbrakeAction = HandbrakeAction.INACTIVE;
-        steerAction = SteerAction.NONE;
-    }
+    
 }
