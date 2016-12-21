@@ -60,7 +60,7 @@ public final class Keyboard {
     }
 
     /**
-     * Constructor
+     * Constructor for initializing the Keyboard object.
      */
     public Keyboard() {
         // Doesnt needs anything for initializing.
@@ -89,7 +89,7 @@ public final class Keyboard {
     /**
      * Returns the correct ThrottleAction based on the current pressed keys
      *
-     * @return ThrottleAction
+     * @return ThrottleAction The current ThrottleAction, not null.
      */
     ThrottleAction getThrottleAction() {
         // The last pressed key
@@ -114,7 +114,7 @@ public final class Keyboard {
     /**
      * Returns the correct SteerAction based on the current pressed keys
      *
-     * @return SteerAction
+     * @return SteerAction The current SteerAction, not null.
      */
     SteerAction getSteerAction() {
 
@@ -135,7 +135,7 @@ public final class Keyboard {
     /**
      * Returns the correct HandbrakeAction based on the current pressed keys
      *
-     * @return HandbrakeAction
+     * @return HandbrakeAction The current HandbrakeAction, not null.
      */
     HandbrakeAction getHandbrakeAction() {
 
