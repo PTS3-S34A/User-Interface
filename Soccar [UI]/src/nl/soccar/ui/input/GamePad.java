@@ -10,12 +10,17 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 /**
+ * Class that represents the gamepadcontroller.
+ *
  * @author PTS34A
  */
 public final class GamePad {
 
+    /**
+     * Values used to check the actions of the GamePad.
+     */
     private static final int ACTION_STEER_LEFT = 40;
-    private static final int ACRION_STEER_RIGHT = 60;
+    private static final int ACTION_STEER_RIGHT = 60;
     private static final int ACTION_THROTTLE = 45;
     private static final int ACTION_REVERSE = 55;
     private static final int POLL_TIME = 50;
@@ -30,14 +35,18 @@ public final class GamePad {
     private Timer timer = new Timer(true);
     private int xAxisPercentage;
 
-    public GamePad() {
+    /**
+     * Constructor used for initializing the GamePad object.
+     *
+     * @param controller The given controller that needs to be used as gamepad,
+     * not null.
+     */
+    public GamePad(Controller controller) {
+        this.controller = controller;
+
         throttleAction = ThrottleAction.IDLE;
         handbrakeAction = HandbrakeAction.INACTIVE;
         steerAction = SteerAction.NONE;
-    }
-
-    public GamePad(Controller controller) {
-        this.controller = controller;
         isPolling = true;
 
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -94,7 +103,7 @@ public final class GamePad {
     private void processSteerActions() {
         if (xAxisPercentage < ACTION_STEER_LEFT) {
             steerAction = SteerAction.STEER_LEFT;
-        } else if (xAxisPercentage > ACRION_STEER_RIGHT) {
+        } else if (xAxisPercentage > ACTION_STEER_RIGHT) {
             steerAction = SteerAction.STEER_RIGHT;
         } else {
             steerAction = SteerAction.NONE;
@@ -114,7 +123,8 @@ public final class GamePad {
     private void processBoostAction(Component.Identifier componentIdentifier, boolean isPressed) {
         if (componentIdentifier == Component.Identifier.Button._0 && isPressed) {
             throttleAction = ThrottleAction.BOOST;
-        } else if (componentIdentifier == Component.Identifier.Button._0 && !isPressed && throttleAction != ThrottleAction.ACCELERATE && throttleAction != ThrottleAction.REVERSE) {
+        } else if (componentIdentifier == Component.Identifier.Button._0 && !isPressed
+                && throttleAction != ThrottleAction.ACCELERATE && throttleAction != ThrottleAction.REVERSE) {
             throttleAction = ThrottleAction.IDLE;
         }
     }
@@ -139,6 +149,12 @@ public final class GamePad {
         return (int) ((2 - (1 - axisValue)) * 100 / 2);
     }
 
+    /**
+     * Checks if the controller is still connected.
+     *
+     * @return Boolean true if the contoller is still connected. false if the
+     * controller is disconnected.
+     */
     public boolean isConnected() {
         return controller.poll();
     }
