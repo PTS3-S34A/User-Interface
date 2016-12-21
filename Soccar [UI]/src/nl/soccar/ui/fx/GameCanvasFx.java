@@ -70,11 +70,11 @@ public class GameCanvasFx extends GameCanvas {
             drawables.forEach(d -> d.draw(context));
         } else if (gameStatus == GameStatus.STOPPED) {
             gameTimer.stop();
+
             Platform.runLater(() -> {
                 Main main = Main.getInstance();
                 main.setScene(FXMLConstants.LOCATION_GAME_RESULTS);
                 main.setFullScreen(false);
-
             });
         }
     }
