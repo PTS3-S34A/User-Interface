@@ -9,6 +9,7 @@ import nl.soccar.library.*;
 import nl.soccar.library.enumeration.MapType;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.physics.GameEngine;
+import nl.soccar.physics.models.BallPhysics;
 import nl.soccar.physics.models.CarPhysics;
 import nl.soccar.physics.models.ObstaclePhysics;
 import nl.soccar.ui.DisplayConstants;
@@ -58,7 +59,6 @@ public class GameViewFXMLController implements Initializable {
 
         initializeMap(session, gameCanvas);
         initializeScoreboard(session, gameCanvas);
-        initializeBall(session, gameCanvas);
         initializeNotification(session, gameCanvas);
 
         engine = gameCanvas.getGameEngine();
@@ -92,6 +92,14 @@ public class GameViewFXMLController implements Initializable {
             gameCanvas.addDrawable(obstacleUiFx);
 
             engine.addWorldObject(physics);
+        } else if (entity instanceof Ball) {
+            Ball ball = (Ball) entity;
+            BallPhysics physics = new BallPhysics(ball, engine.getWorld());
+
+            BallUiFx ballUiFx = new BallUiFx(gameCanvas, ball, physics);
+            gameCanvas.addDrawable(ballUiFx);
+
+            engine.addWorldObject(physics);
         }
     }
 
@@ -109,11 +117,6 @@ public class GameViewFXMLController implements Initializable {
     private void initializeScoreboard(Session session, GameCanvas canvas) {
         ScoreBoardUiFx scoreBoardUiFx = new ScoreBoardUiFx(canvas, session.getGame());
         canvas.addDrawable(scoreBoardUiFx);
-    }
-
-    private void initializeBall(Session session, GameCanvas canvas) {
-        BallUiFx ballUiFx = new BallUiFx(canvas, session.getGame().getMap().getBall());
-        canvas.addDrawable(ballUiFx);
     }
 
     private void initializeBoostMeter(Car car, GameCanvas canvas) {
