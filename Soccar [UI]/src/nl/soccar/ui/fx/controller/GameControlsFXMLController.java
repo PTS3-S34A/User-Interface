@@ -2,11 +2,9 @@ package nl.soccar.ui.fx.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
-import nl.soccar.library.Player;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 
@@ -21,10 +19,6 @@ public class GameControlsFXMLController implements Initializable {
     private Button btnLogOut;
     @FXML
     private Button btnReturn;
-
-    private static final Logger LOGGER = Logger.getLogger(GameControlsFXMLController.class.getSimpleName());
-
-    private Player currentPlayer;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
