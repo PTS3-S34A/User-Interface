@@ -28,6 +28,12 @@ public class BallUiFx extends PhysicsDrawable<Ball, BallPhysics> {
         TEXTURE_SNOWBALL = new Image(DisplayConstants.LOCATION_TEXTURE_SNOWBALL);
     }
 
+    /**
+     * Initiates a new BallUiFx Object using the given parameters.
+     *
+     * @param canvas The canvas on which this Ball is placed.
+     * @param ball The ball model to keep track of.
+     */
     public BallUiFx(GameCanvas canvas, Ball ball) {
         this(canvas, ball, new BallPhysics(ball, canvas.getGameEngine().getWorld()));
     }

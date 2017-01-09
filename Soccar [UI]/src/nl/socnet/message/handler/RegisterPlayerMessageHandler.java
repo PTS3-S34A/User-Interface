@@ -7,7 +7,8 @@ import nl.soccar.socnet.message.MessageHandler;
 import nl.socnet.message.RegisterPlayerMessage;
 
 /**
- *
+ * Handles RegisterPlayer messages, when a player want to register.
+ * 
  * @author PTS34A
  */
 public final class RegisterPlayerMessageHandler extends MessageHandler<RegisterPlayerMessage> {

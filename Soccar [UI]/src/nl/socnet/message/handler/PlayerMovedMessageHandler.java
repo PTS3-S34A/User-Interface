@@ -6,6 +6,7 @@ import nl.soccar.socnet.message.MessageHandler;
 import nl.socnet.message.PlayerMovedMessage;
 
 /**
+ * Handles PlayerMoved messages, after a player moves.
  *
  * @author PTS34A
  */

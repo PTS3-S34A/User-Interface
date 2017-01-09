@@ -13,6 +13,8 @@ import nl.socnet.message.SpawnCarMessage;
 import java.util.Optional;
 
 /**
+ * Handles SpawnCar messages, when cars get spawned.
+ * 
  * @author PTS34A
  */
 public final class SpawnCarMessageHandler extends MessageHandler<SpawnCarMessage> {

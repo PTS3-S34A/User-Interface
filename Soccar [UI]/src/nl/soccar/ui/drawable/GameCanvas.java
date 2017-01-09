@@ -44,7 +44,13 @@ public abstract class GameCanvas {
             drawables.add(drawable);
         }
     }
-    
+
+    /**
+     * Adds a drawable to the list of drawables.
+     *
+     * @param drawable Drawable item, not null, that needs to be added to the
+     * list of drawables.
+     */
     public final void addDrawable(PhysicsDrawable drawable) {
         synchronized (drawables) {
             drawables.add(drawable);
@@ -71,7 +77,13 @@ public abstract class GameCanvas {
             drawables.remove(drawable);
         }
     }
-    
+
+    /**
+     * Removes a drawable out of the list of drawables.
+     *
+     * @param drawable Drawable item, not null, that needs to be removed from
+     * the drawable list.
+     */
     public final void removeDrawable(PhysicsDrawable drawable) {
         synchronized (drawables) {
             drawables.remove(drawable);
@@ -87,6 +99,10 @@ public abstract class GameCanvas {
         }
     }
 
+    /**
+     * Gets the GameEngine.
+     * @return GameEngine.
+     */
     public final GameEngine getGameEngine() {
         return engine;
     }

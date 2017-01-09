@@ -15,7 +15,8 @@ import nl.socnet.message.PlayerLeftSessionMessage;
 import java.util.Optional;
 
 /**
- *
+ * Handles PlayerLeftSession message, after a player leaves the session.
+ * 
  * @author PTS34A
  */
 public final class PlayerLeftSessionMessageHandler extends MessageHandler<PlayerLeftSessionMessage> {

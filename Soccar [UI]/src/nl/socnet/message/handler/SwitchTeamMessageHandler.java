@@ -16,7 +16,8 @@ import nl.socnet.message.SwitchTeamMessage;
 import java.util.Optional;
 
 /**
- *
+ * Handles SwitchTeam messages, when a player switches to another team.
+ * 
  * @author PTS34A
  */
 public final class SwitchTeamMessageHandler extends MessageHandler<SwitchTeamMessage> {

@@ -6,6 +6,8 @@ import nl.soccar.socnet.message.MessageHandler;
 import nl.socnet.message.ChangePlayerStatusMessage;
 
 /**
+ * Handles ChangePlayerStatus messages, after the status of a player has changed.
+ * 
  * @author PTS34A
  */
 public final class ChangePlayerStatusMessageHandler extends MessageHandler<ChangePlayerStatusMessage> {

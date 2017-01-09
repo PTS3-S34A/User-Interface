@@ -10,6 +10,8 @@ import nl.soccar.ui.fx.controller.GameViewFXMLController;
 import nl.socnet.message.SpawnObstacleMessage;
 
 /**
+ * Handles SpawnObstacle messages, at the beginning of a game and after a goal.
+ * 
  * @author PTS34A
  */
 public final class SpawnObstacleMessageHandler extends MessageHandler<SpawnObstacleMessage> {

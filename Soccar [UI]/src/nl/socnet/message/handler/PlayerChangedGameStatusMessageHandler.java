@@ -13,6 +13,8 @@ import nl.socnet.message.PlayerChangedGameStatusMessage;
 import java.util.concurrent.FutureTask;
 
 /**
+ * Handles PlayerChangedGameStatus messages, after a player changed the gamestatus.
+ * 
  * @author PTS34A
  */
 public final class PlayerChangedGameStatusMessageHandler extends MessageHandler<PlayerChangedGameStatusMessage> {

@@ -32,6 +32,12 @@ public final class PasswordUtilities {
     private PasswordUtilities() {
     }
 
+    /**
+     * Generates the password hash.
+     * 
+     * @param password, the password the hash should be made for, not null.
+     * @return byte array, the password hash.
+     */
     public static byte[] generateHash(String password) {
         digest.reset();
         digest.update(password.getBytes());

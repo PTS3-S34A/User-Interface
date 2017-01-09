@@ -6,7 +6,8 @@ import nl.soccar.socnet.message.MessageEvent;
 import nl.socnet.message.handler.ChangeGameStatusMessageHandler;
 
 /**
- *
+ * Message for changing the GameStatus.
+ * 
  * @author PTS34A
  */
 @MessageEvent(id = MessageConstants.CHANGE_GAME_STATUS_MESSAGE_ID, handler = ChangeGameStatusMessageHandler.class)

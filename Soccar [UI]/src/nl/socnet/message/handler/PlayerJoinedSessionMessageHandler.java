@@ -18,7 +18,8 @@ import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.PlayerJoinedSessionMessage;
 
 /**
- *
+ * Handles PlayerJoinedSession messages, after a player has joined the session.
+ * 
  * @author PTS34A
  */
 public final class PlayerJoinedSessionMessageHandler extends MessageHandler<PlayerJoinedSessionMessage> {

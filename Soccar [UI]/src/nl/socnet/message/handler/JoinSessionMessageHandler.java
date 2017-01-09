@@ -17,7 +17,8 @@ import nl.socnet.message.JoinSessionMessage;
 import nl.socnet.message.JoinSessionMessage.Status;
 
 /**
- *
+ * Handles JoinSession messages, after the currentPlayer has joined a session.
+ * 
  * @author PTS34A
  */
 public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionMessage> {

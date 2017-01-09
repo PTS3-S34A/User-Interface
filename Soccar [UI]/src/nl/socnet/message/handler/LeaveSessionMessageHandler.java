@@ -6,6 +6,7 @@ import nl.soccar.socnet.message.MessageHandler;
 import nl.socnet.message.LeaveSessionMessage;
 
 /**
+ * Handles LeaveSession messages, after the currentPlayer has left the session.
  *
  * @author PTS34A
  */

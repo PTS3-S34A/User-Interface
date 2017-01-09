@@ -14,6 +14,7 @@ import nl.socnet.message.MovePlayerMessage;
 import java.util.List;
 
 /**
+ * Handles MovePlayer messages, after the currentPlayer has moved his car.
  *
  * @author PTS34A
  */
