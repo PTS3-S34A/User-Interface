@@ -42,7 +42,7 @@ public class SessionTableItem {
 
     /**
      * Gets the roomName.
-     * @return 
+     * @return String, the roomName
      */
     public String getRoomName() {
         return roomName.get();
@@ -51,7 +51,7 @@ public class SessionTableItem {
     /**
      * Gets the occupancy of the session.
      * 
-     * @return the occupancy. 
+     * @return String, the occupancy. 
      */
     public String getOccupancy() {
         return occupancy.get();
@@ -59,7 +59,7 @@ public class SessionTableItem {
 
     /**
      * Gets the hostName of the gameserver the game is hosted on.
-     * @return 
+     * @return String the hostName.
      */
     public String getHostName() {
         return hostName.get();
