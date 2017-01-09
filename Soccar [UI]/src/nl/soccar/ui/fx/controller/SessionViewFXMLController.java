@@ -131,7 +131,6 @@ public class SessionViewFXMLController implements Initializable {
         btnSwitchToBlue.setDisable(kut == TeamColour.BLUE);
 
         btnStartGame.setVisible(session.get().getHostName().equals(currentPlayer.getUsername()));
-
         // TODO: btnStartGame.setDisable(occupancy != capacity);
     }
 
