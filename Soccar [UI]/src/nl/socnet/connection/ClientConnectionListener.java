@@ -8,7 +8,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
+ * Listener for the connection with the MainServer.
+ * 
  * @author PTS34A
  */
 public final class ClientConnectionListener implements ConnectionListener {

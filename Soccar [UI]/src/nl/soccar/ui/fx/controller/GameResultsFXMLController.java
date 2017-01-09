@@ -118,6 +118,13 @@ public class GameResultsFXMLController implements Initializable {
         lblRoomName.setText(room.getName());
     }
     
+    /**
+     * Method that counts goals for a user.
+     * 
+     * @param type Goaltype (team) that sould be checked, not null.
+     * @param p Player that gets counted, not null.
+     * @return int, Number of goals.
+     */
     private int countGoalsUser(EventType type, Player p) {
         int goals = 0;
         for (Event e : game.getEvents()) {

@@ -105,8 +105,9 @@ public final class InputController {
 
     /**
      * Sets the current gamepadcontroller to the given gamepadcontroller.
-     * 
-     * @param controller The gamepadcontroller that the Client wants to use, not null
+     *
+     * @param controller The gamepadcontroller that the Client wants to use, not
+     * null
      */
     public void setGamePadController(Controller controller) {
         if (controller == null) {
@@ -116,26 +117,56 @@ public final class InputController {
         this.gamePad = new GamePad(controller);
     }
 
+    /**
+     * Gets the ThrottleAction of an input.
+     *
+     * @return ThrottleAction the ThrottleAction of the current input.
+     */
     public ThrottleAction getThrottleAction() {
         return throttleAction;
     }
 
+    /**
+     * Sets the ThrottleAction of the input.
+     *
+     * @param throttleAction The current ThrottleAction, not null.
+     */
     void setThrottleAction(ThrottleAction throttleAction) {
         this.throttleAction = throttleAction;
     }
 
+    /**
+     * Gets the HandbrakeAction of an input.
+     *
+     * @return HandbrakeAction the HandbrakeAction of the current input.
+     */
     public HandbrakeAction getHandbrakeAction() {
         return handbrakeAction;
     }
 
+    /**
+     * Sets the HandBrakeAction of the input.
+     *
+     * @param throttleAction The current ThrottleAction, not null.
+     */
     void setHandbrakeAction(HandbrakeAction handbrakeAction) {
         this.handbrakeAction = handbrakeAction;
     }
 
+    /**
+     * Gets the SteerAction of an input.
+     *
+     * @return SteerAction the SteerAction of the current input.
+     */
     public SteerAction getSteerAction() {
         return steerAction;
     }
 
+    /**
+     * Sets the SteerAction of the input.
+     *
+     * @param SteerAction The current SteerAction, not null.
+     */
     void setSteerAction(SteerAction steerAction) {
         this.steerAction = steerAction;
     }

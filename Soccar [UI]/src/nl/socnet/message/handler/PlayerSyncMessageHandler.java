@@ -13,6 +13,11 @@ import nl.socnet.message.PlayerSyncMessage;
 
 import java.util.Optional;
 
+/**
+ * Handles PlayerSync messages.
+ * 
+ * @author PTS34A
+ */
 public final class PlayerSyncMessageHandler extends MessageHandler<PlayerSyncMessage> {
 
     @Override

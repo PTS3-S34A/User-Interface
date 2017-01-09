@@ -15,7 +15,8 @@ import nl.socnet.message.ChatMessage;
 import java.util.Optional;
 
 /**
- *
+ * Handles ChatMessage messages, after a message has been send/received.
+ * 
  * @author PTS34A
  */
 public final class ChatMessageHandler extends MessageHandler<ChatMessage> {

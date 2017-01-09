@@ -65,6 +65,11 @@ public class GameViewFXMLController implements Initializable {
         engine.start();
     }
 
+    /**
+     * Method that spawns an entity on the map.
+     * 
+     * @param entity The enitty that should be spawned, not null.
+     */
     public void spawnEntity(Entity entity) {
         if (entity instanceof Car) {
             ClientController controller = ClientController.getInstance();
@@ -103,6 +108,11 @@ public class GameViewFXMLController implements Initializable {
         }
     }
 
+    /**
+     * Method that sets the gameStatus to paused/ unpaused.
+     * 
+     * @param paused Game is paused, not null.
+     */
     public void setPaused(boolean paused) {
         engine.getGame().setPaused(paused);
     }
@@ -135,6 +145,11 @@ public class GameViewFXMLController implements Initializable {
         canvas.addDrawable(notificationUiFx);
     }
 
+    /**
+     * Gets the GameCanvas.
+     * 
+     * @return GameCanvas, the gameCanvas.
+     */
     public GameCanvas getGameCanvas() {
         return gameCanvas;
     }

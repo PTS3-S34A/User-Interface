@@ -149,6 +149,13 @@ public class CreateRoomFXMLController implements Initializable {
         }
     }
 
+    /**
+     * Checks the input before creating a room. 
+     * 
+     * @param roomName the input of the roomName field.
+     * @param password the input of the password field.
+     * @return boolean, input correct.
+     */
     private boolean checkInput(String roomName, String password) {
         textFieldRoomName.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
 

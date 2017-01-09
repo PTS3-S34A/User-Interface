@@ -8,6 +8,11 @@ import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.controller.GameViewFXMLController;
 import nl.socnet.message.BallSyncMessage;
 
+/**
+ * Handles BallSync messages, to synchronize the ball across all clients.
+ * 
+ * @author PTS34A
+ */
 public final class BallSyncMessageHandler extends MessageHandler<BallSyncMessage> {
 
     @Override

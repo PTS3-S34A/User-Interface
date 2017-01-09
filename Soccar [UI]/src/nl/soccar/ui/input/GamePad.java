@@ -159,14 +159,29 @@ public final class GamePad {
         return controller.poll();
     }
 
+    /**
+     * Gets the ThrottleAction of an input.
+     *
+     * @return ThrottleAction the ThrottleAction of the current input.
+     */
     ThrottleAction getThrottleAction() {
         return throttleAction;
     }
 
+    /**
+     * Gets the HandbrakeAction of an input.
+     *
+     * @return HandbrakeAction the HandbrakeAction of the current input.
+     */
     HandbrakeAction getHandbrakeAction() {
         return handbrakeAction;
     }
 
+    /**
+     * Gets the SteerAction of an input.
+     *
+     * @return SteerAction the SteerAction of the current input.
+     */
     SteerAction getSteerAction() {
         return steerAction;
     }

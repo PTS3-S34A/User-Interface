@@ -24,10 +24,20 @@ public class ResultTableItem {
         this.goalsScored = new SimpleIntegerProperty(goalsScored);
     }
     
+    /**
+     * Gets the username that the result belongs to.
+     * 
+     * @return String, the username.
+     */
     public String getUsername() {
         return username.get();
     }
 
+    /**
+     * Gets the total of goals scored by the player
+     * 
+     * @return int, the total of goals scored by a player.
+     */
     public Integer getGoalsScored() {
         return goalsScored.get();
     }

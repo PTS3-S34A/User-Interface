@@ -15,6 +15,12 @@ public abstract class Drawable<M> {
     private final GameCanvas canvas;
     private final M model;
 
+    /**
+     * Initializes a Drawable object.
+     * 
+     * @param canvas The gameCanvas for the object, not null.
+     * @param model The model(type) of drawable, not null.
+     */
     public Drawable(GameCanvas canvas, M model) {
         this.canvas = canvas;
         this.model = model;

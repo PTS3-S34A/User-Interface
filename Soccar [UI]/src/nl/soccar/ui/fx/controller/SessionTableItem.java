@@ -31,22 +31,45 @@ public class SessionTableItem {
         passwordAvailable = new SimpleStringProperty(session.hasPassword() ? "Yes" : "No");
     }
     
+    /**
+     * Gets the sessionData of this session.
+     * 
+     * @return SessionData, of this session.
+     */
     public SessionData getSessionData() {
         return sessionData;
     }
 
+    /**
+     * Gets the roomName.
+     * @return 
+     */
     public String getRoomName() {
         return roomName.get();
     }
 
+    /**
+     * Gets the occupancy of the session.
+     * 
+     * @return the occupancy. 
+     */
     public String getOccupancy() {
         return occupancy.get();
     }
 
+    /**
+     * Gets the hostName of the gameserver the game is hosted on.
+     * @return 
+     */
     public String getHostName() {
         return hostName.get();
     }
 
+    /**
+     * Method that checks if there is a password available.
+     * 
+     * @return String password available.
+     */
     public String isPasswordAvailable() {
         return passwordAvailable.get();
     }

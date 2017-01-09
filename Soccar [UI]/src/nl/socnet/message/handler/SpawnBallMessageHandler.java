@@ -10,6 +10,8 @@ import nl.soccar.ui.fx.controller.GameViewFXMLController;
 import nl.socnet.message.SpawnBallMessage;
 
 /**
+ * Handles SpawnBall messages, when a game starts.
+ * 
  * @author PTS34A
  */
 public final class SpawnBallMessageHandler extends MessageHandler<SpawnBallMessage> {
