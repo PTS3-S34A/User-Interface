@@ -23,13 +23,19 @@ public final class ChangeHostMessageHandler extends MessageHandler<ChangeHostMes
     @Override
     protected void handle(Connection connection, ChangeHostMessage message) throws Exception {
         Room room = ClientController.getInstance().getCurrentPlayer().getCurrentSession().getRoom();
-        Optional<Player> optional = room.getAllPlayers().stream().filter(p -> p.getPlayerId() == message.getPlayerId()).findFirst();
-        if (!optional.isPresent()) {
-            return;
-        }
 
-        Player player = optional.get();
-        room.setHost(player);
+        int id = message.getPlayerId();
+        if (id == -1) {
+            room.setHost(null);
+        } else {
+            Optional<Player> optional = room.getAllPlayers().stream().filter(p -> p.getPlayerId() == message.getPlayerId()).findFirst();
+            if (!optional.isPresent()) {
+                return;
+            }
+
+            System.out.println(optional.get().getUsername());
+            room.setHost(optional.get());
+        }
 
         Object controller = Main.getInstance().getController();
         if (controller != null && controller instanceof SessionViewFXMLController) {
