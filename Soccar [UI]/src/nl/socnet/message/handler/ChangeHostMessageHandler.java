@@ -33,7 +33,6 @@ public final class ChangeHostMessageHandler extends MessageHandler<ChangeHostMes
                 return;
             }
 
-            System.out.println(optional.get().getUsername());
             room.setHost(optional.get());
         }
 
