@@ -60,7 +60,7 @@ public final class DisplayConstants {
     public static final float BOOST_METER_WIDTH = 160.0F;
     public static final float BOOST_METER_HEIGHT = 1.0F;
     public static final Color BOOST_METER_STROKE_COLOR = Color.TRANSPARENT;
-    public static final Color BOOST_METER_FILL_COLOR = Color.rgb(30, 30, 230);
+    public static final Color BOOST_METER_FILL_COLOR = Color.rgb(0, 205, 0);
 
     /**
      * Entity images properties

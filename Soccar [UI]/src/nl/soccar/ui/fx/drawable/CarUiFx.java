@@ -116,11 +116,6 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         double y;
         double o = 0.0;
 
-        // TODO: Boost color should be the color of the team the player is in.
-        int r = 30;
-        int g = 30;
-        int b = 230;
-
         // Cancel when there is no trail.
         if (trail.isEmpty()) {
             return;
@@ -133,7 +128,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         // Draw trail line
         for (int i = 1; i < trail.size(); i++) {
 
-            gc.setStroke(Color.rgb(r, g, b, o));
+            gc.setStroke(DisplayConstants.BOOST_METER_FILL_COLOR);
 
             prevX = PhysicsUtilities.toPixelX((float) trail.get(i - 1).getX());
             prevY = PhysicsUtilities.toPixelY((float) trail.get(i - 1).getY());
