@@ -51,6 +51,8 @@ public class MainMenuFXMLController implements Initializable {
     @FXML
     private Button btnLogOut;
     @FXML
+    private Button btnControls;
+    @FXML
     private Button btnJoinRoom;
     @FXML
     private Label lblUsername;
@@ -101,6 +103,7 @@ public class MainMenuFXMLController implements Initializable {
 
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
         btnCreateRoom.setOnAction(e -> Main.getInstance().setScene(FXMLConstants.LOCATION_CREATE_ROOM));
+        btnControls.setOnAction(e -> Main.getInstance().setScene(FXMLConstants.LOCATION_CONTROLS));
         btnJoinRoom.setOnAction(e -> joinRoom(tblSessionList.getSelectionModel().getSelectedItem()));
         btnJoinRoom.setDisable(true);
 

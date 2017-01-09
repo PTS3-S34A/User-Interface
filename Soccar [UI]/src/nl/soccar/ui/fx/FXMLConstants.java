@@ -16,6 +16,7 @@ public final class FXMLConstants {
     public static final String LOCATION_GAME_VIEW = "resources/fxml/GameViewFXML.fxml";
     public static final String LOCATION_GAME_RESULTS = "resources/fxml/GameResultsFXML.fxml";
     public static final String LOCATION_REGISTER = "resources/fxml/RegisterFXML.fxml";
+    public static final String LOCATION_CONTROLS = "resources/fxml/GameControlsFXML.fxml";
 
     // GUI warnings & description
     public static final String WARNING_USERNAME_EXISTS = "USERNAME EXISTS";

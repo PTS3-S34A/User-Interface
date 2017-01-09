@@ -39,6 +39,11 @@
                         <Font name="Century Gothic" size="24.0" />
                      </font>
                   </Button>
+                  <Button id="button" fx:id="btnControls" layoutX="839.0" layoutY="6.0" mnemonicParsing="false" prefHeight="66.0" prefWidth="183.0" stylesheets="@../css/Style.css" text="CONTROLS" textFill="WHITE">
+                     <font>
+                        <Font name="Century Gothic" size="24.0" />
+                     </font>
+                  </Button>
                </children>
             </AnchorPane>
          </children>
