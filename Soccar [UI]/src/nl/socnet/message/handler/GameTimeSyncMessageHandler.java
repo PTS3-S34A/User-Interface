@@ -9,7 +9,7 @@ import nl.socnet.message.GameTimeSyncMessage;
 
 /**
  * Handler for the GameTimeSyncMessage.
- * 
+ *
  * @author PTS34A
  */
 public class GameTimeSyncMessageHandler extends MessageHandler<GameTimeSyncMessage> {
@@ -18,28 +18,28 @@ public class GameTimeSyncMessageHandler extends MessageHandler<GameTimeSyncMessa
     protected void handle(Connection connection, GameTimeSyncMessage message) throws Exception {
         Game game = ClientController.getInstance().getCurrentPlayer().getCurrentSession().getGame();
         int currentGameTime = game.getSecondsLeft();
-        
+
         long timeDifference = System.currentTimeMillis() - message.getCurrentTime();
-        
-        game.setGameTime(currentGameTime + (int)timeDifference);
+
+        game.setGameTime(currentGameTime + (int) timeDifference);
     }
 
     @Override
     protected void encode(Connection connection, GameTimeSyncMessage message, ByteBuf buf) throws Exception {
-        throw new UnsupportedOperationException("Encoding is not supported for Client."); 
+        throw new UnsupportedOperationException("Encoding is not supported for Client.");
     }
 
     @Override
     protected GameTimeSyncMessage decode(Connection connection, ByteBuf buf) throws Exception {
-        if(buf.readableBytes() < 9) {
+        if (buf.readableBytes() < 12) {
             buf.resetReaderIndex();
             return null;
         }
-        
+
         int gameTime = buf.readInt();
         long currentServerTime = buf.readLong();
-        
+
         return new GameTimeSyncMessage(gameTime, currentServerTime);
     }
-    
+
 }
