@@ -46,6 +46,7 @@ public final class SwitchTeamMessageHandler extends MessageHandler<SwitchTeamMes
 
     @Override
     protected void encode(Connection connection, SwitchTeamMessage message, ByteBuf buf) throws Exception {
+        // Will not be used; This message will not be send from here.
     }
 
     @Override

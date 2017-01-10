@@ -24,10 +24,10 @@ public final class FXMLConstants {
     public static final String MESSAGE_USERNAME_EXISTS = "LOGIN";
     public static final String MESSAGE_NEW_USERNAME = "REGISTER";
     public static final String MESSAGE_INVALID_USERNAME = "A username can only contain alphanumeric characters & can't contain more than 16 characters.";
-    public static final String MESSAGE_INVALID_USER_PASSWORD = "A password needs to be at least 8 characters long.";
-    public static final String MESSAGE_FALSE_USER_PASSWORD = "The credentials you've provided seem to be incorrect.";
+    public static final String MESSAGE_INVALID_USER_CREDENTIALS = "A password needs to be at least 8 characters long.";
+    public static final String MESSAGE_FALSE_USER_CREDENTIALS = "The credentials you've provided seem to be incorrect.";
     public static final String MESSAGE_INVALID_ROOM_NAME = "A roomname can only contain alphanumeric characters & can't contain more than 16 characters.";
-    public static final String MESSAGE_FALSE_ROOM_PASSWORD = "The password you've provided seems to be incorrect.";
+    public static final String MESSAGE_FALSE_ROOM_CREDENTIALS = "The password you've provided seems to be incorrect.";
     public static final String MESSAGE_CAR_NOT_SELECTED = "You'll need to select a car.";
 
     // Alert titles & messages

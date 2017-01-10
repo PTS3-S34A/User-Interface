@@ -8,8 +8,10 @@ package nl.soccar.ui.drawable;
 import nl.soccar.physics.WorldObject;
 
 /**
- *
- * @author Lesley
+ * A PhysicsDrawable is a Drawable, that keeps track of an object that get's controlled by the PhysicsEngine.
+ * @author PTS34A
+ * @param <M> Model in the library.
+ * @param <P> Model in the physics.
  */
 public abstract class PhysicsDrawable<M, P extends WorldObject> extends Drawable<M> {
 

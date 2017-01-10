@@ -67,12 +67,12 @@ public class CreateRoomFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         btnLogOut.setOnAction(e -> Main.getInstance().logOut());
         btnCancel.setOnAction(e -> Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU));
-        btnCreateRoom.setOnAction(e -> createRoom());
+        btnCreateRoom.setOnAction(e -> newRoomInformation());
 
         Player player = ClientController.getInstance().getCurrentPlayer();
         lblUsername.setText(player.getUsername());
         lblCar.setText(player.getCarType().toString());
-        textFieldRoomName.setOnAction(e -> createRoom());
+        textFieldRoomName.setOnAction(e -> newRoomInformation());
 
         ObservableList<MapType> maps = cbMap.getItems();
         maps.addAll(MapType.values());
@@ -84,20 +84,32 @@ public class CreateRoomFXMLController implements Initializable {
     }
 
     /**
-     * Event-handler for CreatRoom button; Uses password, roomname, capacity and
-     * map-type.
+     * Checks the roominformatie-input before creating a room.
      */
-    private void createRoom() {
+    private void newRoomInformation() {
         String roomName = textFieldRoomName.getText();
         String input = textFieldPassword.getText();
         String password = !input.isEmpty() ? input : "";
 
-        if (!checkInput(roomName, password)) {
+        if (!checkInput(roomName)) {
             return;
         }
 
         int capacity = (int) sliderCapacity.getValue();
         Duration duration = Duration.values()[(int) sliderDuration.getValue() - 1];
+
+        createRoom(roomName, password, capacity, duration);
+    }
+
+   /**
+    * Creates a room (session) through the main-server.
+    * 
+    * @param roomName The roomname for this new room.
+    * @param password The password for this new room.
+    * @param capacity The capacity of the room.
+    * @param duration The duration (length) for the game.
+    */
+    private void createRoom(String roomName, String password, int capacity, Duration duration) {
 
         ClientController controller = ClientController.getInstance();
 
@@ -126,15 +138,7 @@ public class CreateRoomFXMLController implements Initializable {
 
             Connection connection;
             while ((connection = controller.getCurrentConnection()) == null) {
-                try {
-                    Thread.sleep(50L);
-                } catch (InterruptedException e) {
-                    LOGGER.log(Level.WARNING, "An error while connecting to the game server.", e);
-
-                    DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
-                    
-                    return;
-                }
+                waitForConnection();
             }
 
             Player currentPlayer = controller.getCurrentPlayer();
@@ -149,14 +153,26 @@ public class CreateRoomFXMLController implements Initializable {
         }
     }
 
+    private void waitForConnection() {
+        try {
+            Thread.sleep(50L);
+        } catch (InterruptedException e) {
+            LOGGER.log(Level.WARNING, "An error while connecting to the game server.", e);
+
+            DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
+
+            return;
+        }
+    }
+
     /**
-     * Checks the input before creating a room. 
-     * 
+     * Checks the input before creating a room.
+     *
      * @param roomName the input of the roomName field.
      * @param password the input of the password field.
      * @return boolean, input correct.
      */
-    private boolean checkInput(String roomName, String password) {
+    private boolean checkInput(String roomName) {
         textFieldRoomName.setStyle("-fx-text-box-border: white; -fx-focus-color: white;");
 
         Pattern p = Pattern.compile(REGEX);

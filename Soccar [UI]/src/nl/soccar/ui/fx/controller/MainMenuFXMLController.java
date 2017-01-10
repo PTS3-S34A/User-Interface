@@ -214,15 +214,7 @@ public class MainMenuFXMLController implements Initializable {
 
             Connection connection;
             while ((connection = controller.getCurrentConnection()) == null) {
-                try {
-                    Thread.sleep(50L);
-                } catch (InterruptedException e) {
-                    LOGGER.log(Level.WARNING, "An error while connecting to the game server.", e);
-
-                    DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
-
-                    return;
-                }
+                waitForConnection();
             }
 
             Player currentPlayer = controller.getCurrentPlayer();
@@ -233,9 +225,21 @@ public class MainMenuFXMLController implements Initializable {
             LOGGER.log(Level.INFO, "Joined the chosen Session of the Game Server");
 
         } catch (IOException ex) {
-            Logger.getLogger(MainMenuFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.log(Level.SEVERE, null, ex);
         }
 
+    }
+
+    private void waitForConnection() {
+        try {
+            Thread.sleep(50L);
+        } catch (InterruptedException e) {
+            LOGGER.log(Level.WARNING, "An error while connecting to the game server.", e);
+
+            DisplayUtilities.showAlert("Error", "An error while connecting to the game server.");
+
+            return;
+        }
     }
 
 }

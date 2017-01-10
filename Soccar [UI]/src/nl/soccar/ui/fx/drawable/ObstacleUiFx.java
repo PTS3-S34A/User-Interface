@@ -14,6 +14,11 @@ import nl.soccar.ui.util.PhysicsUtilities;
  */
 public class ObstacleUiFx extends PhysicsDrawable<Obstacle, ObstaclePhysics> {
 
+    /**
+     * Initializes a ObstacleUiFx object.
+     * @param canvas The canvas that the obstacle will be drawn on.
+     * @param obstacle The obstacle that will be drawn.
+     */
     public ObstacleUiFx(GameCanvas canvas, Obstacle obstacle) {
         this(canvas, obstacle, new ObstaclePhysics(obstacle, canvas.getGameEngine().getWorld()));
     }
@@ -40,13 +45,6 @@ public class ObstacleUiFx extends PhysicsDrawable<Obstacle, ObstaclePhysics> {
 
         context.translate(x, y); // Set the origin point of the rotation.
         context.rotate(-obstacle.getDegree()); // Set the angle of the rotation.
-
-        switch (obstacle.getObstacleType()) {
-            default:
-            case WALL:
-                // The wall obstacle is never drawn, it is invisible.
-                break;
-        }
 
         context.restore(); // Restore canvas to display a rotated image.
     }
