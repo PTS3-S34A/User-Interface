@@ -1,9 +1,5 @@
 package nl.soccar.ui.until;
 
-import javafx.scene.image.Image;
-import nl.soccar.library.enumeration.CarType;
-import nl.soccar.library.enumeration.TeamColour;
-import nl.soccar.ui.util.ImageUtilities;
 import nl.soccar.ui.util.PhysicsUtilities;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
