@@ -3,8 +3,8 @@ package nl.soccar.ui.fx.drawable;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import nl.soccar.library.Ball;
-import nl.soccar.ui.DisplayConstants;
 import nl.soccar.physics.models.BallPhysics;
+import nl.soccar.ui.DisplayConstants;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.drawable.PhysicsDrawable;
 import nl.soccar.ui.util.PhysicsUtilities;
@@ -51,6 +51,10 @@ public class BallUiFx extends PhysicsDrawable<Ball, BallPhysics> {
 
     @Override
     public void draw(GraphicsContext context) {
+        if (super.getPhysicsModel().isResetting()) {
+            return;
+        }
+
         Ball ball = super.getModel();
 
         float radius = PhysicsUtilities.toPixelWidth(ball.getRadius());
