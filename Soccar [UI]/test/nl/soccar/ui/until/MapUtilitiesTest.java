@@ -7,7 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 /**
- * JUnit test that tests the nl.soccar.library.MapUtilities class.
+ * JUnit test that tests the nl.soccar.ui.util.MapUtilities class.
  *
  * @author PTS34A
  */
