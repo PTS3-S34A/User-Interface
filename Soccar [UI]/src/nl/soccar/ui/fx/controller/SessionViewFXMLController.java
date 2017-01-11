@@ -122,7 +122,7 @@ public class SessionViewFXMLController implements Initializable {
 
         Optional<SessionData> session = ClientController.getInstance().getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
         if (!session.isPresent()) {
-            LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
+            LOGGER.log(Level.WARNING, "An exception occurred while getting the SessionData from the Game Server");
             return;
         }
 

@@ -1,10 +1,5 @@
 package nl.soccar.ui.fx.controller;
 
-import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,16 +7,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import nl.soccar.library.Event;
-import nl.soccar.library.Game;
-import nl.soccar.library.Player;
-import nl.soccar.library.Room;
-import nl.soccar.library.Session;
-import nl.soccar.library.SessionData;
+import nl.soccar.library.*;
 import nl.soccar.library.enumeration.EventType;
-import nl.soccar.ui.rmi.ClientController;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.rmi.ClientController;
+
+import java.net.URL;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * FXML Controller class
@@ -29,7 +25,8 @@ import nl.soccar.ui.fx.FXMLConstants;
  * @author PTS34A
  */
 public class GameResultsFXMLController implements Initializable {
-    
+
+    private static final Logger LOGGER = Logger.getLogger(GameResultsFXMLController.class.getSimpleName());
     @FXML
     private Label lblRoomName;
     @FXML
@@ -54,9 +51,6 @@ public class GameResultsFXMLController implements Initializable {
     private TableView<ResultTableItem> tblBlueGoalsList;
     @FXML
     private TableView<ResultTableItem> tblRedGoalsList;
-    
-    private static final Logger LOGGER = Logger.getLogger(GameResultsFXMLController.class.getSimpleName());
-    
     private Session currentSession;
     
     private Player currentPlayer;
@@ -85,7 +79,7 @@ public class GameResultsFXMLController implements Initializable {
         
         Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
         if (!session.isPresent()) {
-            LOGGER.log(Level.WARNING, "An exception occured while getting the SessionData from the Game Server");
+            LOGGER.log(Level.WARNING, "An exception occurred while getting the SessionData from the Game Server");
             return;
         }
     }
