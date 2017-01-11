@@ -1,6 +1,6 @@
 package nl.soccar.ui.drawable;
 
-import nl.soccar.library.Game;
+import nl.soccar.library.Session;
 import nl.soccar.physics.GameEngine;
 import nl.soccar.physics.WorldObject;
 import nl.soccar.physics.models.CarPhysics;
@@ -27,8 +27,8 @@ public abstract class GameCanvas {
      *
      * @param game The Game, not null, that will be used to interact with.
      */
-    public GameCanvas(Game game) {
-        engine = new GameEngine(game);
+    public GameCanvas(Session session) {
+        engine = new GameEngine(session);
 
         drawables = new ArrayList<>();
     }
