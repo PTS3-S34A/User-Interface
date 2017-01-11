@@ -6,7 +6,7 @@ import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
-import nl.soccar.library.Game;
+import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.physics.PhysicsConstants;
 import nl.soccar.ui.Main;
@@ -35,8 +35,8 @@ public class GameCanvasFx extends GameCanvas {
      * @param context The context which can be used by Drawables to actually
      * draw on a Canvas.
      */
-    public GameCanvasFx(Game game, GraphicsContext context) {
-        super(game);
+    public GameCanvasFx(Session session, GraphicsContext context) {
+        super(session);
 
         this.context = context;
 

@@ -146,6 +146,9 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     @Override
     public void draw(GraphicsContext context) {
         CarPhysics physics = super.getPhysicsModel();
+        if (physics.isResetting()) {
+            return;
+        }
 
         if (ClientController.getInstance().getCurrentPlayer().equals(super.getModel().getPlayer())) {
             InputController controller = InputController.getInstance();
