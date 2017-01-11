@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import nl.soccar.ui.rmi.ClientController;
 
 /**
  * FXML Controller class
@@ -76,9 +77,17 @@ public class LoginFXMLController implements Initializable {
     }
 
     private void playAsGuest() {
+        String username = txtFieldName.getText();
         CarType car = selectedCar();
+
+        if (ClientController.getInstance().checkIfExists(username)) {
+            FxUtilities.showInlineMessage(txtFieldName, FXMLConstants.MESSAGE_USERNAME_EXISTS);
+            txtFieldName.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
+            return;
+        }
+
         if (car != null && checkInput()) {
-            Main.getInstance().playAsGuest(txtFieldName.getText(), car);
+            Main.getInstance().playAsGuest(username, car);
         }
     }
 
