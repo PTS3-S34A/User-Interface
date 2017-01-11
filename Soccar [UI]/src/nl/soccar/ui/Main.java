@@ -32,6 +32,8 @@ public class Main extends Application {
 
     private static Main instance;
 
+    private ClientController clientController;
+
     private Stage primaryStage;
 
     /**
@@ -44,6 +46,15 @@ public class Main extends Application {
         synchronized (Main.class) {
             if (instance != null) {
                 throw new UnsupportedOperationException("Main is a singleton, cannot be called from its constructor.");
+            }
+
+            clientController = ClientController.getInstance();
+
+            try {
+                clientController.initialize();
+            } catch (IOException | NotBoundException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
             }
 
             instance = this;
@@ -91,15 +102,7 @@ public class Main extends Application {
      * @param selectedCar The selected car of the Player.
      */
     public void loginOrRegister(String username, CarType selectedCar) {
-        ClientController clientController = ClientController.getInstance();
         clientController.setCurrentPlayer(new Player(username, Privilege.NORMAL, selectedCar));
-        try {
-            clientController.initialize();
-        } catch (IOException | NotBoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
-            return;
-        }
 
         setScene(FXMLConstants.LOCATION_REGISTER);
     }
@@ -112,15 +115,7 @@ public class Main extends Application {
      * @param selectedCar The selected car of the Player.
      */
     public void playAsGuest(String username, CarType selectedCar) {
-        ClientController clientController = ClientController.getInstance();
         clientController.setCurrentPlayer(new Player(username, Privilege.GUEST, selectedCar));
-        try {
-            clientController.initialize();
-        } catch (IOException | NotBoundException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-            FxUtilities.showAlert(FXMLConstants.ALERT_TITLE_NO_CONNECTION, FXMLConstants.ALERT_MESSAGE_NO_CONNECTION, Alert.AlertType.ERROR);
-            return;
-        }
 
         setScene(FXMLConstants.LOCATION_MAIN_MENU);
     }

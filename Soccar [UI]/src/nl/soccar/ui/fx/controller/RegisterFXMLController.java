@@ -85,7 +85,6 @@ public class RegisterFXMLController implements Initializable {
     }
 
     private boolean checkInput(String password) {
-
         if (password.length() >= 8) {
             return true;
         }
