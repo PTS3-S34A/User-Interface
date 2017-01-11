@@ -11,7 +11,7 @@ import nl.socnet.message.handler.EventMessageHandler;
  *
  * @author PTS34A
  */
-@MessageEvent(id = MessageConstants.EVENT_MESSAGE, handler = EventMessageHandler.class)
+@MessageEvent(id = MessageConstants.EVENT_MESSAGE_ID, handler = EventMessageHandler.class)
 public final class EventMessage extends Message {
 
     private final EventType type;
@@ -42,7 +42,7 @@ public final class EventMessage extends Message {
 
     @Override
     public int getId() {
-        return MessageConstants.EVENT_MESSAGE;
+        return MessageConstants.EVENT_MESSAGE_ID;
     }
 
 }
