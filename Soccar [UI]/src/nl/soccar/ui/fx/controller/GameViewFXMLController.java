@@ -53,7 +53,7 @@ public class GameViewFXMLController implements Initializable {
         canvas.setFocusTraversable(true);
 
         Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
-        gameCanvas = new GameCanvasFx(session.getGame(), canvas.getGraphicsContext2D());
+        gameCanvas = new GameCanvasFx(session, canvas.getGraphicsContext2D());
 
         textColor = session.getGame().getGameSettings().getMapType() == MapType.ICE ? Color.BLACK : Color.WHITE;
 
