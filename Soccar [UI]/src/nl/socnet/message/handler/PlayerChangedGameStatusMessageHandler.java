@@ -43,8 +43,6 @@ public final class PlayerChangedGameStatusMessageHandler extends MessageHandler<
         } else if (status == PlayerChangedGameStatusMessage.Status.GAME_RUNNING) {
             view.setPaused(false);
         }
-
-        // WILL BE UPDATED
     }
 
     @Override

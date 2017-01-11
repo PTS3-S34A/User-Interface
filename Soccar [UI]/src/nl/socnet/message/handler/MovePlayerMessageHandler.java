@@ -31,6 +31,7 @@ public final class MovePlayerMessageHandler extends MessageHandler<MovePlayerMes
 
         if (game.getStatus() == GameStatus.RUNNING) {
             Car car = players.stream().filter(p -> p.getPlayerId() == message.getPlayerId()).map(map::getCarFromPlayer).findFirst().get();
+
             car.setHandbrakeAction(message.getHandbrakAction());
             car.setSteerAction(message.getSteerAction());
             car.setThrottleAction(message.getThrottleAction());

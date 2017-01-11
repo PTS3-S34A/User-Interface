@@ -18,19 +18,44 @@ import java.util.List;
  */
 public abstract class GameCanvas {
 
-    private final GameEngine engine;
+    private final Session session;
     private final List<Drawable> drawables;
+    private GameEngine engine;
 
     /**
      * Initiates a new GameCanvas object. While initializing, the collections of
      * Drawables en Physics are also initialized.
      *
-     * @param game The Game, not null, that will be used to interact with.
+     * @param session The Session, not null, that will be used by the GameEngine to interact with.
      */
     public GameCanvas(Session session) {
-        engine = new GameEngine(session);
+        this.session = session;
 
         drawables = new ArrayList<>();
+    }
+
+    /**
+     * Initializes the GameEngine.
+     */
+    public void initialize() {
+        engine = new GameEngine(session);
+    }
+
+    /**
+     * Starts the GameEngine.
+     */
+    public void start() {
+        engine.start();
+    }
+
+    /**
+     * Stops the GameEngine.
+     */
+    public void stop() {
+        engine.getGame().getMap().removeCars();
+
+        engine.stop();
+        engine = null;
     }
 
     /**
@@ -100,8 +125,9 @@ public abstract class GameCanvas {
     }
 
     /**
-     * Gets the GameEngine.
-     * @return GameEngine.
+     * Gets the GameEngine used by this Canvas.
+     *
+     * @return The GameEngine used by the Canvas.
      */
     public final GameEngine getGameEngine() {
         return engine;
