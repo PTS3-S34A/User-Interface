@@ -56,6 +56,8 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
      * @param canvas  The canvas on which this Car is placed.
      * @param car     The model to keep track of.
      * @param physics The physics-model to keep track of.
+     * @param colour  The colour of the car.
+     * @param textColor The colour of the username above the car.
      */
     public CarUiFx(GameCanvas canvas, Car car, CarPhysics physics, TeamColour colour, Color textColor) {
         super(canvas, car, physics);
@@ -81,7 +83,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
         gc.translate(x, y); // Set the origin point of the rotation.
         gc.rotate(-car.getDegree()); // Set the angle of the rotation.
-        gc.drawImage(carTexture, -width / 2, -height / 2, width, height); // TODO: Find a solution for anti-aliasing
+        gc.drawImage(carTexture, -width / 2, -height / 2, width, height);
 
         gc.restore(); // Restore canvas to display a rotated image.
 

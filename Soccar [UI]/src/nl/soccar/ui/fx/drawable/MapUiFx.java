@@ -23,15 +23,11 @@ public class MapUiFx extends Drawable<Map> {
     private static final Image TEXTURE_CHRISTMAS;
     private static final Image TEXTURE_ICE;
     private static final Image TEXTURE_GRASS;
-    private static final float WALL_WIDTH;
-    private static final float CORNER_SIZE;
-
+    
     static {
         TEXTURE_ICE = new Image(DisplayConstants.LOCATION_TEXTURE_ICE);
         TEXTURE_CHRISTMAS = new Image(DisplayConstants.LOCATION_TEXTURE_CHRISTMAS);
         TEXTURE_GRASS = new Image(DisplayConstants.LOCATION_TEXTURE_GRASS);
-        WALL_WIDTH = 5.0F;
-        CORNER_SIZE = 15.0F;
     }
 
     private Color lineColor;

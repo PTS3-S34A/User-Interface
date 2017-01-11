@@ -65,7 +65,6 @@ public class BallUiFx extends PhysicsDrawable<Ball, BallPhysics> {
         context.translate(x, y); // Set the origin point of the rotation
         context.rotate(-ball.getDegree()); // Set the angle of the rotation
 
-        // TODO: Find a solution for anti-aliasing
         switch (ball.getBallType()) {
             case FOOTBALL:
                 context.drawImage(TEXTURE_FOOTBALL, -radius, -radius, radius * 2, radius * 2);

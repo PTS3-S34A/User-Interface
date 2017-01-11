@@ -79,7 +79,7 @@ public class RegisterFXMLController implements Initializable {
         if (userExists && controller.checkPassword(username, password) || !userExists && controller.add(username, password)) {
             Main.getInstance().setScene(FXMLConstants.LOCATION_MAIN_MENU);
         } else {
-            FxUtilities.showInlineMessage(txtFieldPassword, FXMLConstants.MESSAGE_FALSE_USER_PASSWORD);
+            FxUtilities.showInlineMessage(txtFieldPassword, FXMLConstants.MESSAGE_FALSE_USER_CREDENTIALS);
             clearInput();
         }
     }
@@ -90,7 +90,7 @@ public class RegisterFXMLController implements Initializable {
             return true;
         }
 
-        FxUtilities.showInlineMessage(txtFieldPassword, FXMLConstants.MESSAGE_INVALID_USER_PASSWORD);
+        FxUtilities.showInlineMessage(txtFieldPassword, FXMLConstants.MESSAGE_INVALID_USER_CREDENTIALS);
         txtFieldPassword.setStyle("-fx-text-box-border: red; -fx-focus-color: red;");
         return false;
     }
