@@ -2,14 +2,13 @@ package nl.soccar.ui.fx;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.application.Platform;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.util.Duration;
 import nl.soccar.library.Session;
 import nl.soccar.library.enumeration.GameStatus;
+import nl.soccar.physics.GameEngine;
 import nl.soccar.physics.PhysicsConstants;
-import nl.soccar.ui.Main;
 import nl.soccar.ui.drawable.Drawable;
 import nl.soccar.ui.drawable.GameCanvas;
 import nl.soccar.ui.input.InputController;
@@ -51,6 +50,7 @@ public class GameCanvasFx extends GameCanvas {
         if (controller.getAllGamePadControllers().size() > 0) {
             controller.setGamePadController(controller.getAllGamePadControllers().get(0));
         }
+
         controller.initializeInput(keyboard);
 
         Canvas canvas = context.getCanvas();
@@ -62,8 +62,13 @@ public class GameCanvasFx extends GameCanvas {
      * Clears the canvas and renders a frame by drawing all Drawable items.
      */
     private void render() {
-        GameStatus gameStatus = getGameEngine().getGame().getStatus();
+        GameEngine engine = super.getGameEngine();
+        if (engine == null) {
+            gameTimer.stop();
+            return;
+        }
 
+        GameStatus gameStatus = engine.getGame().getStatus();
         if (gameStatus == GameStatus.RUNNING || gameStatus == GameStatus.PAUSED) {
             clear();
 
@@ -71,12 +76,6 @@ public class GameCanvasFx extends GameCanvas {
             drawables.forEach(d -> d.draw(context));
         } else if (gameStatus == GameStatus.STOPPED) {
             gameTimer.stop();
-
-            Platform.runLater(() -> {
-                Main main = Main.getInstance();
-                main.setScene(FXMLConstants.LOCATION_GAME_RESULTS);
-                main.setFullScreen(false);
-            });
         }
     }
 

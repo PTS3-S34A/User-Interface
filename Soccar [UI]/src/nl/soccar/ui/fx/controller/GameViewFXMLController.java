@@ -38,8 +38,6 @@ public class GameViewFXMLController implements Initializable {
     private GameCanvas gameCanvas;
     private Color textColor;
 
-    private GameEngine engine;
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -53,16 +51,12 @@ public class GameViewFXMLController implements Initializable {
         canvas.setFocusTraversable(true);
 
         Session session = ClientController.getInstance().getCurrentPlayer().getCurrentSession(); // Will never be null.
-        gameCanvas = new GameCanvasFx(session, canvas.getGraphicsContext2D());
-
-        textColor = session.getGame().getGameSettings().getMapType() == MapType.ICE ? Color.BLACK : Color.WHITE;
-
+        initializeGameCanvas(session);
         initializeMap(session, gameCanvas);
         initializeScoreboard(session, gameCanvas);
         initializeNotification(session, gameCanvas);
 
-        engine = gameCanvas.getGameEngine();
-        engine.start();
+        gameCanvas.start();
     }
 
     /**
@@ -71,6 +65,8 @@ public class GameViewFXMLController implements Initializable {
      * @param entity The enitty that should be spawned, not null.
      */
     public void spawnEntity(Entity entity) {
+        GameEngine engine = gameCanvas.getGameEngine();
+
         if (entity instanceof Car) {
             ClientController controller = ClientController.getInstance();
             Session session = controller.getCurrentPlayer().getCurrentSession();
@@ -114,7 +110,19 @@ public class GameViewFXMLController implements Initializable {
      * @param paused Game is paused, not null.
      */
     public void setPaused(boolean paused) {
-        engine.getGame().setPaused(paused);
+        gameCanvas.getGameEngine().getGame().setPaused(paused);
+    }
+
+    public void stop() {
+        gameCanvas.stop();
+        gameCanvas = null;
+    }
+
+    private void initializeGameCanvas(Session session) {
+        gameCanvas = new GameCanvasFx(session, canvas.getGraphicsContext2D());
+        gameCanvas.initialize();
+
+        textColor = session.getGame().getGameSettings().getMapType() == MapType.ICE ? Color.BLACK : Color.WHITE;
     }
 
     private void initializeMap(Session session, GameCanvas canvas) {
