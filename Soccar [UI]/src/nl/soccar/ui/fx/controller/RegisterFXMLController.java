@@ -56,15 +56,15 @@ public class RegisterFXMLController implements Initializable {
         userExists = controller.checkIfExists(username);
 
         if (userExists) {
-            lblTitel.setText(FXMLConstants.MESSAGE_USERNAME_EXISTS);
+            lblTitel.setText(FXMLConstants.BUTTON_TEXT_USERNAME_EXISTS);
             lblUsername.setText(username);
             lblUsernameDescription.setText(FXMLConstants.WARNING_USERNAME_EXISTS);
-            btnLoginRegister.setText(FXMLConstants.MESSAGE_USERNAME_EXISTS);
+            btnLoginRegister.setText(FXMLConstants.BUTTON_TEXT_USERNAME_EXISTS);
         } else {
-            lblTitel.setText(FXMLConstants.MESSAGE_NEW_USERNAME);
+            lblTitel.setText(FXMLConstants.BUTTON_TEXT_NEW_USERNAME);
             lblUsername.setText(username);
             lblUsernameDescription.setText(FXMLConstants.WARNING_NEW_USERNAME);
-            btnLoginRegister.setText(FXMLConstants.MESSAGE_NEW_USERNAME);
+            btnLoginRegister.setText(FXMLConstants.BUTTON_TEXT_NEW_USERNAME);
         }
     }
 
