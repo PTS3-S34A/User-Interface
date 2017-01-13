@@ -21,8 +21,9 @@ public final class FXMLConstants {
     // GUI warnings & description
     public static final String WARNING_USERNAME_EXISTS = "USERNAME EXISTS";
     public static final String WARNING_NEW_USERNAME = "REGISTER USERNAME";
-    public static final String MESSAGE_USERNAME_EXISTS = "Username is already registered.";
-    public static final String MESSAGE_NEW_USERNAME = "REGISTER";
+    public static final String BUTTON_TEXT_USERNAME_EXISTS = "LOGIN";
+    public static final String BUTTON_TEXT_NEW_USERNAME = "REGISTER";
+    public static final String MESSAGE_USERNAME_EXISTS = "Username already registered, please choose a new username.";
     public static final String MESSAGE_INVALID_USERNAME = "A username can only contain alphanumeric characters & can't contain more than 16 characters.";
     public static final String MESSAGE_INVALID_USER_CREDENTIALS = "A password needs to be at least 8 characters long.";
     public static final String MESSAGE_FALSE_USER_CREDENTIALS = "The credentials you've provided seem to be incorrect.";
