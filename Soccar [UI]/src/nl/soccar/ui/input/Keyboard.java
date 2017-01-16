@@ -15,9 +15,6 @@ import java.util.List;
  */
 public final class Keyboard {
 
-    // Stores the keys that are being pressed at any time.
-    private static final List<KeyCode> PRESSED_KEYS;
-
     // Stores the key binds.
     private static final List<KeyCode> ACCELERATE;
     private static final List<KeyCode> REVERSE;
@@ -25,10 +22,8 @@ public final class Keyboard {
     private static final List<KeyCode> STEER_LEFT;
     private static final List<KeyCode> STEER_RIGHT;
     private static final List<KeyCode> HANDBRAKE;
-
+    
     static {
-        PRESSED_KEYS = new ArrayList<>();
-
         // Accelerate binds
         ACCELERATE = new ArrayList<>();
         ACCELERATE.add(KeyCode.W);
@@ -58,6 +53,9 @@ public final class Keyboard {
         HANDBRAKE = new ArrayList<>();
         HANDBRAKE.add(KeyCode.SPACE);
     }
+    
+    // Stores the keys that are being pressed at any time.
+    private final List<KeyCode> PRESSED_KEYS = new ArrayList<>();
 
     /**
      * Constructor for initializing the Keyboard object.
