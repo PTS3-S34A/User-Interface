@@ -10,6 +10,7 @@ import nl.soccar.library.enumeration.Duration;
 import nl.soccar.library.enumeration.MapType;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
+import nl.soccar.ui.DisplayUtilities;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 import nl.soccar.ui.rmi.ClientController;
@@ -18,7 +19,7 @@ import nl.socnet.message.JoinSessionMessage.Status;
 
 /**
  * Handles JoinSession messages, after the currentPlayer has joined a session.
- * 
+ *
  * @author PTS34A
  */
 public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionMessage> {
@@ -26,8 +27,24 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
     @Override
     protected void handle(Connection connection, JoinSessionMessage message) throws Exception {
         Status status = message.getStatus();
-        if (status != Status.SUCCESS) {
-            return;
+        switch (status) {
+            case CAPACITY_OVERFLOW:
+                failedJoiningOfSession("Capacity overflow", "The session is already full, wait till there is a spot free in the Room.");
+                return;
+            case INVALID_PASSWORD:
+                failedJoiningOfSession("Invalid password", "The password you entered is incorrect.");
+                return;
+            case SESSION_NON_EXISTENT:
+                failedJoiningOfSession("Session non exists", "The selected session doesnt exist anymore.");
+                return;
+            case USERNAME_EXISTS:
+                failedJoiningOfSession("Username exists", "There is already a player with the same name in the Room, please change your username.");
+                return;
+            case SUCCESS:
+                // Doenst need to do anything specific.
+                break;
+            default:
+                throw new UnsupportedOperationException();
         }
 
         GameSettings givenSettings = message.getGameSettings();
@@ -83,6 +100,13 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
         settings.setDuration(duration);
 
         return new JoinSessionMessage(status, roomName, capacity, settings);
+    }
+
+    private void failedJoiningOfSession(String title, String message) {
+        Platform.runLater(() -> DisplayUtilities.showAlert(title, message));
+
+        ClientController.getInstance().getClient().disconnect();
+        ClientController.getInstance().setCurrentConnection(null);
     }
 
 }

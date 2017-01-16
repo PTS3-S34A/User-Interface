@@ -198,7 +198,7 @@ public class MainMenuFXMLController implements Initializable {
             dialog.setTitle("Room Locked");
             dialog.setHeaderText("Room Locked");
             dialog.setContentText("Enter the room password:");
-
+            
             Optional<String> result = dialog.showAndWait();
             if (!result.isPresent()) {
                 // There's no password set, we should just do nothing.
@@ -225,6 +225,9 @@ public class MainMenuFXMLController implements Initializable {
             LOGGER.log(Level.INFO, "Joined the chosen Session of the Game Server");
 
         } catch (IOException ex) {
+            client.disconnect();
+            controller.setCurrentConnection(null);
+            
             LOGGER.log(Level.SEVERE, null, ex);
         }
 
