@@ -40,8 +40,11 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
             case USERNAME_EXISTS:
                 failedJoiningOfSession("Username exists", "There is already a player with the same name in the Room, please change your username.");
                 return;
-            default:
+            case SUCCESS:
+                // Doenst need to do anything specific.
                 break;
+            default:
+                throw new UnsupportedOperationException();
         }
 
         GameSettings givenSettings = message.getGameSettings();
