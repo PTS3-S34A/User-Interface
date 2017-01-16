@@ -46,6 +46,7 @@ public class GameCanvasFx extends GameCanvas {
 
         Keyboard keyboard = new Keyboard();
         InputController controller = InputController.getInstance();
+        controller.reset();
 
         if (controller.getAllGamePadControllers().size() > 0) {
             controller.setGamePadController(controller.getAllGamePadControllers().get(0));
