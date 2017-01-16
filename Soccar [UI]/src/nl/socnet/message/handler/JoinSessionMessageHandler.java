@@ -27,7 +27,6 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
     @Override
     protected void handle(Connection connection, JoinSessionMessage message) throws Exception {
         Status status = message.getStatus();
-        System.out.println(status.name());
         switch (status) {
             case CAPACITY_OVERFLOW:
                 failedJoiningOfSession("Capacity overflow", "The session is already full, wait till there is a spot free in the Room.");
@@ -41,6 +40,8 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
             case USERNAME_EXISTS:
                 failedJoiningOfSession("Username exists", "There is already a player with the same name in the Room, please change your username.");
                 return;
+            default:
+                break;
         }
 
         GameSettings givenSettings = message.getGameSettings();
@@ -99,9 +100,7 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
     }
 
     private void failedJoiningOfSession(String title, String message) {
-        Platform.runLater(() -> {
-            DisplayUtilities.showAlert(title, message);
-        });
+        Platform.runLater(() -> DisplayUtilities.showAlert(title, message));
 
         ClientController.getInstance().getClient().disconnect();
         ClientController.getInstance().setCurrentConnection(null);
