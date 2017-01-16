@@ -108,7 +108,6 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     }
 
     private void drawBoostTrail(List<Point2D> trail, GraphicsContext gc) {
-
         double prevX;
         double prevY;
         double x;
@@ -116,7 +115,7 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
         double o = 0.0;
 
         // Cancel when there is no trail.
-        if (trail.isEmpty()) {
+        if (trail.isEmpty() || super.getPhysicsModel().isResetting()) {
             return;
         }
 
@@ -126,7 +125,6 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
 
         // Draw trail line
         for (int i = 1; i < trail.size(); i++) {
-
             gc.setStroke(DisplayConstants.BOOST_METER_FILL_COLOR);
 
             prevX = PhysicsUtilities.toPixelX((float) trail.get(i - 1).getX());
