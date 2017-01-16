@@ -17,7 +17,7 @@
          <children>
             <ImageView pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../resources/images/logo_christmas.png" />
+                  <Image url="@../../resources/images/logo.png" />
                </image>
             </ImageView>
          </children>

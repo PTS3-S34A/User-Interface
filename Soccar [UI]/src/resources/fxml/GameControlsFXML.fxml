@@ -56,7 +56,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="667.0" prefWidth="1200.0" style="-fx-background-color: #080931;">
                            <children>
-                              <Text fill="WHITE" layoutX="519.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handbreak">
+                              <Text fill="WHITE" layoutX="476.0" layoutY="597.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handbrake">
                                  <font>
                                     <Font name="Century Gothic" size="30.0" />
                                  </font>
@@ -86,7 +86,7 @@
                                     <Font name="Century Gothic" size="30.0" />
                                  </font>
                               </Text>
-                              <ImageView fitHeight="50.0" fitWidth="263.0" layoutX="469.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="50.0" fitWidth="263.0" layoutX="426.0" layoutY="462.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@../../resources/images/key_space.png" />
                                  </image>
@@ -106,7 +106,17 @@
                               <Line endX="20.0" layoutX="328.0" layoutY="114.0" rotate="90.0" stroke="WHITE" strokeWidth="2.0" />
                               <Line endX="20.0" layoutX="356.0" layoutY="307.0" rotate="90.0" stroke="WHITE" strokeWidth="2.0" />
                               <Line endX="20.0" layoutX="197.0" layoutY="487.0" rotate="90.0" stroke="WHITE" strokeWidth="2.0" />
-                              <Line endX="20.0" layoutX="590.0" layoutY="542.0" rotate="90.0" stroke="WHITE" strokeWidth="2.0" />
+                              <Line endX="20.0" layoutX="547.0" layoutY="542.0" rotate="90.0" stroke="WHITE" strokeWidth="2.0" />
+                              <Text fill="WHITE" layoutX="856.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="HOW TO PLAY">
+                                 <font>
+                                    <Font name="Century Gothic Bold" size="30.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="WHITE" layoutX="729.0" layoutY="148.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Get behind the wheel and get ready &#10;for a extremely struggle match! &#10;&#10;In this match, each player will have &#10;the controls of a car which has some&#10;special features.&#10;&#10;By hitting the handbrake, the car will &#10;get more friction. By hitting the boost, &#10;the car will drive faster for a limited time.&#10;&#10;The one who controls his/her car better &#10;and who controls the ball better, &#10;wins the game!&#10;" textAlignment="CENTER">
+                                 <font>
+                                    <Font name="Century Gothic" size="23.0" />
+                                 </font>
+                              </Text>
                            </children>
                         </AnchorPane>
                   </content>
@@ -125,7 +135,7 @@
                                     <Font name="Century Gothic" size="30.0" />
                                  </font>
                               </Text>
-                              <Text fill="WHITE" layoutX="971.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handbreak">
+                              <Text fill="WHITE" layoutX="971.0" layoutY="264.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Handbrake">
                                  <font>
                                     <Font name="Century Gothic" size="30.0" />
                                  </font>
