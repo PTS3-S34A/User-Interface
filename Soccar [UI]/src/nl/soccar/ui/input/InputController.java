@@ -21,7 +21,7 @@ public final class InputController {
 
     private static final InputController INSTANCE = new InputController();
     private static final int POLL_TIME = 50;
-    private final Timer timer = new Timer(true);
+    private Timer timer;
     private ThrottleAction throttleAction;
     private HandbrakeAction handbrakeAction;
     private SteerAction steerAction;
@@ -29,9 +29,7 @@ public final class InputController {
     private GamePad gamePad;
 
     private InputController() {
-        throttleAction = ThrottleAction.IDLE;
-        handbrakeAction = HandbrakeAction.INACTIVE;
-        steerAction = SteerAction.NONE;
+        resetInput();
     }
 
     /**
@@ -55,9 +53,29 @@ public final class InputController {
     }
 
     /**
+     * Resets the inputcontroller.
+     */
+    public void reset() {
+        if (timer != null) {
+            timer.cancel();
+            timer.purge();
+            timer = null;
+        }
+
+        resetInput();
+    }
+
+    private void resetInput() {
+        throttleAction = ThrottleAction.IDLE;
+        handbrakeAction = HandbrakeAction.INACTIVE;
+        steerAction = SteerAction.NONE;
+    }
+
+    /**
      * Starts the polling of the input divices.
      */
     private void start() {
+        timer = new Timer(true);
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
@@ -71,12 +89,8 @@ public final class InputController {
      * values.
      */
     private void poll() {
-        if (gamePad == null) {
-            pollKeyboard();
-        } else if (gamePad.isConnected()) {
-            setThrottleAction(gamePad.getThrottleAction());
-            setHandbrakeAction(gamePad.getHandbrakeAction());
-            setSteerAction(gamePad.getSteerAction());
+        if (gamePad != null && gamePad.isConnected()) {
+            pollGamePad();
         } else {
             pollKeyboard();
         }
@@ -89,6 +103,12 @@ public final class InputController {
         setThrottleAction(keyboard.getThrottleAction());
         setHandbrakeAction(keyboard.getHandbrakeAction());
         setSteerAction(keyboard.getSteerAction());
+    }
+
+    private void pollGamePad() {
+        setThrottleAction(gamePad.getThrottleAction());
+        setHandbrakeAction(gamePad.getHandbrakeAction());
+        setSteerAction(gamePad.getSteerAction());
     }
 
     /**
