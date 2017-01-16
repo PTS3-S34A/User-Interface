@@ -33,8 +33,14 @@ public final class EventMessageHandler extends MessageHandler<EventMessage> {
             return;
         }
 
+        LocalTime time = LocalTime.now();
+
         Player player = optional.get();
-        game.addEvent(new Event(message.getEventType(), LocalTime.now(), player));
+        game.addEvent(new Event(message.getEventType(), time, player));
+
+        Notification notification = game.getNotification();
+        notification.setDisplayTime(time);
+        notification.setPlayer(player);
 
         Object controller = Main.getInstance().getController();
         if (controller instanceof GameViewFXMLController) {
