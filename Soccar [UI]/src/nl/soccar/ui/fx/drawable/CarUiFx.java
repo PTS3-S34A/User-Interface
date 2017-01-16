@@ -8,10 +8,7 @@ import javafx.scene.shape.StrokeLineCap;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import nl.soccar.library.Car;
-import nl.soccar.library.enumeration.HandbrakeAction;
-import nl.soccar.library.enumeration.SteerAction;
-import nl.soccar.library.enumeration.TeamColour;
-import nl.soccar.library.enumeration.ThrottleAction;
+import nl.soccar.library.enumeration.*;
 import nl.soccar.physics.PhysicsConstants;
 import nl.soccar.physics.models.CarPhysics;
 import nl.soccar.physics.models.WheelPhysics;
@@ -53,10 +50,10 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
     /**
      * Initiates a new CarUiFx Object using the given parameters.
      *
-     * @param canvas  The canvas on which this Car is placed.
-     * @param car     The model to keep track of.
-     * @param physics The physics-model to keep track of.
-     * @param colour  The colour of the car.
+     * @param canvas    The canvas on which this Car is placed.
+     * @param car       The model to keep track of.
+     * @param physics   The physics-model to keep track of.
+     * @param colour    The colour of the car.
      * @param textColor The colour of the username above the car.
      */
     public CarUiFx(GameCanvas canvas, Car car, CarPhysics physics, TeamColour colour, Color textColor) {
@@ -157,12 +154,18 @@ public class CarUiFx extends PhysicsDrawable<Car, CarPhysics> {
             HandbrakeAction handbrakeAction = controller.getHandbrakeAction();
             ThrottleAction throttleAction = controller.getThrottleAction();
 
-            super.getModel().setSteerAction(steerAction);
-            super.getModel().setHandbrakeAction(handbrakeAction);
-            super.getModel().setThrottleAction(throttleAction);
+            GameStatus gameStatus = super.getModel().getPlayer().getCurrentSession().getGame().getStatus();
 
             // TODO : Change location of sending this message (Ugly implementation for now)
-            if (previousThrottleAction != throttleAction || previousSteerAction != steerAction || previousHandbrakeAction != handbrakeAction) {
+            if (gameStatus == GameStatus.RUNNING
+                    && previousThrottleAction != throttleAction
+                    || previousSteerAction != steerAction
+                    || previousHandbrakeAction != handbrakeAction) {
+
+                super.getModel().setSteerAction(steerAction);
+                super.getModel().setHandbrakeAction(handbrakeAction);
+                super.getModel().setThrottleAction(throttleAction);
+
                 Connection connection = ClientController.getInstance().getCurrentConnection();
                 connection.send(new PlayerMovedMessage(steerAction, handbrakeAction, throttleAction));
 
