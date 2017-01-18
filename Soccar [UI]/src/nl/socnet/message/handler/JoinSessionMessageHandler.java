@@ -27,43 +27,51 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
 
     @Override
     protected void handle(Connection connection, JoinSessionMessage message) throws Exception {
-        Status status = message.getStatus();
+        if (!handleStatus(message.getStatus())) {
+            return;
+        }
+
+        Session session = initializeSession(message.getRoomName(), message.getPassword(), message.getCapacity(), message.getGameSettings());
+        ClientController.getInstance().getCurrentPlayer().setCurrentSession(session);
+
+        Platform.runLater(() -> {
+            Main main = Main.getInstance();
+            main.setScene(FXMLConstants.LOCATION_SESSION_VIEW);
+            ((SessionViewFXMLController) main.getController()).setRoomInfo();
+        });
+    }
+
+    private boolean handleStatus(Status status) {
         switch (status) {
             case CAPACITY_OVERFLOW:
                 failedJoiningOfSession("Capacity overflow", "The session is already full, wait till there is a spot free in the Room.");
-                return;
+                return false;
             case INVALID_PASSWORD:
                 failedJoiningOfSession("Invalid password", "The password you entered is incorrect.");
-                return;
+                return false;
             case SESSION_NON_EXISTENT:
                 failedJoiningOfSession("Session non exists", "The selected session doesnt exist anymore.");
-                return;
+                return false;
             case USERNAME_EXISTS:
                 failedJoiningOfSession("Username exists", "There is already a player with the same name in the Room, please change your username.");
-                return;
+                return false;
             case SUCCESS:
-                // Doenst need to do anything specific.
-                break;
+                return true;
             default:
                 throw new UnsupportedOperationException();
         }
+    }
 
-        GameSettings givenSettings = message.getGameSettings();
-
-        Session session = new Session(message.getRoomName(), message.getPassword());
-        session.getRoom().setCapacity(message.getCapacity());
+    private Session initializeSession(String name, String password, int capacity, GameSettings givenSettings) {
+        Session session = new Session(name, password);
+        session.getRoom().setCapacity(capacity);
 
         GameSettings settings = session.getGame().getGameSettings();
         settings.setDuration(givenSettings.getDuration());
         settings.setMapType(givenSettings.getMapType());
         settings.setBallType(givenSettings.getBallType());
 
-        ClientController.getInstance().getCurrentPlayer().setCurrentSession(session);
-        Platform.runLater(() -> {
-            Main main = Main.getInstance();
-            main.setScene(FXMLConstants.LOCATION_SESSION_VIEW);
-            ((SessionViewFXMLController) main.getController()).setRoomInfo();
-        });
+        return session;
     }
 
     @Override
