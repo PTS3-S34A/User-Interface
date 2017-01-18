@@ -15,9 +15,6 @@ import java.util.List;
  */
 public final class Keyboard {
 
-    // Stores the keys that are being pressed at any time.
-    private static final List<KeyCode> PRESSED_KEYS;
-
     // Stores the key binds.
     private static final List<KeyCode> ACCELERATE;
     private static final List<KeyCode> REVERSE;
@@ -25,10 +22,8 @@ public final class Keyboard {
     private static final List<KeyCode> STEER_LEFT;
     private static final List<KeyCode> STEER_RIGHT;
     private static final List<KeyCode> HANDBRAKE;
-
+    
     static {
-        PRESSED_KEYS = new ArrayList<>();
-
         // Accelerate binds
         ACCELERATE = new ArrayList<>();
         ACCELERATE.add(KeyCode.W);
@@ -58,6 +53,9 @@ public final class Keyboard {
         HANDBRAKE = new ArrayList<>();
         HANDBRAKE.add(KeyCode.SPACE);
     }
+    
+    // Stores the keys that are being pressed at any time.
+    private final List<KeyCode> pressedKeys = new ArrayList<>();
 
     /**
      * Constructor for initializing the Keyboard object.
@@ -72,8 +70,8 @@ public final class Keyboard {
      * @param code The keycode that needs to be added to the pressedKeys list.
      */
     public void setKeyPressed(KeyCode code) {
-        if (!PRESSED_KEYS.contains(code)) {
-            PRESSED_KEYS.add(0, code); // Prepend to the list, so the last key pressed gets first priority
+        if (!pressedKeys.contains(code)) {
+            pressedKeys.add(0, code); // Prepend to the list, so the last key pressed gets first priority
         }
     }
 
@@ -83,7 +81,7 @@ public final class Keyboard {
      * @param code The keycode that needs to be removed of the pressedKeys list.
      */
     public void setKeyReleased(KeyCode code) {
-        PRESSED_KEYS.remove(code);
+        pressedKeys.remove(code);
     }
 
     /**
@@ -93,7 +91,7 @@ public final class Keyboard {
      */
     ThrottleAction getThrottleAction() {
         // The last pressed key
-        for (KeyCode pressedKey : PRESSED_KEYS) {
+        for (KeyCode pressedKey : pressedKeys) {
 
             if (BOOST.contains(pressedKey)) {
                 return ThrottleAction.BOOST;
@@ -118,7 +116,7 @@ public final class Keyboard {
      */
     SteerAction getSteerAction() {
 
-        for (KeyCode pressedKey : PRESSED_KEYS) {
+        for (KeyCode pressedKey : pressedKeys) {
 
             if (STEER_LEFT.contains(pressedKey)) {
                 return SteerAction.STEER_LEFT;
@@ -139,7 +137,7 @@ public final class Keyboard {
      */
     HandbrakeAction getHandbrakeAction() {
 
-        for (KeyCode pressedKey : PRESSED_KEYS) {
+        for (KeyCode pressedKey : pressedKeys) {
 
             if (HANDBRAKE.contains(pressedKey)) {
                 return HandbrakeAction.ACTIVE;
