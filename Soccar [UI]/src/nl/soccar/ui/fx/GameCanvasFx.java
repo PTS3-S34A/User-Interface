@@ -30,7 +30,7 @@ public class GameCanvasFx extends GameCanvas {
     /**
      * Initiates a new GameCanvasFx object using the given parameters.
      *
-     * @param game The game that runs on the canvas.
+     * @param session The session that runs on the canvas.
      * @param context The context which can be used by Drawables to actually
      * draw on a Canvas.
      */
