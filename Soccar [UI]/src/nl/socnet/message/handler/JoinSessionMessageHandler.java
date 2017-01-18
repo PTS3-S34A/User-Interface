@@ -13,6 +13,7 @@ import nl.soccar.socnet.message.MessageHandler;
 import nl.soccar.ui.DisplayUtilities;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
+import nl.soccar.ui.fx.controller.SessionViewFXMLController;
 import nl.soccar.ui.rmi.ClientController;
 import nl.socnet.message.JoinSessionMessage;
 import nl.socnet.message.JoinSessionMessage.Status;
@@ -58,7 +59,11 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
         settings.setBallType(givenSettings.getBallType());
 
         ClientController.getInstance().getCurrentPlayer().setCurrentSession(session);
-        Platform.runLater(() -> Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW));
+        Platform.runLater(() -> {
+            Main main = Main.getInstance();
+            main.setScene(FXMLConstants.LOCATION_SESSION_VIEW);
+            ((SessionViewFXMLController) main.getController()).setRoomInfo();
+        });
     }
 
     @Override

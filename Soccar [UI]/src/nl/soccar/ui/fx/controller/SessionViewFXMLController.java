@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
@@ -18,10 +17,7 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 import nl.soccar.ui.rmi.ClientController;
-import nl.socnet.message.ChangeGameStatusMessage;
-import nl.socnet.message.ChatMessage;
-import nl.socnet.message.LeaveSessionMessage;
-import nl.socnet.message.SwitchTeamMessage;
+import nl.socnet.message.*;
 
 import java.net.URL;
 import java.util.Optional;
@@ -91,22 +87,17 @@ public class SessionViewFXMLController implements Initializable {
         btnChat.setOnAction(e -> sendChatMessage());
         txtChat.setOnAction(e -> sendChatMessage());
 
-        lvChat.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> list) {
-                ListCell cell = new ListCell();
+        lvChat.setCellFactory(list -> {
+            ListCell cell = new ListCell();
 
-                Text text = new Text();
-                text.wrappingWidthProperty().bind(lvChat.widthProperty().subtract(25));
-                text.textProperty().bind(cell.itemProperty());
+            Text text = new Text();
+            text.wrappingWidthProperty().bind(lvChat.widthProperty().subtract(25));
+            text.textProperty().bind(cell.itemProperty());
 
-                cell.setGraphic(text);
-                cell.setWrapText(true);
-                return cell;
-            }
+            cell.setGraphic(text);
+            cell.setWrapText(true);
+            return cell;
         });
-
-        setRoomInfo();
     }
 
     /**
@@ -123,7 +114,8 @@ public class SessionViewFXMLController implements Initializable {
         lvPlayersBlue.setItems(FXCollections.observableArrayList(room.getTeamBlue().getPlayers()));
         lvPlayersRed.setItems(FXCollections.observableArrayList(room.getTeamRed().getPlayers()));
 
-        Optional<SessionData> session = ClientController.getInstance().getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
+        ClientController controller = ClientController.getInstance();
+        Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
         if (!session.isPresent()) {
             LOGGER.log(Level.WARNING, "An exception occurred while getting the SessionData from the Game Server");
             return;
@@ -138,6 +130,8 @@ public class SessionViewFXMLController implements Initializable {
 
         boolean isHost = room.getHost() == null ? session.get().getHostName().equals(currentPlayer.getUsername()) : room.getHost().equals(currentPlayer);
         btnStartGame.setVisible(isHost);
+
+        controller.getCurrentConnection().send(new GameStatusMessage());
     }
 
     /**
@@ -146,7 +140,7 @@ public class SessionViewFXMLController implements Initializable {
      * @param status The current status of the Game.
      */
     public void setGameStatus(GameStatus status) {
-        lblRoomStatus.setText(status == GameStatus.RUNNING ? "GAME RUNNING, PLEASE STAND BY" : "WAITING FOR OTHER PLAYERS");
+        lblRoomStatus.setText(status != GameStatus.STOPPED ? "GAME RUNNING, PLEASE WAIT" : "WAITING FOR OTHER PLAYERS");
     }
 
     /**

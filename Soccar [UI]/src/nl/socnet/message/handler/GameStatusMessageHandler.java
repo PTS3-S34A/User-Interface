@@ -1,6 +1,7 @@
 package nl.socnet.message.handler;
 
 import io.netty.buffer.ByteBuf;
+import javafx.application.Platform;
 import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.socnet.connection.Connection;
 import nl.soccar.socnet.message.MessageHandler;
@@ -20,13 +21,14 @@ public final class GameStatusMessageHandler extends MessageHandler<GameStatusMes
         Object controller = Main.getInstance().getController();
         if (controller instanceof SessionViewFXMLController) {
             SessionViewFXMLController view = (SessionViewFXMLController) controller;
-            view.setGameStatus(message.getGameStatus());
+
+            Platform.runLater(() -> view.setGameStatus(message.getGameStatus()));
         }
     }
 
     @Override
     protected void encode(Connection connection, GameStatusMessage message, ByteBuf buf) throws Exception {
-        throw new UnsupportedOperationException("Encoding not supported for Client.");
+        // Do nothing, just request the status.
     }
 
     @Override

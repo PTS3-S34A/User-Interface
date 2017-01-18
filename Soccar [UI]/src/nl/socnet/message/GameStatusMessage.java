@@ -17,6 +17,13 @@ public final class GameStatusMessage extends Message {
     private final GameStatus status;
 
     /**
+     * Initializes this message without an actual GameStatus, this way a request can be initiated.
+     */
+    public GameStatusMessage() {
+        this(null);
+    }
+
+    /**
      * Initializes this message.
      *
      * @param status The current GameStatus of the Game.
