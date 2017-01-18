@@ -113,6 +113,9 @@ public class GameViewFXMLController implements Initializable {
         gameCanvas.getGameEngine().getGame().setPaused(paused);
     }
 
+    /**
+     * Stops the underlying canvas from drawing.
+     */
     public void stop() {
         gameCanvas.stop();
         gameCanvas = null;
