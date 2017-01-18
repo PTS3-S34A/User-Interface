@@ -1,8 +1,11 @@
 package nl.soccar.ui.until;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import javafx.scene.shape.Rectangle;
 import nl.soccar.ui.util.MapUtilities;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +28,24 @@ public class MapUtilitiesTest {
         int width = 50;
         int height = 30;
         rec = new Rectangle(xPos, yPos, width, height);
+    }
+
+    /**
+     * Tests the private constructor.
+     *
+     * @throws Throwable Thrown when the private constructor is invoked.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void privateConstructorTest() throws Throwable {
+        Constructor<MapUtilities> constructor = (Constructor<MapUtilities>) MapUtilities.class.getDeclaredConstructors()[0];
+        constructor.setAccessible(true);
+        try {
+            constructor.newInstance();
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        } catch (InstantiationException | IllegalArgumentException | IllegalAccessException e) {
+            fail("Wrong exception type thrown.");
+        }
     }
 
     /**
