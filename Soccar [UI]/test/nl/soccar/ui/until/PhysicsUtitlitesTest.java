@@ -1,7 +1,10 @@
 package nl.soccar.ui.until;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import nl.soccar.ui.util.PhysicsUtilities;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import org.junit.Test;
 
 /**
@@ -10,6 +13,24 @@ import org.junit.Test;
  * @author PTS34A
  */
 public class PhysicsUtitlitesTest {
+
+    /**
+     * Tests the private constructor.
+     *
+     * @throws Throwable Thrown when the private constructor is invoked.
+     */
+    @Test(expected = UnsupportedOperationException.class)
+    public void privateConstructorTest() throws Throwable {
+        Constructor<PhysicsUtilities> constructor = (Constructor<PhysicsUtilities>) PhysicsUtilities.class.getDeclaredConstructors()[0];
+        constructor.setAccessible(true);
+        try {
+            constructor.newInstance();
+        } catch (InvocationTargetException e) {
+            throw e.getTargetException();
+        } catch (InstantiationException | IllegalArgumentException | IllegalAccessException e) {
+            fail("Wrong exception type thrown.");
+        }
+    }
 
     @Test
     public void calculateCarHeightTest() {
