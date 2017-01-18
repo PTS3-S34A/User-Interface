@@ -5,11 +5,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
 import nl.soccar.library.SessionData;
+import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.Client;
@@ -17,10 +17,7 @@ import nl.soccar.socnet.connection.Connection;
 import nl.soccar.ui.Main;
 import nl.soccar.ui.fx.FXMLConstants;
 import nl.soccar.ui.rmi.ClientController;
-import nl.socnet.message.ChangeGameStatusMessage;
-import nl.socnet.message.ChatMessage;
-import nl.socnet.message.LeaveSessionMessage;
-import nl.socnet.message.SwitchTeamMessage;
+import nl.socnet.message.*;
 
 import java.net.URL;
 import java.util.Optional;
@@ -64,8 +61,10 @@ public class SessionViewFXMLController implements Initializable {
     private Button btnSwitchToBlue;
     @FXML
     private Button btnSwitchToRed;
-    private Session currentSession;
+    @FXML
+    private Label lblRoomStatus;
 
+    private Session currentSession;
     private Player currentPlayer;
 
     @Override
@@ -88,22 +87,17 @@ public class SessionViewFXMLController implements Initializable {
         btnChat.setOnAction(e -> sendChatMessage());
         txtChat.setOnAction(e -> sendChatMessage());
 
-        lvChat.setCellFactory(new Callback<ListView<String>, ListCell<String>>() {
-            @Override
-            public ListCell<String> call(ListView<String> list) {
-                ListCell cell = new ListCell();
+        lvChat.setCellFactory(list -> {
+            ListCell cell = new ListCell();
 
-                Text text = new Text();
-                text.wrappingWidthProperty().bind(lvChat.widthProperty().subtract(25));
-                text.textProperty().bind(cell.itemProperty());
+            Text text = new Text();
+            text.wrappingWidthProperty().bind(lvChat.widthProperty().subtract(25));
+            text.textProperty().bind(cell.itemProperty());
 
-                cell.setGraphic(text);
-                cell.setWrapText(true);
-                return cell;
-            }
+            cell.setGraphic(text);
+            cell.setWrapText(true);
+            return cell;
         });
-
-        setRoomInfo();
     }
 
     /**
@@ -120,21 +114,33 @@ public class SessionViewFXMLController implements Initializable {
         lvPlayersBlue.setItems(FXCollections.observableArrayList(room.getTeamBlue().getPlayers()));
         lvPlayersRed.setItems(FXCollections.observableArrayList(room.getTeamRed().getPlayers()));
 
-        Optional<SessionData> session = ClientController.getInstance().getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
+        ClientController controller = ClientController.getInstance();
+        Optional<SessionData> session = controller.getAllSessions().stream().filter(s -> s.getRoomName().equals(lblRoomName.getText())).findFirst();
         if (!session.isPresent()) {
             LOGGER.log(Level.WARNING, "An exception occurred while getting the SessionData from the Game Server");
             return;
         }
 
-        TeamColour kut = room.getTeamRed().getPlayers().contains(currentPlayer) ? TeamColour.RED : TeamColour.BLUE;
-        btnSwitchToRed.setDisable(kut == TeamColour.RED);
-        btnSwitchToBlue.setDisable(kut == TeamColour.BLUE);
+        TeamColour colour = room.getTeamRed().getPlayers().contains(currentPlayer) ? TeamColour.RED : TeamColour.BLUE;
+        btnSwitchToRed.setDisable(colour == TeamColour.RED);
+        btnSwitchToBlue.setDisable(colour == TeamColour.BLUE);
 
         boolean validSize = room.getTeamBlue().getSize() >= 1 && room.getTeamRed().getSize() >= 1;
         btnStartGame.setDisable(!validSize);
 
         boolean isHost = room.getHost() == null ? session.get().getHostName().equals(currentPlayer.getUsername()) : room.getHost().equals(currentPlayer);
         btnStartGame.setVisible(isHost);
+
+        controller.getCurrentConnection().send(new GameStatusMessage());
+    }
+
+    /**
+     * Sets the display String reflecting the GameStatus provided.
+     *
+     * @param status The current status of the Game.
+     */
+    public void setGameStatus(GameStatus status) {
+        lblRoomStatus.setText(status != GameStatus.STOPPED ? "GAME RUNNING, PLEASE WAIT" : "WAITING FOR OTHER PLAYERS");
     }
 
     /**
@@ -185,9 +191,9 @@ public class SessionViewFXMLController implements Initializable {
      * Adds a new chat message to the list view that is used to display all chat
      * messages.
      *
-     * @param username The username of the player that sent the chatmessage.
+     * @param username  The username of the player that sent the chatmessage.
      * @param privilege The privilege of the player that sent the chatmessage.
-     * @param message The actual content of the message.
+     * @param message   The actual content of the message.
      */
     public void addChatMessage(String username, Privilege privilege, String message) {
         lvChat.getItems().add(String.format("%s%s: %s", getPrivilegePrefix(privilege), username, message));

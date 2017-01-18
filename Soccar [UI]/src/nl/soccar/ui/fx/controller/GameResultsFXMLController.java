@@ -133,7 +133,9 @@ public class GameResultsFXMLController implements Initializable {
      * Method that navigates to back the SessionView screen (Room information).
      */
     public void closeResults() {
-        Main.getInstance().setScene(FXMLConstants.LOCATION_SESSION_VIEW);
+        Main main = Main.getInstance();
+        main.setScene(FXMLConstants.LOCATION_SESSION_VIEW);
+        ((SessionViewFXMLController) main.getController()).setRoomInfo();
     }
     
 }
