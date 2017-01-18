@@ -20,6 +20,7 @@ public final class EventMessage extends Message {
     /**
      * Initializes this message.
      *
+     * @param type  The EventType of this message.
      * @param playerId The id of the new host.
      */
     public EventMessage(EventType type, int playerId) {
@@ -27,6 +28,11 @@ public final class EventMessage extends Message {
         this.playerId = playerId;
     }
 
+    /**
+     * Gets the EventType of this Message.
+     *
+     * @return The EventType of this Message.
+     */
     public EventType getEventType() {
         return type;
     }
