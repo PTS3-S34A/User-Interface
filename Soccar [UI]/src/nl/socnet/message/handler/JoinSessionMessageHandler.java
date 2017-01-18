@@ -42,24 +42,34 @@ public final class JoinSessionMessageHandler extends MessageHandler<JoinSessionM
     }
 
     private boolean handleStatus(Status status) {
+        String title;
+        String message;
+
         switch (status) {
             case CAPACITY_OVERFLOW:
-                failedJoiningOfSession("Capacity overflow", "The session is already full, wait till there is a spot free in the Room.");
-                return false;
+                title = "Capacity overflow";
+                message = "The session is already full, wait until there is a spot free in the room or join a different room.";
+                break;
             case INVALID_PASSWORD:
-                failedJoiningOfSession("Invalid password", "The password you entered is incorrect.");
-                return false;
+                title = "Invalid password";
+                message = "The password you entered is incorrect.";
+                break;
             case SESSION_NON_EXISTENT:
-                failedJoiningOfSession("Session non exists", "The selected session doesnt exist anymore.");
-                return false;
+                title = "Session doesn't exist";
+                message = "The selected session doesnt exist anymore.";
+                break;
             case USERNAME_EXISTS:
-                failedJoiningOfSession("Username exists", "There is already a player with the same name in the Room, please change your username.");
-                return false;
+                title = "Username already exists";
+                message = "There is already a player with the same name in the room, please change your username or join a different room.";
+                break;
             case SUCCESS:
                 return true;
             default:
                 throw new UnsupportedOperationException();
         }
+
+        failedJoiningOfSession(title, message);
+        return false;
     }
 
     private Session initializeSession(String name, String password, int capacity, GameSettings givenSettings) {
