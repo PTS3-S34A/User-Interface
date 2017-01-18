@@ -87,6 +87,7 @@ public final class ClientController {
         registry.register(JoinSessionMessage.class);
         registry.register(LeaveSessionMessage.class);
         registry.register(ChangeHostMessage.class);
+        registry.register(GameStatusMessage.class);
 
         registry.register(PlayerJoinedSessionMessage.class);
         registry.register(PlayerLeftSessionMessage.class);

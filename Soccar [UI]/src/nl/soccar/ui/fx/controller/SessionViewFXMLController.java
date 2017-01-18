@@ -10,6 +10,7 @@ import nl.soccar.library.Player;
 import nl.soccar.library.Room;
 import nl.soccar.library.Session;
 import nl.soccar.library.SessionData;
+import nl.soccar.library.enumeration.GameStatus;
 import nl.soccar.library.enumeration.Privilege;
 import nl.soccar.library.enumeration.TeamColour;
 import nl.soccar.socnet.Client;
@@ -64,8 +65,10 @@ public class SessionViewFXMLController implements Initializable {
     private Button btnSwitchToBlue;
     @FXML
     private Button btnSwitchToRed;
-    private Session currentSession;
+    @FXML
+    private Label lblRoomStatus;
 
+    private Session currentSession;
     private Player currentPlayer;
 
     @Override
@@ -126,15 +129,24 @@ public class SessionViewFXMLController implements Initializable {
             return;
         }
 
-        TeamColour kut = room.getTeamRed().getPlayers().contains(currentPlayer) ? TeamColour.RED : TeamColour.BLUE;
-        btnSwitchToRed.setDisable(kut == TeamColour.RED);
-        btnSwitchToBlue.setDisable(kut == TeamColour.BLUE);
+        TeamColour colour = room.getTeamRed().getPlayers().contains(currentPlayer) ? TeamColour.RED : TeamColour.BLUE;
+        btnSwitchToRed.setDisable(colour == TeamColour.RED);
+        btnSwitchToBlue.setDisable(colour == TeamColour.BLUE);
 
         boolean validSize = room.getTeamBlue().getSize() >= 1 && room.getTeamRed().getSize() >= 1;
         btnStartGame.setDisable(!validSize);
 
         boolean isHost = room.getHost() == null ? session.get().getHostName().equals(currentPlayer.getUsername()) : room.getHost().equals(currentPlayer);
         btnStartGame.setVisible(isHost);
+    }
+
+    /**
+     * Sets the display String reflecting the GameStatus provided.
+     *
+     * @param status The current status of the Game.
+     */
+    public void setGameStatus(GameStatus status) {
+        lblRoomStatus.setText(status == GameStatus.RUNNING ? "GAME RUNNING, PLEASE STAND BY" : "WAITING FOR OTHER PLAYERS");
     }
 
     /**
@@ -185,9 +197,9 @@ public class SessionViewFXMLController implements Initializable {
      * Adds a new chat message to the list view that is used to display all chat
      * messages.
      *
-     * @param username The username of the player that sent the chatmessage.
+     * @param username  The username of the player that sent the chatmessage.
      * @param privilege The privilege of the player that sent the chatmessage.
-     * @param message The actual content of the message.
+     * @param message   The actual content of the message.
      */
     public void addChatMessage(String username, Privilege privilege, String message) {
         lvChat.getItems().add(String.format("%s%s: %s", getPrivilegePrefix(privilege), username, message));
