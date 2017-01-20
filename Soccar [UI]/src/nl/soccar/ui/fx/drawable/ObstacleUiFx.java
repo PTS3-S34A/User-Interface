@@ -20,7 +20,7 @@ public class ObstacleUiFx extends PhysicsDrawable<Obstacle, ObstaclePhysics> {
      * @param obstacle The obstacle that will be drawn.
      */
     public ObstacleUiFx(GameCanvas canvas, Obstacle obstacle) {
-        this(canvas, obstacle, new ObstaclePhysics(obstacle, canvas.getGameEngine().getWorld()));
+        this(canvas, obstacle, new ObstaclePhysics(canvas.getGameEngine(), obstacle));
     }
     
     /**

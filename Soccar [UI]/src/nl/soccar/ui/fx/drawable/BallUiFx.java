@@ -35,7 +35,7 @@ public class BallUiFx extends PhysicsDrawable<Ball, BallPhysics> {
      * @param ball The ball model to keep track of.
      */
     public BallUiFx(GameCanvas canvas, Ball ball) {
-        this(canvas, ball, new BallPhysics(ball, canvas.getGameEngine().getWorld()));
+        this(canvas, ball, new BallPhysics(canvas.getGameEngine(), ball));
     }
 
     /**

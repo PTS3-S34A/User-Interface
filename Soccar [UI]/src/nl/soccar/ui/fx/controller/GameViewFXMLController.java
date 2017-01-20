@@ -73,7 +73,7 @@ public class GameViewFXMLController implements Initializable {
             Room room = session.getRoom();
 
             Car car = (Car) entity;
-            CarPhysics physics = new CarPhysics(car, engine.getWorld());
+            CarPhysics physics = new CarPhysics(engine, car);
 
             Player player = car.getPlayer();
             TeamColour colour = room.getTeamBlue().getPlayers().contains(player) ? TeamColour.BLUE : TeamColour.RED;
@@ -87,7 +87,7 @@ public class GameViewFXMLController implements Initializable {
             initializeBoostMeter(car, gameCanvas);
         } else if (entity instanceof Obstacle) {
             Obstacle obstacle = (Obstacle) entity;
-            ObstaclePhysics physics = new ObstaclePhysics(obstacle, engine.getWorld());
+            ObstaclePhysics physics = new ObstaclePhysics(engine, obstacle);
 
             ObstacleUiFx obstacleUiFx = new ObstacleUiFx(gameCanvas, obstacle, physics);
             gameCanvas.addDrawable(obstacleUiFx);
@@ -95,7 +95,7 @@ public class GameViewFXMLController implements Initializable {
             engine.addWorldObject(physics);
         } else if (entity instanceof Ball) {
             Ball ball = (Ball) entity;
-            BallPhysics physics = new BallPhysics(ball, engine.getWorld());
+            BallPhysics physics = new BallPhysics(engine, ball);
 
             BallUiFx ballUiFx = new BallUiFx(gameCanvas, ball, physics);
             gameCanvas.addDrawable(ballUiFx);
