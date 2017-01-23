@@ -35,6 +35,10 @@ public final class PlayerLeftSessionMessageHandler extends MessageHandler<Player
         room.getTeamBlue().leave(player);
         room.getTeamRed().leave(player);
 
+        if (room.getHost().equals(player)) {
+            room.setHost(room.getAllPlayers().get(0));
+        }
+
         Object controller = Main.getInstance().getController();
         if (controller != null && controller instanceof SessionViewFXMLController) {
             Platform.runLater(() -> ((SessionViewFXMLController) controller).setRoomInfo());
